@@ -3,12 +3,12 @@ import globals from "globals"
 import reactHooks from "eslint-plugin-react-hooks"
 import reactRefresh from "eslint-plugin-react-refresh"
 import tseslint from "typescript-eslint"
-import reactDom from "eslint-plugin-react-dom"
+import pluginImport from "eslint-plugin-import"
 
 export default tseslint.config(
   { ignores: ["dist"] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.strictTypeChecked, ...tseslint.configs.stylisticTypeChecked],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, pluginImport.flatConfigs.recommended],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -24,8 +24,45 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      ...reactDom.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+      "import/no-unresolved": "off",
+      "import/no-cycle": "error",
+      "import/order": [
+        "error",
+        {
+          groups: ["builtin", "external", "internal"],
+          pathGroups: [
+            {
+              pattern: "@/app/**",
+              group: "external",
+              position: "after",
+            },
+            {
+              pattern: "@/pages/**",
+              group: "external",
+              position: "after",
+            },
+            {
+              pattern: "@/shared/**",
+              group: "external",
+              position: "after",
+            },
+          ],
+          pathGroupsExcludedImportTypes: ["builtin"],
+          "newlines-between": "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
     },
   }
 )

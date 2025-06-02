@@ -1,11 +1,12 @@
 import { useNavigate as useReactRouterNavigate } from "react-router-dom"
-import { type AppRoutes, type RoutePath } from "./types"
+
 import { compilePath } from "./compilePath"
+import { type AppRoutes, type RoutePath } from "./types"
 
 export const useNavigate = () => {
   const navigate = useReactRouterNavigate()
 
-  return function typedNavigate<Path extends RoutePath>(
+  return async function typedNavigate<Path extends RoutePath>(
     to: Path,
     options?: {
       params?: AppRoutes[Path]
@@ -14,7 +15,7 @@ export const useNavigate = () => {
     }
   ) {
     const path = compilePath(to, options?.params)
-    navigate(path, {
+    await navigate(path, {
       state: options?.state,
       replace: options?.replace,
     })

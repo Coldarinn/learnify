@@ -1,9 +1,10 @@
-import { Link, type RoutePath } from "@/shared/router"
 import { createBrowserRouter, Navigate, Outlet } from "react-router-dom"
 import { type RouteObject as ReactRouterRouteObject } from "react-router-dom"
 
+import { Link, type RoutePath } from "@/shared/router"
+
 type RouteObject = Omit<ReactRouterRouteObject, "path" | "children"> & {
-  path: RoutePath | ReactRouterRouteObject["path"]
+  path: RoutePath
   children?: RouteObject[] | ReactRouterRouteObject["children"]
 }
 

@@ -1,6 +1,7 @@
 import { Link as ReactRouterLink } from "react-router-dom"
-import { type AppRoutes, type RoutePath } from "./types"
+
 import { compilePath } from "./compilePath"
+import { type AppRoutes, type RoutePath } from "./types"
 
 type LinkProps<Path extends RoutePath> = {
   to: Path

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom"
+
 import { type AppRoutes, type RoutePath } from "./types"
 
 export function useQuery<Path extends RoutePath>(): Partial<AppRoutes[Path]> {

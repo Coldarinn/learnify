@@ -1,10 +1,10 @@
-export type AppRoutes = {
-  "/": void
-  "/about": void
-  "/auth": void
-  "/auth/login": void
-  "/auth/registration": void
-  "/auth/reset": void
+export interface AppRoutes {
+  "/": never
+  "/about": never
+  "/auth": never
+  "/auth/login": never
+  "/auth/registration": never
+  "/auth/reset": never
   "/user/:id": { id: string }
   "/posts/:postId/comments/:commentId": { postId: string; commentId: string }
   "/search": { query?: string; sort?: "asc" | "desc" }
