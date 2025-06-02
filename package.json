@@ -1,0 +1,17 @@
+{
+  "name": "tessera",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write .",
+    "prepare": "git config core.hooksPath .git-hooks || echo 'Not in a git repo'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "lint-staged": "^16.1.0",
+    "prettier": "^3.5.3"
+  }
+}

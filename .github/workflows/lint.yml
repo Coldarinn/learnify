@@ -1,0 +1,69 @@
+name: lint
+
+on:
+  push:
+    branches:
+      - "*"
+      - "!main"
+    paths:
+      - "frontend/**"
+      - "backend/**"
+  pull_request:
+    paths:
+      - "frontend/**"
+      - "backend/**"
+
+jobs:
+  lint-frontend:
+    runs-on: ubuntu-latest
+    name: lint frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: npm
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Run JavaScript lint
+        working-directory: ./frontend
+        run: npm run lint:js
+
+      - name: Run TypeScript lint
+        working-directory: ./frontend
+        run: npm run lint:ts
+
+      - name: Run CSS lint
+        working-directory: ./frontend
+        run: npm run lint:css
+
+  lint-backend:
+    runs-on: ubuntu-latest
+    name: lint backend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.x"
+          cache: npm
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Run JavaScript lint
+        working-directory: ./backend
+        run: npm run lint:js
+
+      - name: Run TypeScript lint
+        working-directory: ./backend
+        run: npm run lint:ts
