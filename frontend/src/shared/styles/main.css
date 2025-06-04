@@ -1,0 +1,100 @@
+@import "./typography.css";
+@import "./colors.css";
+@import "./theme.css";
+@import "./border-radius.css";
+@import "./shadows.css";
+@import "./gaps.css";
+@import "./opacity.css";
+@import "./ant.css";
+
+body,
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  width: 100%;
+  height: fit-content;
+  min-height: 100vh;
+}
+
+body {
+  font: var(--font-body-normal-m);
+  font-family: var(--font-family-base);
+  -webkit-font-smoothing: antialiased; /* Улучшение сглаживания шрифтов */
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text-primary);
+
+  background-color: var(--color-surface-base-page);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+
+  background: none;
+  border: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+img,
+picture,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+img,
+picture {
+  pointer-events: none;
+}
+
+svg:not(.clear),
+svg:not(.clear) * {
+  overflow-clip-margin: content-box;
+  fill: currentcolor;
+  width: 1em;
+  height: 1em;
+}
+
+/* Общий стиль скроллбара */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Ползунок  */
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-base-quaternary);
+  border-radius: var(--radius-2xl);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-surface-base-quaternary-hover);
+}
+
+/* Фон скроллбара */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: var(--radius-2xl);
+}

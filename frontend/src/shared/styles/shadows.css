@@ -1,0 +1,10 @@
+:root {
+  --shadow-tooltip: 0px 2px 8px 0px var(--color-transparent-dark-150);
+  --shadow-alert: 0px 8px 28px 8px rgba(0, 0, 0, 5%), 0px 6px 16px 0px rgba(0, 0, 0, 10%), 0px 2px 6px -4px rgba(0, 0, 0, 15%);
+  --shadow-popup: 0px 4px 6px 0px var(--color-transparent-dark-200), 0px 8px 32px 0px var(--color-transparent-dark-50);
+
+  --shadow-divider-bottom: 0px -1px 0px 0px var(--color-transparent-dark-100);
+  --shadow-divider-top: 0px 1px 0px 0px var(--color-transparent-dark-100);
+  --shadow-divider-right: -1px 0px 0px 0px var(--color-transparent-dark-100);
+  --shadow-divider-left: 1px 0px 0px 0px var(--color-transparent-dark-100);
+}
