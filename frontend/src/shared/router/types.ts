@@ -1,4 +1,4 @@
-export interface AppRoutes {
+export type AppRoutes = {
   "/": never
   "/about": never
   "/auth": never
