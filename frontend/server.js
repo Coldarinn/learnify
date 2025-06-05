@@ -18,9 +18,8 @@ function resolve(p) {
 
 async function createServer() {
   let app = express()
-  /**
-   * @type {import('vite').ViteDevServer}
-   */
+
+  /** @type {import('vite').ViteDevServer | undefined} */
   let vite
 
   if (isProduction) {
@@ -32,17 +31,20 @@ async function createServer() {
     ).createServer({
       root,
       appType: "custom",
-      server: { middlewareMode: "ssr" },
+      server: { middlewareMode: true },
     })
 
     app.use(vite.middlewares)
   }
 
-  app.use("*", async (req, res) => {
+  app.use("*all", async (req, res) => {
     let url = req.originalUrl
 
     try {
+      /** @type {string} */
       let template
+
+      /** @type {import('./src/app/entry.server.ts').render} */
       let render
 
       if (isProduction) {
