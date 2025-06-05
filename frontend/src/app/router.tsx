@@ -30,13 +30,13 @@ export const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <Navigate to="/auth/login" replace />,
+            element: <Navigate to="/auth/sign-in" replace />,
           },
           {
             path: "sign-in",
             element: (
               <h3>
-                Sign In <Link to="/auth/sign-in">Go To Sign Up</Link>
+                Sign In <Link to="/auth/sign-up">Go To Sign Up</Link>
               </h3>
             ),
           },
@@ -44,7 +44,7 @@ export const routes: RouteObject[] = [
             path: "sign-up",
             element: (
               <h3>
-                Sign Up <Link to="/auth/sign-up">Go To Sign In</Link>
+                Sign Up <Link to="/auth/sign-in">Go To Sign In</Link>
               </h3>
             ),
           },
