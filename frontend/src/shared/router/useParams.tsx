@@ -1,4 +1,4 @@
-import { useParams as useReactRouterParams } from "react-router-dom"
+import { useParams as useReactRouterParams } from "react-router"
 
 import { type AppRoutes, type RoutePath } from "./types"
 

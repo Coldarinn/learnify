@@ -1,32 +1,28 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router-dom"
-import { type RouteObject as ReactRouterRouteObject } from "react-router-dom"
+import { createBrowserRouter, Navigate, Outlet } from "react-router"
+import { type RouteObject } from "react-router"
 
-import { Link, type RoutePath } from "@/shared/router"
+import { Link } from "@/shared/router"
 
-type RouteObject = Omit<ReactRouterRouteObject, "path" | "children"> & {
-  path: RoutePath
-  children?: RouteObject[] | ReactRouterRouteObject["children"]
-}
-
-const routerConfig: RouteObject[] = [
+export const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Outlet />,
-    errorElement: <h1>Error Page</h1>,
+    element: (
+      <div>
+        <h1>Layout</h1>
+        <hr />
+        <Outlet />
+      </div>
+    ),
     children: [
       {
-        path: "/",
+        index: true,
         element: <h1>Home Page</h1>,
       },
       {
-        path: "/about",
-        element: <h1>About Page</h1>,
-      },
-      {
-        path: "/auth",
+        path: "auth",
         element: (
           <>
-            <h1>Auth Layout</h1>
+            <h2>Auth Layout</h2>
             <hr />
             <Outlet />
           </>
@@ -37,22 +33,22 @@ const routerConfig: RouteObject[] = [
             element: <Navigate to="/auth/login" replace />,
           },
           {
-            path: "/auth/login",
+            path: "sign-in",
             element: (
-              <h2>
-                Login Page <Link to="/auth/registration">Registration</Link>
-              </h2>
+              <h3>
+                Sign In <Link to="/auth/sign-in">Go To Sign Up</Link>
+              </h3>
             ),
           },
           {
-            path: "/auth/registration",
-            element: <h2>Registration Page</h2>,
+            path: "sign-up",
+            element: (
+              <h3>
+                Sign Up <Link to="/auth/sign-up">Go To Sign In</Link>
+              </h3>
+            ),
           },
         ],
-      },
-      {
-        path: "/user/:id",
-        element: <h1>User Page</h1>,
       },
       {
         path: "*",
@@ -62,4 +58,4 @@ const routerConfig: RouteObject[] = [
   },
 ]
 
-export const router = createBrowserRouter(routerConfig as ReactRouterRouteObject[])
+export const router = createBrowserRouter(routes)

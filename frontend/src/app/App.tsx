@@ -1,10 +1,10 @@
 import ConfigProvider from "antd/es/config-provider"
 import ruRU from "antd/locale/ru_RU"
-import { RouterProvider } from "react-router-dom"
+import { RouterProvider } from "react-router"
 
 import { ThemeProvider } from "@/shared/theme"
 
-import { router } from "./app/router"
+import { router } from "./router"
 import "@/shared/styles/main.css"
 
 export const App = () => {

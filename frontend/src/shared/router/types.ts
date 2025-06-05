@@ -1,13 +1,8 @@
 export type AppRoutes = {
   "/": never
-  "/about": never
   "/auth": never
-  "/auth/login": never
-  "/auth/registration": never
-  "/auth/reset": never
-  "/user/:id": { id: string }
-  "/posts/:postId/comments/:commentId": { postId: string; commentId: string }
-  "/search": { query?: string; sort?: "asc" | "desc" }
+  "/auth/sign-in": never
+  "/auth/sign-up": never
 }
 
 export type RoutePath = keyof AppRoutes

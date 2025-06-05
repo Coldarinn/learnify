@@ -1,4 +1,4 @@
-import { Link as ReactRouterLink } from "react-router-dom"
+import { Link as ReactRouterLink } from "react-router"
 
 import { compilePath } from "./compilePath"
 import { type AppRoutes, type RoutePath } from "./types"

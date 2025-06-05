@@ -1,4 +1,4 @@
-import { useNavigate as useReactRouterNavigate } from "react-router-dom"
+import { useNavigate as useReactRouterNavigate } from "react-router"
 
 import { compilePath } from "./compilePath"
 import { type AppRoutes, type RoutePath } from "./types"

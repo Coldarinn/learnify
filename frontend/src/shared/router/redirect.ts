@@ -1,4 +1,4 @@
-import { redirect as reactRouterRedirect } from "react-router-dom"
+import { redirect as reactRouterRedirect } from "react-router"
 
 import { compilePath } from "./compilePath"
 import { type AppRoutes, type RoutePath } from "./types"
