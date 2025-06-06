@@ -1,18 +1,20 @@
 export const endpoints = {
-  login: {
-    endpoint: "/auth/login",
-    method: "POST",
-  },
-  registration: {
-    endpoint: "/auth/registration",
-    method: "POST",
-  },
-  refresh: {
-    endpoint: "/auth/refresh",
-    method: "POST",
-  },
-  reset: {
-    endpoint: "/auth/reset",
-    method: "POST",
+  auth: {
+    signIn: {
+      endpoint: "/auth/sign-in",
+      method: "POST",
+    },
+    signUp: {
+      endpoint: "/auth/sign-up",
+      method: "POST",
+    },
+    refresh: {
+      endpoint: "/auth/refresh",
+      method: "POST",
+    },
+    reset: {
+      endpoint: "/auth/reset",
+      method: "POST",
+    },
   },
 } as const

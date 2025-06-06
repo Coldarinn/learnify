@@ -21,8 +21,13 @@ export const Wrapper = styled(ControlWrapper)`
       case "error":
         return css`
           ${StyledInput}.custom-input {
-            background-color: var(--color-surface-base-primary);
-            border-color: var(--color-border-critical);
+            &,
+            &:hover,
+            &:focus-within {
+              background-color: var(--color-surface-base-primary);
+              border-color: var(--color-border-critical);
+              box-shadow: none;
+            }
           }
         `
       default:
@@ -66,6 +71,15 @@ export const StyledInput = styled(AntInput)`
         background-color: var(--color-surface-base-primary);
         border-color: var(--color-border-tertiary);
       }
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus,
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+      transition:
+        background-color 0s 600000s,
+        color 0s 600000s !important;
     }
   }
 `

@@ -3,7 +3,7 @@ import React from "react"
 import { Theme } from "./theme.types"
 
 export const useTheme = () => {
-  const [theme, setTheme] = React.useState<Theme>("light")
+  const [theme, setTheme] = React.useState<Theme>(getTheme())
 
   const changeTheme = (newTheme: Theme) => {
     document.documentElement.dataset.theme = newTheme
@@ -11,13 +11,9 @@ export const useTheme = () => {
     setTheme(newTheme)
   }
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const observer = new MutationObserver(() => {
-      const datasetTheme = document.documentElement.dataset.theme
-      const newTheme = (
-        datasetTheme ? datasetTheme
-        : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark"
-        : "light") as Theme
+      const newTheme = getTheme()
       setTheme(newTheme)
       localStorage.setItem(themeStorageKey, newTheme)
     })
@@ -26,8 +22,9 @@ export const useTheme = () => {
       attributeFilter: ["data-theme"],
     })
 
+    const initTheme = getTheme()
     const storageTheme = localStorage.getItem(themeStorageKey)
-    changeTheme((storageTheme || "light") as Theme)
+    changeTheme((storageTheme || initTheme) as Theme)
 
     return () => {
       observer.disconnect()
@@ -35,6 +32,11 @@ export const useTheme = () => {
   }, [])
 
   return { theme, changeTheme }
+}
+
+const getTheme = () => {
+  const datasetTheme = document.documentElement.dataset.them
+  return (datasetTheme ? datasetTheme : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") as Theme
 }
 
 const themeStorageKey = "theme"

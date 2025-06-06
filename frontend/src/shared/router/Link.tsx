@@ -12,7 +12,7 @@ type LinkProps<Path extends RoutePath> = {
   children?: React.ReactNode
 } & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href">
 
-export function Link<Path extends RoutePath>({ to, params, state, replace, reloadDocument, children, ...rest }: LinkProps<Path>) {
+export const Link = <Path extends RoutePath>({ to, params, state, replace, reloadDocument, children, ...rest }: LinkProps<Path>) => {
   const path = compilePath(to, params)
 
   return (

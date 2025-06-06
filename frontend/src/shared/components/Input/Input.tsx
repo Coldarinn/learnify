@@ -3,20 +3,8 @@ import React from "react"
 import { sizeStyles, StyledInput, Wrapper } from "./Input.styles"
 import { InputProps, InputRef } from "./Input.types"
 
-// TODO: phone input
 export const Input = React.forwardRef<InputRef, InputProps>((props, ref) => {
-  const {
-    className,
-    size = "m",
-    label,
-    caption,
-    status,
-    formControlStatus,
-    isFormItem,
-    isRequired,
-    error,
-    ...otherProps
-  } = props
+  const { className, size = "m", label, caption, status, formControlStatus, isFormItem, isRequired, error, ...otherProps } = props
 
   const styles = sizeStyles[size]
 

@@ -1,18 +1,11 @@
-import { createBrowserRouter, Navigate, Outlet } from "react-router"
+import { createBrowserRouter, Navigate } from "react-router"
 import { type RouteObject } from "react-router"
 
-import { Link } from "@/shared/router"
+import { AuthLayout, SignIn, SignUp } from "@/pages/auth"
 
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: (
-      <div>
-        <h1>Layout</h1>
-        <hr />
-        <Outlet />
-      </div>
-    ),
     children: [
       {
         index: true,
@@ -20,13 +13,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: "auth",
-        element: (
-          <>
-            <h2>Auth Layout</h2>
-            <hr />
-            <Outlet />
-          </>
-        ),
+        element: <AuthLayout />,
         children: [
           {
             index: true,
@@ -34,19 +21,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: "sign-in",
-            element: (
-              <h3>
-                Sign In <Link to="/auth/sign-up">Go To Sign Up</Link>
-              </h3>
-            ),
+            element: <SignIn />,
           },
           {
             path: "sign-up",
-            element: (
-              <h3>
-                Sign Up <Link to="/auth/sign-in">Go To Sign In</Link>
-              </h3>
-            ),
+            element: <SignUp />,
           },
         ],
       },

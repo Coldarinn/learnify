@@ -20,7 +20,11 @@ export const Wrapper = styled(ControlWrapper)`
       case "error":
         return css`
           ${StyledInputNumber}.custom-input-number {
-            border-color: var(--color-border-critical);
+            &,
+            &:hover,
+            &:focus-within {
+              border-color: var(--color-border-critical);
+            }
           }
         `
       default:

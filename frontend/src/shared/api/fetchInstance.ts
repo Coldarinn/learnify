@@ -1,5 +1,5 @@
 import { endpoints } from "./endpoints"
-import { ACCESS_TOKEN, getAccessToken, removeAccessToken, saveAccessToken } from "./tokenManager"
+import { accessToken, getAccessToken, removeAccessToken, saveAccessToken } from "./tokenManager"
 
 export const fetchInstance = async (endpoint: string, options: RequestInit = {}): Promise<Response> => {
   const url = `${import.meta.env.VITE_BACKEND_URL}/api${endpoint}`
@@ -20,13 +20,13 @@ export const fetchInstance = async (endpoint: string, options: RequestInit = {})
     const errorData: { message: string; statusCode: number } = await response.json()
 
     if (errorData.statusCode === 401 && errorData.message !== "Invalid password") {
-      const refreshResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api${endpoints.refresh.endpoint}`, {
-        method: endpoints.refresh.method,
+      const refreshResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api${endpoints.auth.refresh.endpoint}`, {
+        method: endpoints.auth.refresh.method,
         credentials: "include",
       })
 
       if (refreshResponse.ok) {
-        const { accessToken }: { [ACCESS_TOKEN]: string } = await refreshResponse.json()
+        const { accessToken }: { [accessToken]: string } = await refreshResponse.json()
         saveAccessToken(accessToken)
 
         response = await fetch(url, {
