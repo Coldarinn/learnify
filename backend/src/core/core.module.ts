@@ -5,6 +5,7 @@ import { PrismaModule } from "./prisma/prisma.module"
 import { GraphQLModule } from "@nestjs/graphql"
 import { ApolloDriver } from "@nestjs/apollo"
 import { getGraphQLConfig } from "./config/graphql.config"
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { getGraphQLConfig } from "./config/graphql.config"
       inject: [ConfigService],
     }),
     PrismaModule,
+    RedisModule,
   ],
 })
 export class CoreModule {}
