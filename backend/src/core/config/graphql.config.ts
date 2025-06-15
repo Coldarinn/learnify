@@ -7,7 +7,7 @@ import { isDev } from "@/src/shared/utils/is-dev.util"
 export function getGraphQLConfig(configService: ConfigService): ApolloDriverConfig {
   return {
     playground: isDev(configService),
-    path: configService.getOrThrow<string>("GRAPHQL_PREFIX"),
+    path: configService.get("GRAPHQL_PREFIX"),
     autoSchemaFile: join(process.cwd(), "src/core/graphql/schema.gql"),
     sortSchema: true,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
