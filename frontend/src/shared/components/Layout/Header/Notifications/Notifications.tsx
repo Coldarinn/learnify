@@ -9,7 +9,13 @@ import { NotificationsProps } from "./Notifications.types"
 const NotificationsContent = (props: NotificationsProps) => {
   const { notifications } = props
 
-  return <Content>{notifications?.map((notification, idx) => <Notification key={idx} {...notification} />)}</Content>
+  return (
+    <Content>
+      {notifications?.map((notification, idx) => (
+        <Notification key={idx} {...notification} />
+      ))}
+    </Content>
+  )
 }
 
 export const Notifications = (props: NotificationsProps) => {

@@ -13,9 +13,7 @@ export const ControlWrapper = (props: ControlWrapperProps) => {
         </Label>
       )}
       {children}
-      {(isFormItem || error || caption) && (
-        <Caption className={`form-control-caption ${error ? "error" : ""}`}>{error || caption}</Caption>
-      )}
+      {(isFormItem || error || caption) && <Caption className={`form-control-caption ${error ? "error" : ""}`}>{error || caption}</Caption>}
     </Wrapper>
   )
 }

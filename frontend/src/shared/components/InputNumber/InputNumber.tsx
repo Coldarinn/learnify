@@ -4,18 +4,7 @@ import { sizeStyles, StyledInputNumber, Wrapper } from "./InputNumber.styles"
 import { InputNumberProps, InputNumberRef } from "./InputNumber.types"
 
 export const InputNumber = React.forwardRef<InputNumberRef, InputNumberProps>((props, ref) => {
-  const {
-    className,
-    size = "m",
-    label,
-    caption,
-    status,
-    formControlStatus,
-    isFormItem,
-    isRequired,
-    error,
-    ...otherProps
-  } = props
+  const { className, size = "m", label, caption, status, formControlStatus, isFormItem, isRequired, error, ...otherProps } = props
 
   const styles = sizeStyles[size]
 

@@ -55,37 +55,37 @@ export const StyledButton = styled(Button)<{ isLoading?: ButtonProps["loading"] 
   }
 
   ${({ isLoading }) =>
-    isLoading ?
-      css`
-        color: var(--bg-color-loading);
-
-        cursor: default;
-
-        background-color: var(--bg-color-loading);
-
-        &:not(:disabled):not(.ant-btn-disabled):hover,
-        &:not(:disabled):not(.ant-btn-disabled):active {
+    isLoading
+      ? css`
           color: var(--bg-color-loading);
 
+          cursor: default;
+
           background-color: var(--bg-color-loading);
-          border-color: var(--border-color);
-        }
-      `
-    : css`
-        &:not(:disabled):not(.ant-btn-disabled):hover {
-          color: var(--color-hover);
 
-          background-color: var(--bg-color-hover);
-          border-color: var(--border-color-hover);
-        }
+          &:not(:disabled):not(.ant-btn-disabled):hover,
+          &:not(:disabled):not(.ant-btn-disabled):active {
+            color: var(--bg-color-loading);
 
-        &:not(:disabled):not(.ant-btn-disabled):active {
-          color: var(--color-active);
+            background-color: var(--bg-color-loading);
+            border-color: var(--border-color);
+          }
+        `
+      : css`
+          &:not(:disabled):not(.ant-btn-disabled):hover {
+            color: var(--color-hover);
 
-          background-color: var(--bg-color-active);
-          border-color: var(--border-color-active);
-        }
-      `}
+            background-color: var(--bg-color-hover);
+            border-color: var(--border-color-hover);
+          }
+
+          &:not(:disabled):not(.ant-btn-disabled):active {
+            color: var(--color-active);
+
+            background-color: var(--bg-color-active);
+            border-color: var(--border-color-active);
+          }
+        `}
 
   .ant-btn-loading-icon {
     position: absolute;

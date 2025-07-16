@@ -28,8 +28,6 @@ const ForwardedRadio = React.forwardRef<RadioRef, RadioProps>((props, ref) => {
   )
 })
 
-const ForwardedRadioGroup = React.forwardRef<RadioGroupRef, RadioGroupProps>((props, ref) => (
-  <StyledGroup ref={ref} {...props} />
-))
+const ForwardedRadioGroup = React.forwardRef<RadioGroupRef, RadioGroupProps>((props, ref) => <StyledGroup ref={ref} {...props} />)
 
 export const Radio = Object.assign(ForwardedRadio, { Group: ForwardedRadioGroup })

@@ -58,9 +58,7 @@ export const styles = css`
         background: var(--cell-background);
         box-shadow: var(--shadow-divider-bottom);
 
-        &:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not(
-            [colspan]
-          )::before {
+        &:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
           height: 50%;
         }
 

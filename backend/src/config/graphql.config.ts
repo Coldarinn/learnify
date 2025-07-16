@@ -1,5 +1,6 @@
 import type { ApolloDriverConfig } from "@nestjs/apollo"
 import { ConfigService } from "@nestjs/config"
+import { Request, Response } from "express"
 import { join } from "path"
 
 import { isDev } from "@/src/shared/utils/is-dev.util"
@@ -8,9 +9,8 @@ export function getGraphQLConfig(configService: ConfigService): ApolloDriverConf
   return {
     playground: isDev(configService),
     path: configService.get("GRAPHQL_PREFIX"),
-    autoSchemaFile: join(process.cwd(), "src/core/graphql/schema.gql"),
+    autoSchemaFile: join(process.cwd(), "src/graphql/schema.gql"),
     sortSchema: true,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    context: ({ req, res }) => ({ req, res }),
+    context: ({ req, res }: { req: Request; res: Response }) => ({ req, res }),
   }
 }

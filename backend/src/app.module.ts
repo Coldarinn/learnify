@@ -1,11 +1,12 @@
+import { ApolloDriver } from "@nestjs/apollo"
 import { Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
-import { IS_DEV_ENV } from "../shared/utils/is-dev.util"
-import { PrismaModule } from "./prisma/prisma.module"
 import { GraphQLModule } from "@nestjs/graphql"
-import { ApolloDriver } from "@nestjs/apollo"
+
 import { getGraphQLConfig } from "./config/graphql.config"
-import { RedisModule } from './redis/redis.module';
+import { PrismaModule } from "./modules/prisma/prisma.module"
+import { RedisModule } from "./modules/redis/redis.module"
+import { IS_DEV_ENV } from "./shared/utils/is-dev.util"
 
 @Module({
   imports: [
@@ -23,4 +24,4 @@ import { RedisModule } from './redis/redis.module';
     RedisModule,
   ],
 })
-export class CoreModule {}
+export class AppModule {}

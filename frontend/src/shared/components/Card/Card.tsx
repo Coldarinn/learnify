@@ -12,7 +12,13 @@ export const Card = (props: CardProps) => {
   return (
     <StyledCard className={className} css={styles}>
       {cover && <Cover className="card-cover">{typeof cover === "string" ? <img src={cover} alt="изображение" /> : cover}</Cover>}
-      {tags && tags?.length > 0 && <Tags className="card-tags">{tags?.map((tag, idx) => <Tag key={idx} size="s" {...tag} />)}</Tags>}
+      {tags && tags?.length > 0 && (
+        <Tags className="card-tags">
+          {tags?.map((tag, idx) => (
+            <Tag key={idx} size="s" {...tag} />
+          ))}
+        </Tags>
+      )}
       <MainContent className="card-main-content">
         {date && <Date className="card-date">{date}</Date>}
         {title && <Title className="card-title">{title}</Title>}

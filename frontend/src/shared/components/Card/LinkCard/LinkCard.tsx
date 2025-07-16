@@ -17,7 +17,11 @@ export const LinkCard = (props: LinkCardProps) => {
         </Title>
         <ArrowIcon className="card-arrow" />
       </Header>
-      <Tags className="card-tags">{tags?.map((tag, idx) => <Tag key={idx} size="s" {...tag} />)}</Tags>
+      <Tags className="card-tags">
+        {tags?.map((tag, idx) => (
+          <Tag key={idx} size="s" {...tag} />
+        ))}
+      </Tags>
       {text && <Text className="card-text">{text}</Text>}
       {extraContent && <div className="card-extra-content">{extraContent}</div>}
       {typeof link === "string" ? <Link className="card-link" href={link} /> : link && link}

@@ -4,18 +4,7 @@ import { sizeStyles, StyledTextArea, Wrapper } from "./TextArea.styles"
 import { TextAreaProps, TextAreaRef } from "./TextArea.types"
 
 export const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>((props, ref) => {
-  const {
-    className,
-    size = "m",
-    label,
-    caption,
-    status,
-    formControlStatus,
-    isFormItem,
-    isRequired,
-    error,
-    ...otherProps
-  } = props
+  const { className, size = "m", label, caption, status, formControlStatus, isFormItem, isRequired, error, ...otherProps } = props
 
   const styles = sizeStyles[size]
 
