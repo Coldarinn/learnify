@@ -1,9 +1,9 @@
-version: "3.7"
+version: "3.8"
 
 services:
   db:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:15
     restart: always
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
@@ -19,11 +19,13 @@ services:
       - teastream-backend
   redis:
     container_name: redis
-    image: redis:5.0
+    image: redis:7
     restart: always
     ports:
       - ${REDIS_PORT}:6379
-    command: redis-server --requirepass ${REDIS_PASSWORD}
+    command: > 
+      redis-server 
+      --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
     networks:
