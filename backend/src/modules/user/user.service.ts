@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common"
 import { hash } from "argon2"
 
-import { PrismaService } from "../prisma/prisma.service"
+import { PrismaService } from "@/modules/prisma/prisma.service"
 
 import { CreateUserInput } from "./inputs/create-user.input"
 
@@ -41,5 +41,11 @@ export class UserService {
     if (!user) throw new NotFoundException("User not found")
 
     return user
+  }
+
+  async me(id: string) {
+    return await this.prismaService.user.findUnique({
+      where: { id },
+    })
   }
 }

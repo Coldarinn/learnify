@@ -1,6 +1,6 @@
 import { Args, Context, Mutation, Resolver } from "@nestjs/graphql"
 
-import { GqlContext } from "@/src/shared/types/gql-context.types"
+import { GqlContext } from "@/shared/types/gql-context.types"
 
 import { User } from "../user/entities/user.entity"
 
