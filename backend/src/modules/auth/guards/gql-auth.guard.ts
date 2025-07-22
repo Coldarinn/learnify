@@ -2,6 +2,7 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { GqlExecutionContext } from "@nestjs/graphql"
 
 import { PrismaService } from "@/modules/prisma/prisma.service"
+import { GqlContext } from "@/shared/types/gql-context.types"
 
 @Injectable()
 export class GqlAuthGuard implements CanActivate {
@@ -9,7 +10,7 @@ export class GqlAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context)
-    const request = ctx.getContext().req
+    const request = ctx.getContext<GqlContext>().req
 
     if (typeof request.session.userId === "undefined") throw new UnauthorizedException("Unauthorized")
 
@@ -18,6 +19,8 @@ export class GqlAuthGuard implements CanActivate {
         id: request.session.userId,
       },
     })
+
+    if (!user) throw new UnauthorizedException("Unauthorized")
 
     request.user = user
 

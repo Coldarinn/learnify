@@ -3,6 +3,8 @@ import { ConfigService } from "@nestjs/config"
 import { verify } from "argon2"
 import { Request } from "express"
 
+import { getSessionMetadata } from "@/shared/utils/session.util"
+
 import { UserService } from "./../user/user.service"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
@@ -18,7 +20,7 @@ export class AuthService {
     return this.userService.create(input)
   }
 
-  async signIn(req: Request, input: SignInInput) {
+  async signIn(req: Request, input: SignInInput, userAgent: string) {
     const { login, password } = input
 
     const user = await this.userService.findByLogin(login)
@@ -27,12 +29,14 @@ export class AuthService {
 
     if (!isValidPassword) throw new UnauthorizedException("Invalid password")
 
+    const metadata = getSessionMetadata(req, userAgent)
+
     return new Promise((resolve, reject) => {
       req.session.createdAt = new Date()
       req.session.userId = user.id
+      req.session.metadata = metadata
 
       req.session.save((err) => {
-        console.log("err: ", err)
         if (err) reject(new InternalServerErrorException("Session error"))
 
         resolve(user)

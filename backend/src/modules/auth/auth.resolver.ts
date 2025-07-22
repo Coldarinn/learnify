@@ -5,6 +5,7 @@ import { GqlContext } from "@/shared/types/gql-context.types"
 import { User } from "../user/entities/user.entity"
 
 import { AuthService } from "./auth.service"
+import { UserAgent } from "./decorators/user-agent.decorator"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
 
@@ -18,8 +19,8 @@ export class AuthResolver {
   }
 
   @Mutation(() => User, { name: "signIn" })
-  async signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput) {
-    return this.authService.signIn(req, input)
+  async signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string) {
+    return this.authService.signIn(req, input, userAgent)
   }
 
   @Mutation(() => Boolean, { name: "signOut" })

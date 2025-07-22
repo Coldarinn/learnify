@@ -1,7 +1,7 @@
 export interface Location {
   country: string
   city: string
-  latidute: number
+  latitude: number
   longitude: number
 }
 
