@@ -7,5 +7,5 @@ export function parseBoolean(value: unknown): boolean {
     if (v === "false") return false
   }
 
-  throw new Error(`Не удалось преобразовать значение "${String(value)}" в логическое значение.`)
+  throw new Error(`Couldn't convert the value of "${String(value)}" to a boolean value.`)
 }

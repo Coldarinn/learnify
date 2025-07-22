@@ -5,9 +5,8 @@ import { Request } from "express"
 import { User } from "generated/prisma"
 import { lookup } from "geoip-lite"
 
-import { SessionMetadata } from "@/shared/types/session-metadata.types"
-
-import { IS_DEV_ENV } from "./is-dev.util"
+import { SessionMetadata } from "@/modules/auth/types/session-metadata.types"
+import { IS_DEV_ENV } from "@/shared/utils/is-dev.util"
 
 function getClientIp(req: Request): string {
   if (IS_DEV_ENV) return "104.156.244.107"

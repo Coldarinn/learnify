@@ -1,10 +1,10 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql"
 
-import { Authorization } from "../auth/decorators/auth.decorator"
+import { Authorization } from "@/modules/auth/decorators/auth.decorator"
+import { CurrentUser } from "@/modules/auth/decorators/current-user.decorator"
 
-import { CurrentUser } from "./../auth/decorators/current-user.decorator"
-import { User } from "./entities/user.entity"
 import { CreateUserInput } from "./inputs/create-user.input"
+import { UserModel } from "./models/user.model"
 import { UserService } from "./user.service"
 
 @Resolver("User")
@@ -17,8 +17,8 @@ export class UserResolver {
   }
 
   @Authorization()
-  @Query(() => User, { name: "currentUser" })
+  @Query(() => UserModel, { name: "currentUser" })
   me(@CurrentUser("id") id: string) {
-    return this.userService.me(id)
+    return this.userService.getById(id)
   }
 }

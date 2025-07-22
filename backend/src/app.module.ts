@@ -6,6 +6,7 @@ import { GraphQLModule } from "@nestjs/graphql"
 import { getGraphQLConfig } from "./config/graphql.config"
 import { AuthModule } from "./modules/auth/auth.module"
 import { PrismaModule } from "./modules/prisma/prisma.module"
+import { RedisModule } from "./modules/redis/redis.module"
 import { UserModule } from "./modules/user/user.module"
 import { IS_DEV_ENV } from "./shared/utils/is-dev.util"
 
@@ -21,6 +22,7 @@ import { IS_DEV_ENV } from "./shared/utils/is-dev.util"
       useFactory: getGraphQLConfig,
       inject: [ConfigService],
     }),
+    RedisModule,
     PrismaModule,
     AuthModule,
     UserModule,

@@ -8,15 +8,44 @@ input CreateUserInput {
   username: String!
 }
 
+type DeviceModel {
+  browser: String!
+  os: String!
+  type: String!
+}
+
+type LocationModel {
+  city: String!
+  country: String!
+  latitude: Float!
+  longitude: Float!
+}
+
 type Mutation {
   createUser(data: CreateUserInput!): Boolean!
-  signIn(data: SignInInput!): User!
+  signIn(data: SignInInput!): UserModel!
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
 }
 
 type Query {
-  currentUser: User!
+  currentSession: SessionModel!
+  currentUser: UserModel!
+  deleteSession(sessionId: String!): Boolean!
+  userSessions: [SessionModel!]!
+}
+
+type SessionMetadataModel {
+  device: DeviceModel!
+  ip: String!
+  location: LocationModel!
+}
+
+type SessionModel {
+  createdAt: String!
+  id: ID!
+  metadata: SessionMetadataModel!
+  userId: String!
 }
 
 input SignInInput {
@@ -30,7 +59,7 @@ input SignUpInput {
   username: String!
 }
 
-type User {
+type UserModel {
   avatar: String
   createdAt: String!
   email: String!

@@ -5,9 +5,9 @@ import { RedisStore } from "connect-redis"
 import cookieParser from "cookie-parser"
 import session from "express-session"
 import ms, { StringValue } from "ms"
-import { createClient } from "redis"
 
 import { AppModule } from "./app.module"
+import { RedisService } from "./modules/redis/redis.service"
 import { parseBoolean } from "./shared/utils/parse-boolean.util"
 
 async function bootstrap() {
@@ -15,10 +15,7 @@ async function bootstrap() {
 
   const config = app.get(ConfigService)
 
-  const redis = createClient({
-    url: config.get("REDIS_URI"),
-  })
-  redis.connect()
+  const redis = app.get(RedisService)
 
   app.use(cookieParser(config.get("COOKIES_SECRET")))
 
