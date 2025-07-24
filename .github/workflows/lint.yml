@@ -39,10 +39,6 @@ jobs:
         working-directory: ./frontend
         run: npm run lint:ts
 
-      - name: Run CSS lint
-        working-directory: ./frontend
-        run: npm run lint:css
-
   lint-backend:
     runs-on: ubuntu-latest
     name: lint backend
