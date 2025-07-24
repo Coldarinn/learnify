@@ -5,7 +5,6 @@ import { User } from "prisma/generated"
 import { PrismaService } from "@/modules/prisma/prisma.service"
 
 import { CreateUserInput } from "./inputs/create-user.input"
-import { UserModel } from "./models/user.model"
 
 @Injectable()
 export class UserService {
@@ -45,10 +44,9 @@ export class UserService {
     return user
   }
 
-  async getById(id: string): Promise<UserModel> {
+  async getById(id: string): Promise<User> {
     const user = await this.prismaService.user.findUnique({
       where: { id },
-      omit: { password: true },
     })
 
     if (!user) throw new NotFoundException("User not found")

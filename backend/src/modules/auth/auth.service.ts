@@ -21,7 +21,7 @@ export class AuthService {
     private readonly redisService: RedisService
   ) {}
 
-  async signUp(input: SignUpInput): Promise<boolean> {
+  signUp(input: SignUpInput): Promise<boolean> {
     return this.userService.create(input)
   }
 
@@ -50,7 +50,7 @@ export class AuthService {
     })
   }
 
-  async signOut(req: Request): Promise<boolean> {
+  signOut(req: Request): Promise<boolean> {
     return new Promise((resolve, reject) => {
       req.session.destroy((err) => {
         if (err) reject(new InternalServerErrorException("Session error"))
