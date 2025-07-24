@@ -1,12 +1,12 @@
 import { createParamDecorator, type ExecutionContext } from "@nestjs/common"
 import { GqlExecutionContext } from "@nestjs/graphql"
 import { Request } from "express"
-import { User } from "generated/prisma"
 
+import { UserModel } from "@/modules/user/models/user.model"
 import { GqlContext } from "@/shared/types/gql-context.types"
 
-export const CurrentUser = createParamDecorator((data: keyof User, ctx: ExecutionContext) => {
-  let user: User
+export const CurrentUser = createParamDecorator((data: keyof UserModel, ctx: ExecutionContext) => {
+  let user: UserModel
 
   if (ctx.getType() === "http") {
     user = ctx.switchToHttp().getRequest<Request>().user

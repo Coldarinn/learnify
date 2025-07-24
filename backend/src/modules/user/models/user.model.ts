@@ -1,7 +1,8 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql"
+import { User } from "prisma/generated"
 
 @ObjectType()
-export class UserModel {
+export class UserModel implements Omit<User, "password"> {
   @Field(() => ID)
   id: string
 
@@ -9,17 +10,17 @@ export class UserModel {
   email: string
 
   @Field(() => String)
-  password: string
-
-  @Field(() => String)
   username: string
 
   @Field(() => String, { nullable: true })
-  avatar: string
+  avatar: string | null
 
-  @Field(() => String)
-  createdAt: string
+  @Field(() => Boolean)
+  isEmailConfirmed: boolean
 
-  @Field(() => String)
-  updatedAt: string
+  @Field(() => Date)
+  createdAt: Date
+
+  @Field(() => Date)
+  updatedAt: Date
 }

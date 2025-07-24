@@ -15,35 +15,35 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => Boolean)
-  signUp(@Args("data") input: SignUpInput) {
+  signUp(@Args("data") input: SignUpInput): Promise<boolean> {
     return this.authService.signUp(input)
   }
 
   @Mutation(() => UserModel)
-  signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string) {
+  signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string): Promise<UserModel> {
     return this.authService.signIn(req, input, userAgent)
   }
 
   @Mutation(() => Boolean)
-  signOut(@Context() { req }: GqlContext) {
+  signOut(@Context() { req }: GqlContext): Promise<boolean> {
     return this.authService.signOut(req)
   }
 
   @Authorization()
   @Query(() => SessionModel)
-  currentSession(@Context() { req }: GqlContext) {
+  currentSession(@Context() { req }: GqlContext): Promise<SessionModel> {
     return this.authService.getCurrentSession(req)
   }
 
   @Authorization()
   @Query(() => [SessionModel])
-  userSessions(@Context() { req }: GqlContext) {
+  userSessions(@Context() { req }: GqlContext): Promise<SessionModel[]> {
     return this.authService.userSessions(req)
   }
 
   @Authorization()
   @Query(() => Boolean)
-  deleteSession(@Context() { req }: GqlContext, @Args("sessionId") sessionId: string) {
+  deleteSession(@Context() { req }: GqlContext, @Args("sessionId") sessionId: string): Promise<boolean> {
     return this.authService.deleteSession(req, sessionId)
   }
 }

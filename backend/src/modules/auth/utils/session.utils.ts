@@ -2,8 +2,8 @@ import { InternalServerErrorException } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import DeviceDetector from "device-detector-js"
 import { Request } from "express"
-import { User } from "generated/prisma"
 import { lookup } from "geoip-lite"
+import { User } from "prisma/generated"
 
 import { SessionMetadata } from "@/modules/auth/types/session-metadata.types"
 import { IS_DEV_ENV } from "@/shared/utils/is-dev.util"
@@ -42,7 +42,7 @@ export function getSessionMetadata(req: Request, userAgent: string): SessionMeta
   }
 }
 
-export function saveSession(req: Request, user: User, metadata: SessionMetadata) {
+export function saveSession(req: Request, user: User, metadata: SessionMetadata): Promise<User> {
   return new Promise((resolve, reject) => {
     req.session.createdAt = new Date()
     req.session.userId = user.id
@@ -51,12 +51,12 @@ export function saveSession(req: Request, user: User, metadata: SessionMetadata)
     req.session.save((err) => {
       if (err) reject(new InternalServerErrorException("Couldn't save session"))
 
-      resolve({ user })
+      resolve(user)
     })
   })
 }
 
-export function destroySession(req: Request, configService: ConfigService) {
+export function destroySession(req: Request, configService: ConfigService): Promise<boolean> {
   return new Promise((resolve, reject) => {
     req.session.destroy((err) => {
       if (err) reject(new InternalServerErrorException("Couldn't destroy session"))

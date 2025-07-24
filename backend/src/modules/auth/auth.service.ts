@@ -2,15 +2,16 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { ConfigService } from "@nestjs/config"
 import { verify } from "argon2"
 import { Request } from "express"
-import { SessionData } from "express-session"
 
-import { getSessionMetadata } from "@/modules/auth/utils/session.utils"
 import { UserService } from "@/modules/user/user.service"
 
 import { RedisService } from "../redis/redis.service"
+import { UserModel } from "../user/models/user.model"
 
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
+import { SessionModel } from "./models/session.model"
+import { getSessionMetadata } from "./utils/session.utils"
 
 @Injectable()
 export class AuthService {
@@ -20,11 +21,11 @@ export class AuthService {
     private readonly redisService: RedisService
   ) {}
 
-  async signUp(input: SignUpInput) {
+  async signUp(input: SignUpInput): Promise<boolean> {
     return this.userService.create(input)
   }
 
-  async signIn(req: Request, input: SignInInput, userAgent: string) {
+  async signIn(req: Request, input: SignInInput, userAgent: string): Promise<UserModel> {
     const { login, password } = input
 
     const user = await this.userService.findByLogin(login)
@@ -43,12 +44,13 @@ export class AuthService {
       req.session.save((err) => {
         if (err) reject(new InternalServerErrorException("Session error"))
 
-        resolve(user)
+        const { password: _, ...safeUser } = user
+        resolve(safeUser)
       })
     })
   }
 
-  async signOut(req: Request) {
+  async signOut(req: Request): Promise<boolean> {
     return new Promise((resolve, reject) => {
       req.session.destroy((err) => {
         if (err) reject(new InternalServerErrorException("Session error"))
@@ -60,19 +62,19 @@ export class AuthService {
     })
   }
 
-  async getCurrentSession(req: Request) {
+  async getCurrentSession(req: Request): Promise<SessionModel> {
     const sessionId = req.session.id
 
     const sessionRaw = await this.redisService.get(`${this.configService.get("SESSION_FOLDER")}${sessionId}`)
     if (!sessionRaw) throw new NotFoundException("Session not found")
 
     return {
-      ...(JSON.parse(sessionRaw) as SessionData),
+      ...(JSON.parse(sessionRaw) as SessionModel),
       id: sessionId,
     }
   }
 
-  async userSessions(req: Request) {
+  async userSessions(req: Request): Promise<SessionModel[]> {
     const userId = req.session.userId
     if (!userId) throw new NotFoundException("Session not found")
 
@@ -83,7 +85,7 @@ export class AuthService {
         const sessionRaw = await this.redisService.get(key)
         if (!sessionRaw) return null
 
-        const sessionData = JSON.parse(sessionRaw) as SessionData
+        const sessionData = JSON.parse(sessionRaw) as SessionModel
         const session = { ...sessionData, id: key.split(":")[1] }
 
         return session.userId === userId ? session : null
@@ -93,7 +95,7 @@ export class AuthService {
     return sessions.filter((s) => !!s).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
   }
 
-  async deleteSession(req: Request, sessionId: string) {
+  async deleteSession(req: Request, sessionId: string): Promise<boolean> {
     if (req.session.id === sessionId) throw new ConflictException("The current session cannot be deleted")
 
     const key = `${this.configService.get("SESSION_FOLDER")}${sessionId}`

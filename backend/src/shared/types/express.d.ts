@@ -1,8 +1,9 @@
 import { Request } from "express"
-import { User } from "generated/prisma"
+
+import { UserModel } from "@/modules/user/models/user.model"
 
 declare module "express" {
   interface Request {
-    user: User
+    user: UserModel
   }
 }

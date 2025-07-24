@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql"
 import { Cookie, SessionData } from "express-session"
 
-import { Device, Location, SessionMetadata } from "@/modules/auth/types/session-metadata.types"
+import { Device, Location, SessionMetadata } from "../types/session-metadata.types"
 
 @ObjectType()
 export class LocationModel implements Location {
