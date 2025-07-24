@@ -1,5 +1,5 @@
 import { endpoints } from "./endpoints"
-import { accessToken, getAccessToken, removeAccessToken, saveAccessToken } from "./tokenManager"
+import { accessToken as accessTokenName, getAccessToken, removeAccessToken, saveAccessToken } from "./tokenManager"
 
 export const fetchInstance = async (endpoint: string, options: RequestInit = {}): Promise<Response> => {
   const url = `${import.meta.env.VITE_BACKEND_URL}/api${endpoint}`
@@ -26,7 +26,7 @@ export const fetchInstance = async (endpoint: string, options: RequestInit = {})
       })
 
       if (refreshResponse.ok) {
-        const { accessToken }: { [accessToken]: string } = await refreshResponse.json()
+        const { accessToken }: { [accessTokenName]: string } = await refreshResponse.json()
         saveAccessToken(accessToken)
 
         response = await fetch(url, {
