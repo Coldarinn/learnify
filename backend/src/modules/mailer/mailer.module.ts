@@ -2,6 +2,8 @@ import { MailerModule as NestMailerModule } from "@nestjs-modules/mailer"
 import { Global, Module } from "@nestjs/common"
 import { ConfigModule, ConfigService } from "@nestjs/config"
 
+import { parseBoolean } from "@/shared/utils/parse-boolean.util"
+
 import { MailerService } from "./mailer.service"
 
 @Global()
@@ -11,12 +13,12 @@ import { MailerService } from "./mailer.service"
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
         transport: {
-          host: configService.get<string>("MAIL_HOST"),
-          port: configService.get<number>("MAIL_PORT"),
-          secure: false,
+          host: configService.get("MAIL_HOST"),
+          port: configService.get("MAIL_PORT"),
+          secure: parseBoolean(configService.get("MAIL_SECURE")),
           auth: {
-            user: configService.get<string>("MAIL_LOGIN"),
-            pass: configService.get<string>("MAIL_PASSWORD"),
+            user: configService.get("MAIL_LOGIN"),
+            pass: configService.get("MAIL_PASSWORD"),
           },
         },
         defaults: {

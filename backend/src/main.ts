@@ -28,25 +28,27 @@ async function bootstrap() {
   app.use(
     session({
       secret: config.get("SESSION_SECRET")!,
-      name: config.get<string>("SESSION_NAME"),
+      name: config.get("SESSION_NAME"),
       resave: false,
       saveUninitialized: false,
       cookie: {
-        domain: config.get<string>("SESSION_DOMAIN"),
+        domain: config.get("SESSION_DOMAIN"),
         maxAge: ms(config.get<StringValue>("SESSION_MAX_AGE")!),
         httpOnly: parseBoolean(config.get("SESSION_HTTP_ONLY")),
         secure: parseBoolean(config.get("SESSION_SECURE")),
-        sameSite: "lax",
+        sameSite: config.get("SESSION_SAME_SITE"),
       },
       store: new RedisStore({
         client: redis,
-        prefix: config.get("SESSION_FOLDER"),
+        prefix: config.get("SESSION_PREFIX"),
       }),
     })
   )
 
+  const rawOrigins = config.get<string>("ALLOWED_ORIGINS")
+  const origin = rawOrigins?.split(",").map((origin) => origin.trim())
   app.enableCors({
-    origin: config.get<string>("ALLOWED_ORIGIN"),
+    origin,
     credentials: true,
     exposedHeaders: ["set-cookie"],
   })

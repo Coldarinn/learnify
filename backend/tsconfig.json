@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react-jsx",
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -11,7 +12,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-			"@/*": ["src/*"],
+      "@/*": ["src/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -23,4 +24,5 @@
 
     "esModuleInterop": true
   },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
 }

@@ -11,7 +11,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Authorization()
-  @Query(() => UserModel, { name: "currentUser" })
+  @Query(() => UserModel)
   async me(@CurrentUser("id") id: string): Promise<UserModel> {
     const { password: _, ...safeUser } = await this.userService.getById(id)
     return safeUser

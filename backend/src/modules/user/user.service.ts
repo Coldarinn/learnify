@@ -1,5 +1,4 @@
-import { ConflictException, Injectable, NotFoundException } from "@nestjs/common"
-import { hash } from "argon2"
+import { Injectable, NotFoundException } from "@nestjs/common"
 import { User } from "prisma/generated"
 
 import { PrismaService } from "@/modules/prisma/prisma.service"
@@ -10,26 +9,8 @@ import { CreateUserInput } from "./inputs/create-user.input"
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(input: CreateUserInput): Promise<boolean> {
-    const { username, email, password } = input
-
-    const isUsernameExists = await this.prismaService.user.findUnique({ where: { username } })
-
-    if (isUsernameExists) throw new ConflictException("Username already in use")
-
-    const isEmailExists = await this.prismaService.user.findUnique({ where: { email } })
-
-    if (isEmailExists) throw new ConflictException("Email already in use")
-
-    await this.prismaService.user.create({
-      data: {
-        username,
-        email,
-        password: await hash(password),
-      },
-    })
-
-    return true
+  async create(input: CreateUserInput): Promise<User> {
+    return this.prismaService.user.create({ data: input })
   }
 
   async findByLogin(login: string): Promise<User> {

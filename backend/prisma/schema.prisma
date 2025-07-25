@@ -45,7 +45,7 @@ model Token {
 }
 
 enum TokenType {
-  EMAIL_VERIFY
+  EMAIL_CONFIRM
 
   @@map("token_types")
 }

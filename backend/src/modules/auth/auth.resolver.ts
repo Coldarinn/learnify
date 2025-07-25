@@ -19,6 +19,11 @@ export class AuthResolver {
     return this.authService.signUp(input)
   }
 
+  @Mutation(() => Boolean)
+  confirmEmail(@Args("token") token: string): Promise<boolean> {
+    return this.authService.confirmEmail(token)
+  }
+
   @Mutation(() => UserModel)
   signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string): Promise<UserModel> {
     return this.authService.signIn(req, input, userAgent)
