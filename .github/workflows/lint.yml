@@ -8,10 +8,12 @@ on:
     paths:
       - "frontend/**"
       - "backend/**"
+      - ".github/workflows/lint.yml"
   pull_request:
     paths:
       - "frontend/**"
       - "backend/**"
+      - ".github/workflows/lint.yml"
 
 jobs:
   lint-frontend:
