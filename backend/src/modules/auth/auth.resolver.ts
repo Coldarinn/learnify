@@ -1,5 +1,6 @@
 import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql"
 
+import { SessionModel } from "@/modules/session/models/session.model"
 import { UserModel } from "@/modules/user/models/user.model"
 import { GqlContext } from "@/shared/types/gql-context.types"
 
@@ -8,7 +9,6 @@ import { Authorization } from "./decorators/auth.decorator"
 import { UserAgent } from "./decorators/user-agent.decorator"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
-import { SessionModel } from "./models/session.model"
 
 @Resolver("Auth")
 export class AuthResolver {
@@ -26,7 +26,7 @@ export class AuthResolver {
 
   @Mutation(() => UserModel)
   signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string): Promise<UserModel> {
-    return this.authService.signIn(req, input, userAgent)
+    return this.authService.signIn(input, req.session, req.headers, req.ip, userAgent)
   }
 
   @Mutation(() => Boolean)
@@ -37,18 +37,18 @@ export class AuthResolver {
   @Authorization()
   @Query(() => SessionModel)
   currentSession(@Context() { req }: GqlContext): Promise<SessionModel> {
-    return this.authService.getCurrentSession(req)
+    return this.authService.getCurrentSession(req.session.id)
   }
 
   @Authorization()
   @Query(() => [SessionModel])
   userSessions(@Context() { req }: GqlContext): Promise<SessionModel[]> {
-    return this.authService.userSessions(req)
+    return this.authService.getUserSessions(req.session.userId)
   }
 
   @Authorization()
   @Query(() => Boolean)
-  deleteSession(@Context() { req }: GqlContext, @Args("sessionId") sessionId: string): Promise<boolean> {
-    return this.authService.deleteSession(req, sessionId)
+  terminateSession(@Context() { req }: GqlContext, @Args("sessionId") sessionId: string): Promise<boolean> {
+    return this.authService.terminateSession(req.session, sessionId)
   }
 }

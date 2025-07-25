@@ -31,12 +31,16 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     return this.client.get(key)
   }
 
-  del(key: string) {
+  del(key: string | string[]) {
     return this.client.del(key)
   }
 
   expire(key: RedisArgument, seconds: number, mode?: "NX" | "XX" | "GT" | "LT") {
     return this.client.expire(key, seconds, mode)
+  }
+
+  multi() {
+    return this.client.multi()
   }
 
   async scan(pattern: string) {
