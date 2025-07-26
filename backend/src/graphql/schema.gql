@@ -29,8 +29,8 @@ type Mutation {
 
 type Query {
   currentSession: SessionModel!
-  deleteSession(sessionId: String!): Boolean!
   me: UserModel!
+  terminateSession(sessionId: String!): Boolean!
   userSessions: [SessionModel!]!
 }
 

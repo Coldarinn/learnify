@@ -20,13 +20,13 @@ export class SessionService {
     this.prefix = this.configService.get<string>("SESSION_PREFIX")!
   }
 
-  save(session: Request["session"], userId: string, metadata: SessionMetadata): Promise<boolean> {
+  async save(session: Request["session"], userId: string, metadata: SessionMetadata): Promise<boolean> {
     session.createdAt = session.createdAt || new Date()
     session.userId = userId
     session.metadata = metadata
 
     return new Promise((resolve, reject) => {
-      session.regenerate((err) => {
+      session.save((err) => {
         if (err) reject(new InternalServerErrorException("Couldn't save session"))
         resolve(true)
       })
