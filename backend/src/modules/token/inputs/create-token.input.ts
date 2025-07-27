@@ -2,7 +2,7 @@ import { Field, InputType } from "@nestjs/graphql"
 import { TokenType } from "prisma/generated"
 
 @InputType()
-class GenerateTokenOptionsInput {
+class CreateTokenOptionsInput {
   @Field(() => Boolean, { nullable: true })
   isUUID?: boolean
 
@@ -14,13 +14,13 @@ class GenerateTokenOptionsInput {
 }
 
 @InputType()
-export class GenerateTokenInput {
+export class CreateTokenInput {
   @Field(() => String)
   userId: string
 
   @Field(() => TokenType)
   type: TokenType
 
-  @Field(() => GenerateTokenOptionsInput, { nullable: true })
-  options?: GenerateTokenOptionsInput
+  @Field(() => CreateTokenOptionsInput, { nullable: true })
+  options?: CreateTokenOptionsInput
 }

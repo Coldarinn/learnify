@@ -1,11 +1,4 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common"
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import { hash, verify } from "argon2"
 import { Request } from "express"
@@ -25,6 +18,8 @@ import { SignUpInput } from "./inputs/sign-up.input"
 
 @Injectable()
 export class AuthService {
+  private readonly PASSWORD_RESET_THROTTLE = 60_000
+
   constructor(
     private readonly userService: UserService,
     private readonly configService: ConfigService,
@@ -51,7 +46,7 @@ export class AuthService {
         data: { username, email, password: hashedPassword },
       })
 
-      const token = await this.tokenService.generateToken({ userId: user.id, type: "EMAIL_CONFIRM" }, tx)
+      const token = await this.tokenService.createForUser({ userId: user.id, type: "EMAIL_CONFIRM" }, tx)
 
       return { user, token }
     })
@@ -66,16 +61,10 @@ export class AuthService {
   }
 
   async confirmEmail(token: string): Promise<boolean> {
-    const tokenRecord = await this.prismaService.token.findUnique({
-      where: { token },
-      include: { user: true },
-    })
-
-    if (!tokenRecord || tokenRecord.expiresIn < new Date() || tokenRecord.type !== "EMAIL_CONFIRM")
-      throw new BadRequestException("Invalid or expired token")
+    const { userId } = await this.tokenService.validateToken(token, "EMAIL_CONFIRM")
 
     await this.prismaService.user.update({
-      where: { id: tokenRecord.userId! },
+      where: { id: userId },
       data: { isEmailConfirmed: true },
     })
 
@@ -115,6 +104,51 @@ export class AuthService {
         resolve(true)
       })
     })
+  }
+
+  async requestPasswordReset(headers: Request["headers"], ip: Request["ip"], userAgent: string, email: string): Promise<boolean> {
+    const user = await this.userService.findByLogin(email)
+
+    const recentReset = await this.prismaService.token.findFirst({
+      where: {
+        userId: user.id,
+        type: "PASSWORD_RESET",
+        createdAt: {
+          gte: new Date(Date.now() - this.PASSWORD_RESET_THROTTLE),
+        },
+      },
+    })
+
+    if (recentReset) throw new ConflictException("Too many password reset requests")
+
+    const token = await this.tokenService.createForUser({ userId: user.id, type: "PASSWORD_RESET" })
+
+    const metadata = getSessionMetadata(headers, ip, userAgent)
+
+    await this.mailerService.sendPasswordResetEmail({
+      to: user.email,
+      username: user.username,
+      token,
+      metadata,
+    })
+
+    return true
+  }
+
+  async resetPassword(token: string, newPassword: string): Promise<boolean> {
+    const { userId } = await this.tokenService.validateToken(token, "PASSWORD_RESET")
+
+    const hashedPassword = await hash(newPassword)
+
+    await this.prismaService.$transaction([
+      this.prismaService.user.update({
+        where: { id: userId },
+        data: { password: hashedPassword },
+      }),
+      this.prismaService.token.delete({ where: { token } }),
+    ])
+
+    return true
   }
 
   getCurrentSession(sessionId: string): Promise<SessionModel> {

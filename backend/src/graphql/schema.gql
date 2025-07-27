@@ -22,6 +22,8 @@ type LocationModel {
 
 type Mutation {
   confirmEmail(token: String!): Boolean!
+  requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
+  resetPassword(data: ResetPasswordInput!): Boolean!
   signIn(data: SignInInput!): UserModel!
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
@@ -32,6 +34,15 @@ type Query {
   me: UserModel!
   terminateSession(sessionId: String!): Boolean!
   userSessions: [SessionModel!]!
+}
+
+input RequestPasswordResetInput {
+  email: String!
+}
+
+input ResetPasswordInput {
+  newPassword: String!
+  token: String!
 }
 
 type SessionMetadataModel {

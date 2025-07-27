@@ -7,6 +7,8 @@ import { GqlContext } from "@/shared/types/gql-context.types"
 import { AuthService } from "./auth.service"
 import { Authorization } from "./decorators/auth.decorator"
 import { UserAgent } from "./decorators/user-agent.decorator"
+import { RequestPasswordResetInput } from "./inputs/request-password-reset.input"
+import { ResetPasswordInput } from "./inputs/reset-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
 
@@ -32,6 +34,20 @@ export class AuthResolver {
   @Mutation(() => Boolean)
   signOut(@Context() { req }: GqlContext): Promise<boolean> {
     return this.authService.signOut(req)
+  }
+
+  @Mutation(() => Boolean)
+  requestPasswordReset(
+    @Context() { req }: GqlContext,
+    @Args("data") input: RequestPasswordResetInput,
+    @UserAgent() userAgent: string
+  ): Promise<boolean> {
+    return this.authService.requestPasswordReset(req.headers, req.ip, userAgent, input.email)
+  }
+
+  @Mutation(() => Boolean)
+  resetPassword(@Args("data") input: ResetPasswordInput): Promise<boolean> {
+    return this.authService.resetPassword(input.token, input.newPassword)
   }
 
   @Authorization()

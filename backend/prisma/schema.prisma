@@ -33,10 +33,10 @@ model Token {
 
   token     String    @unique
   type      TokenType
-  expiresIn DateTime  @map("expires_in")
+  expiresAt DateTime  @map("expires_in")
 
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String? @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -46,6 +46,7 @@ model Token {
 
 enum TokenType {
   EMAIL_CONFIRM
+  PASSWORD_RESET
 
   @@map("token_types")
 }
