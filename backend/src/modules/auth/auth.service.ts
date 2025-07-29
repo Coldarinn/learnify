@@ -14,6 +14,7 @@ import { UserService } from "@/modules/user/user.service"
 import { TwoFaService } from "../2fa/2fa.service"
 import { getSessionMetadata } from "../session/utils/session.utils"
 
+import { ChangePasswordInput } from "./inputs/change-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
 
@@ -155,6 +156,24 @@ export class AuthService {
       }),
       this.prismaService.token.delete({ where: { token } }),
     ])
+
+    return true
+  }
+
+  async changePassword(userId: string, input: ChangePasswordInput): Promise<boolean> {
+    const { currentPassword, newPassword } = input
+
+    const user = await this.userService.getById(userId)
+    const isMatch = await verify(user.password, currentPassword)
+
+    if (!isMatch) throw new UnauthorizedException("Current password is incorrect")
+
+    const hashedNewPassword = await hash(newPassword)
+
+    await this.prismaService.user.update({
+      where: { id: userId },
+      data: { password: hashedNewPassword },
+    })
 
     return true
   }
