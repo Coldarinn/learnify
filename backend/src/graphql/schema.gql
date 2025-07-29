@@ -22,6 +22,9 @@ type LocationModel {
 
 type Mutation {
   confirmEmail(token: String!): Boolean!
+  disableTwoFa(code: String!): Boolean!
+  enableTwoFa(code: String!): Boolean!
+  generateTwoFaSecret: String!
   requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   signIn(data: SignInInput!): UserModel!
@@ -61,6 +64,7 @@ type SessionModel {
 input SignInInput {
   login: String!
   password: String!
+  twoFaCode: String
 }
 
 input SignUpInput {
@@ -75,6 +79,7 @@ type UserModel {
   email: String!
   id: ID!
   isEmailConfirmed: Boolean!
+  isTwoFaEnabled: Boolean!
   updatedAt: DateTime!
   username: String!
 }

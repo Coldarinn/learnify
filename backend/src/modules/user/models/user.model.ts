@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from "@nestjs/graphql"
 import { User } from "prisma/generated"
 
 @ObjectType()
-export class UserModel implements Omit<User, "password"> {
+export class UserModel implements Omit<User, "password" | "twoFaSecret" | "tempTwoFaSecret"> {
   @Field(() => ID)
   id: string
 
@@ -17,6 +17,9 @@ export class UserModel implements Omit<User, "password"> {
 
   @Field(() => Boolean)
   isEmailConfirmed: boolean
+
+  @Field(() => Boolean)
+  isTwoFaEnabled: boolean
 
   @Field(() => Date)
   createdAt: Date

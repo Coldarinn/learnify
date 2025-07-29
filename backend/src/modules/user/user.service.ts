@@ -34,4 +34,8 @@ export class UserService {
 
     return user
   }
+
+  update(id: string, data: Partial<User>): Promise<User> {
+    return this.prismaService.user.update({ where: { id }, data })
+  }
 }

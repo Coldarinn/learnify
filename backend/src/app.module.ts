@@ -5,6 +5,7 @@ import { GraphQLModule } from "@nestjs/graphql"
 import { ScheduleModule } from "@nestjs/schedule"
 import { join } from "path"
 
+import { TwoFaModule } from "./modules/2fa/2fa.module"
 import { AuthModule } from "./modules/auth/auth.module"
 import { MailerModule } from "./modules/mailer/mailer.module"
 import { PrismaModule } from "./modules/prisma/prisma.module"
@@ -44,6 +45,7 @@ import { IS_DEV_ENV, isDev } from "./shared/utils/is-dev.util"
 
     UserModule,
     AuthModule,
+    TwoFaModule,
   ],
 })
 export class AppModule {}

@@ -22,6 +22,10 @@ model User {
 
   tokens Token[]
 
+  twoFaSecret     String? @db.VarChar(255)
+  tempTwoFaSecret String? @db.VarChar(255)
+  isTwoFaEnabled  Boolean @default(false)
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

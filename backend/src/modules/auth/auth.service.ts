@@ -11,6 +11,7 @@ import { TokenService } from "@/modules/token/token.service"
 import { UserModel } from "@/modules/user/models/user.model"
 import { UserService } from "@/modules/user/user.service"
 
+import { TwoFaService } from "../2fa/2fa.service"
 import { getSessionMetadata } from "../session/utils/session.utils"
 
 import { SignInInput } from "./inputs/sign-in.input"
@@ -26,7 +27,8 @@ export class AuthService {
     private readonly prismaService: PrismaService,
     private readonly tokenService: TokenService,
     private readonly mailerService: MailerService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly twoFaService: TwoFaService
   ) {}
 
   async signUp(input: SignUpInput): Promise<boolean> {
@@ -80,13 +82,19 @@ export class AuthService {
     ip: Request["ip"],
     userAgent: string
   ): Promise<UserModel> {
-    const { login, password } = input
+    const { login, password, twoFaCode } = input
 
     const user = await this.userService.findByLogin(login)
     if (!user.isEmailConfirmed) throw new UnauthorizedException("Please confirm your email")
 
     const isValidPassword = await verify(user.password, password)
     if (!isValidPassword) throw new UnauthorizedException("Invalid password")
+
+    if (user.isTwoFaEnabled) {
+      if (!twoFaCode) throw new UnauthorizedException("TWO_FA_REQUIRED")
+
+      await this.twoFaService.verifyCode(user.id, twoFaCode)
+    }
 
     const metadata = getSessionMetadata(headers, ip, userAgent)
 

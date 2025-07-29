@@ -45,11 +45,13 @@
     "geoip-lite": "^1.4.10",
     "graphql": "^16.11.0",
     "nodemailer": "^7.0.5",
+    "qrcode": "^1.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "redis": "^5.6.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -68,7 +70,9 @@
     "@types/ms": "^2.1.0",
     "@types/node": "^22.10.7",
     "@types/nodemailer": "^6.4.17",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^19.1.8",
+    "@types/speakeasy": "^2.0.10",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
     "eslint": "^9.18.0",

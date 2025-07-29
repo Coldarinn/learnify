@@ -9,4 +9,7 @@ export class SignInInput {
 
   @Field(() => String)
   password: string
+
+  @Field({ nullable: true })
+  twoFaCode?: string
 }
