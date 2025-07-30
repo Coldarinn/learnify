@@ -41,8 +41,10 @@ export class TokenService {
       include: { user: true },
     })
 
-    if (!tokenRecord || tokenRecord.type !== expectedType || tokenRecord.expiresAt < new Date())
+    if (!tokenRecord || tokenRecord.type !== expectedType || tokenRecord.expiresAt < new Date()) {
+      if (tokenRecord) await this.prismaService.token.delete({ where: { token } })
       throw new BadRequestException("Invalid or expired token")
+    }
 
     return tokenRecord
   }

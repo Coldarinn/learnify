@@ -14,6 +14,7 @@ import { UserService } from "@/modules/user/user.service"
 import { TwoFaService } from "../2fa/2fa.service"
 import { getSessionMetadata } from "../session/utils/session.utils"
 
+import { ChangeEmailInput } from "./inputs/change-email.input"
 import { ChangePasswordInput } from "./inputs/change-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
@@ -45,9 +46,8 @@ export class AuthService {
 
     const { user, token } = await this.prismaService.$transaction(async (tx) => {
       const hashedPassword = await hash(password)
-      const user = await tx.user.create({
-        data: { username, email, password: hashedPassword },
-      })
+
+      const user = await this.userService.create({ username, email, password: hashedPassword }, tx)
 
       const token = await this.tokenService.createForUser({ userId: user.id, type: "EMAIL_CONFIRM" }, tx)
 
@@ -66,12 +66,10 @@ export class AuthService {
   async confirmEmail(token: string): Promise<boolean> {
     const { userId } = await this.tokenService.validateToken(token, "EMAIL_CONFIRM")
 
-    await this.prismaService.user.update({
-      where: { id: userId },
-      data: { isEmailConfirmed: true },
+    await this.prismaService.$transaction(async (tx) => {
+      await this.userService.update(userId, { isEmailConfirmed: true }, tx)
+      await tx.token.delete({ where: { token } })
     })
-
-    await this.prismaService.token.delete({ where: { token } })
 
     return true
   }
@@ -149,13 +147,10 @@ export class AuthService {
 
     const hashedPassword = await hash(newPassword)
 
-    await this.prismaService.$transaction([
-      this.prismaService.user.update({
-        where: { id: userId },
-        data: { password: hashedPassword },
-      }),
-      this.prismaService.token.delete({ where: { token } }),
-    ])
+    await this.prismaService.$transaction(async (tx) => {
+      await this.userService.update(userId, { password: hashedPassword }, tx)
+      await tx.token.delete({ where: { token } })
+    })
 
     return true
   }
@@ -171,6 +166,51 @@ export class AuthService {
     const hashedNewPassword = await hash(newPassword)
 
     await this.userService.update(userId, { password: hashedNewPassword })
+
+    return true
+  }
+
+  async requestEmailChange(
+    headers: Request["headers"],
+    ip: Request["ip"],
+    userAgent: string,
+    userId: string,
+    input: ChangeEmailInput
+  ): Promise<boolean> {
+    const { currentPassword, newEmail } = input
+
+    const user = await this.userService.getById(userId)
+
+    const isMatch = await verify(user.password, currentPassword)
+    if (!isMatch) throw new UnauthorizedException("Incorrect password")
+
+    const existing = await this.prismaService.user.findUnique({ where: { email: newEmail } })
+    if (existing) throw new ConflictException("Email is already in use")
+
+    const token = await this.tokenService.createForUser({
+      userId,
+      type: "EMAIL_CHANGE",
+    })
+
+    const metadata = getSessionMetadata(headers, ip, userAgent)
+
+    await this.mailerService.sendEmailChange({
+      to: newEmail,
+      username: user.username,
+      token,
+      metadata,
+    })
+
+    return true
+  }
+
+  async confirmEmailChange(token: string, newEmail: string): Promise<boolean> {
+    const { userId } = await this.tokenService.validateToken(token, "EMAIL_CHANGE")
+
+    await this.prismaService.$transaction(async (tx) => {
+      await this.userService.update(userId, { email: newEmail }, tx)
+      await tx.token.delete({ where: { token } })
+    })
 
     return true
   }

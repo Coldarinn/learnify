@@ -5,9 +5,11 @@ import { render } from "@react-email/components"
 import { SentMessageInfo } from "nodemailer"
 
 import { ConfirmEmailInput } from "./inputs/confirm-email.input"
+import { EmailChangeInput } from "./inputs/email-change.input"
 import { PasswordResetInput } from "./inputs/password-reset.input"
 import { SendEmailInput } from "./inputs/send-email.input"
 import ConfirmEmailTemplate from "./templates/confirm-email.template"
+import EmailChangeTemplate from "./templates/email-change.template"
 import PasswordResetTemplate from "./templates/password-reset.template"
 
 @Injectable()
@@ -37,6 +39,15 @@ export class MailerService {
     const html = await render(PasswordResetTemplate({ resetUrl, ...otherInput }))
 
     return this.sendEmail({ to: input.to, html, subject: "Password reset" })
+  }
+
+  async sendEmailChange(input: EmailChangeInput): Promise<SentMessageInfo> {
+    const { token, ...otherInput } = input
+
+    const changeUrl = `${this.clientUrl}/email-change/${token}?email=${input.to}`
+    const html = await render(EmailChangeTemplate({ changeUrl, ...otherInput }))
+
+    return this.sendEmail({ to: input.to, html, subject: "Email change" })
   }
 
   private sendEmail(input: SendEmailInput): Promise<SentMessageInfo> {

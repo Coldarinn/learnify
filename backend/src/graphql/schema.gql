@@ -2,9 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input ChangeEmailInput {
+  currentPassword: String!
+  newEmail: String!
+}
+
 input ChangePasswordInput {
   currentPassword: String!
   newPassword: String!
+}
+
+input ConfirmEmailChangeInput {
+  email: String!
+  token: String!
 }
 
 """
@@ -28,9 +38,11 @@ type LocationModel {
 type Mutation {
   changePassword(data: ChangePasswordInput!): Boolean!
   confirmEmail(token: String!): Boolean!
+  confirmEmailChange(data: ConfirmEmailChangeInput!): Boolean!
   disableTwoFa(code: String!): Boolean!
   enableTwoFa(code: String!): Boolean!
   generateTwoFaSecret: String!
+  requestEmailChange(data: ChangeEmailInput!): Boolean!
   requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   signIn(data: SignInInput!): UserModel!

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common"
-import { User } from "prisma/generated"
+import { Prisma, User } from "prisma/generated"
 
 import { PrismaService } from "@/modules/prisma/prisma.service"
 
@@ -9,8 +9,8 @@ import { CreateUserInput } from "./inputs/create-user.input"
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(input: CreateUserInput): Promise<User> {
-    return this.prismaService.user.create({ data: input })
+  async create(input: CreateUserInput, tx: Prisma.TransactionClient = this.prismaService): Promise<User> {
+    return tx.user.create({ data: input })
   }
 
   async findByLogin(login: string): Promise<User> {
@@ -35,7 +35,7 @@ export class UserService {
     return user
   }
 
-  update(id: string, data: Partial<User>): Promise<User> {
-    return this.prismaService.user.update({ where: { id }, data })
+  update(id: string, data: Partial<User>, tx: Prisma.TransactionClient = this.prismaService): Promise<User> {
+    return tx.user.update({ where: { id }, data })
   }
 }

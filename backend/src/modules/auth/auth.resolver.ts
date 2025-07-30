@@ -8,7 +8,9 @@ import { AuthService } from "./auth.service"
 import { Authorization } from "./decorators/auth.decorator"
 import { CurrentUser } from "./decorators/current-user.decorator"
 import { UserAgent } from "./decorators/user-agent.decorator"
+import { ChangeEmailInput } from "./inputs/change-email.input"
 import { ChangePasswordInput } from "./inputs/change-password.input"
+import { ConfirmEmailChangeInput } from "./inputs/confirm-email-change.input"
 import { RequestPasswordResetInput } from "./inputs/request-password-reset.input"
 import { ResetPasswordInput } from "./inputs/reset-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
@@ -56,6 +58,22 @@ export class AuthResolver {
   @Mutation(() => Boolean)
   changePassword(@CurrentUser("id") userId: string, @Args("data") input: ChangePasswordInput): Promise<boolean> {
     return this.authService.changePassword(userId, input)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean)
+  requestEmailChange(
+    @Context() { req }: GqlContext,
+    @UserAgent() userAgent: string,
+    @CurrentUser("id") userId: string,
+    @Args("data") input: ChangeEmailInput
+  ): Promise<boolean> {
+    return this.authService.requestEmailChange(req.headers, req.ip, userAgent, userId, input)
+  }
+
+  @Mutation(() => Boolean)
+  confirmEmailChange(@Args("data") { token, email }: ConfirmEmailChangeInput): Promise<boolean> {
+    return this.authService.confirmEmailChange(token, email)
   }
 
   @Authorization()
