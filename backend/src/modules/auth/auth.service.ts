@@ -34,7 +34,7 @@ export class AuthService {
   ) {}
 
   async signUp(input: SignUpInput): Promise<boolean> {
-    const { username, email, password } = input
+    const { username, email, password, ...otherInput } = input
 
     const [usernameExists, emailExists] = await Promise.all([
       this.prismaService.user.findUnique({ where: { username } }),
@@ -47,7 +47,7 @@ export class AuthService {
     const { user, token } = await this.prismaService.$transaction(async (tx) => {
       const hashedPassword = await hash(password)
 
-      const user = await this.userService.create({ username, email, password: hashedPassword }, tx)
+      const user = await this.userService.create({ username, email, password: hashedPassword, ...otherInput }, tx)
 
       const token = await this.tokenService.createForUser({ userId: user.id, type: "EMAIL_CONFIRM" }, tx)
 

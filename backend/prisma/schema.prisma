@@ -11,12 +11,13 @@ datasource db {
 model User {
   id String @id @default(uuid())
 
+  username String @unique
   email    String @unique
   password String
 
-  username String @unique
-
-  avatar String?
+  firstName String  @map("first_name")
+  lastName  String  @map("last_name")
+  avatar    String?
 
   isEmailConfirmed Boolean @default(false) @map("is_email_confirmed")
 
@@ -25,6 +26,8 @@ model User {
   twoFaSecret     String? @db.VarChar(255)
   tempTwoFaSecret String? @db.VarChar(255)
   isTwoFaEnabled  Boolean @default(false)
+
+  oAuthAccounts OAuthAccount[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -54,4 +57,25 @@ enum TokenType {
   PASSWORD_RESET
 
   @@map("token_types")
+}
+
+model OAuthAccount {
+  id String @id @default(cuid())
+
+  provider       String
+  providerUserId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerUserId])
+  @@map("oauth_account")
+}
+
+enum OAuthProvider {
+  google
+  yandex
 }

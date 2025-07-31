@@ -12,6 +12,12 @@ export class UserModel implements Omit<User, "password" | "twoFaSecret" | "tempT
   @Field(() => String)
   username: string
 
+  @Field(() => String)
+  firstName: string
+
+  @Field(() => String)
+  lastName: string
+
   @Field(() => String, { nullable: true })
   avatar: string | null
 

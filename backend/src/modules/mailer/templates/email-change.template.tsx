@@ -4,11 +4,12 @@ import { SessionMetadataModel } from "@/modules/session/models/session.model"
 
 interface Props {
   changeUrl: string
-  username: string
+  firstName: string
+  lastName: string
   metadata: SessionMetadataModel
 }
 
-export const EmailChangeTemplate = ({ changeUrl, username, metadata }: Props) => (
+export const EmailChangeTemplate = ({ changeUrl, firstName, lastName, metadata }: Props) => (
   <Html>
     <Head />
     <Preview>Confirm your email change request</Preview>
@@ -18,7 +19,7 @@ export const EmailChangeTemplate = ({ changeUrl, username, metadata }: Props) =>
         <Heading style={heading}>Confirm your new email</Heading>
 
         <Text style={text}>
-          Hi, {username}!
+          Hi, {lastName} {firstName}!
           <br />
           <br />
           You recently requested to change the email associated with your Tessera account. To confirm this change, please click the button below:

@@ -4,11 +4,12 @@ import { SessionMetadataModel } from "@/modules/session/models/session.model"
 
 interface Props {
   resetUrl: string
-  username: string
+  firstName: string
+  lastName: string
   metadata: SessionMetadataModel
 }
 
-export const PasswordResetTemplate = ({ resetUrl, username, metadata }: Props) => (
+export const PasswordResetTemplate = ({ resetUrl, firstName, lastName, metadata }: Props) => (
   <Html>
     <Head />
     <Preview>Reset your Tessera password</Preview>
@@ -18,7 +19,7 @@ export const PasswordResetTemplate = ({ resetUrl, username, metadata }: Props) =
         <Heading style={heading}>Reset your password</Heading>
 
         <Text style={text}>
-          {`Hi, ${username}!`}
+          Hi, {lastName} {firstName}!
           <br />
           <br />
           We received a request to reset your password for your Tessera account. If you made this request, click the button below to set a new

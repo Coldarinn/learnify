@@ -2,10 +2,11 @@ import { Body, Button, Container, Head, Heading, Html, Link, Preview, Section, T
 
 interface Props {
   confirmationUrl: string
-  username: string
+  firstName: string
+  lastName: string
 }
 
-export const ConfirmEmailTemplate = ({ confirmationUrl, username }: Props) => (
+export const ConfirmEmailTemplate = ({ confirmationUrl, firstName, lastName }: Props) => (
   <Html>
     <Head />
     <Preview>Confirm your email to get started with Tessera</Preview>
@@ -14,7 +15,7 @@ export const ConfirmEmailTemplate = ({ confirmationUrl, username }: Props) => (
         <Heading style={heading}>Confirm your email</Heading>
 
         <Text style={text}>
-          {`Hi, ${username}!`}
+          Hi, {lastName} {firstName}!
           <br />
           <br />
           Welcome to <strong>Tessera</strong>! Please confirm your email address to activate your account.
