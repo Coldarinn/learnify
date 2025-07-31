@@ -46,8 +46,14 @@ type Mutation {
   requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
   signIn(data: SignInInput!): UserModel!
+  signInOAuth(data: OAuthSignInInput!): UserModel!
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
+}
+
+input OAuthSignInInput {
+  code: String!
+  provider: String!
 }
 
 type Query {
@@ -87,6 +93,8 @@ input SignInInput {
 
 input SignUpInput {
   email: String!
+  firstName: String!
+  lastName: String!
   password: String!
   username: String!
 }
@@ -95,9 +103,11 @@ type UserModel {
   avatar: String
   createdAt: DateTime!
   email: String!
+  firstName: String!
   id: ID!
   isEmailConfirmed: Boolean!
   isTwoFaEnabled: Boolean!
+  lastName: String!
   updatedAt: DateTime!
   username: String!
 }

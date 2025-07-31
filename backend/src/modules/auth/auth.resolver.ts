@@ -15,10 +15,15 @@ import { RequestPasswordResetInput } from "./inputs/request-password-reset.input
 import { ResetPasswordInput } from "./inputs/reset-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
+import { OAuthSignInInput } from "./oauth/inputs/oauth-sign-in.input"
+import { OAuthService } from "./oauth/oauth.service"
 
 @Resolver("Auth")
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly oauthService: OAuthService
+  ) {}
 
   @Mutation(() => Boolean)
   signUp(@Args("data") input: SignUpInput): Promise<boolean> {
@@ -33,6 +38,13 @@ export class AuthResolver {
   @Mutation(() => UserModel)
   signIn(@Context() { req }: GqlContext, @Args("data") input: SignInInput, @UserAgent() userAgent: string): Promise<UserModel> {
     return this.authService.signIn(input, req.session, req.headers, req.ip, userAgent)
+  }
+
+  @Mutation(() => UserModel)
+  async signInOAuth(@Context() { req }: GqlContext, @Args("data") input: OAuthSignInInput, @UserAgent() userAgent: string): Promise<UserModel> {
+    const { code, provider } = input
+
+    return await this.oauthService.signInOAuth(code, provider, req.session, req.headers, req.ip, userAgent)
   }
 
   @Mutation(() => Boolean)

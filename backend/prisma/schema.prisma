@@ -62,7 +62,7 @@ enum TokenType {
 model OAuthAccount {
   id String @id @default(cuid())
 
-  provider       String
+  provider       OAuthProvider
   providerUserId String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -78,4 +78,6 @@ model OAuthAccount {
 enum OAuthProvider {
   google
   yandex
+
+  @@map("oauth_providers")
 }

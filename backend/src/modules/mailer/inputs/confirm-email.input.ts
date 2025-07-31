@@ -8,7 +8,10 @@ export class ConfirmEmailInput {
   to: string
 
   @Field(() => String)
-  username: string
+  firstName: string
+
+  @Field(() => String)
+  lastName: string
 
   @Field(() => String)
   token: string

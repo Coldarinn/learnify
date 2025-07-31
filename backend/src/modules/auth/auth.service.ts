@@ -56,7 +56,8 @@ export class AuthService {
 
     await this.mailerService.sendConfirmEmail({
       to: user.email,
-      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       token,
     })
 
@@ -85,6 +86,8 @@ export class AuthService {
 
     const user = await this.userService.findByLogin(login)
     if (!user.isEmailConfirmed) throw new UnauthorizedException("Please confirm your email")
+
+    if (!user.password) throw new UnauthorizedException("You don't have a password yet. You need to sign in via Google or Yandex")
 
     const isValidPassword = await verify(user.password, password)
     if (!isValidPassword) throw new UnauthorizedException("Invalid password")
@@ -134,7 +137,8 @@ export class AuthService {
 
     await this.mailerService.sendPasswordResetEmail({
       to: user.email,
-      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       token,
       metadata,
     })
@@ -159,9 +163,11 @@ export class AuthService {
     const { currentPassword, newPassword } = input
 
     const user = await this.userService.getById(userId)
-    const isMatch = await verify(user.password, currentPassword)
 
-    if (!isMatch) throw new UnauthorizedException("Current password is incorrect")
+    if ((!user.password && user.oAuthAccounts.length === 0) || user.password) {
+      const isMatch = await verify(user.password, currentPassword)
+      if (!isMatch) throw new UnauthorizedException("Current password is incorrect")
+    }
 
     const hashedNewPassword = await hash(newPassword)
 
@@ -196,7 +202,8 @@ export class AuthService {
 
     await this.mailerService.sendEmailChange({
       to: newEmail,
-      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
       token,
       metadata,
     })

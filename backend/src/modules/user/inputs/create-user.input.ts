@@ -24,4 +24,8 @@ export class CreateUserInput {
   @IsString()
   @IsNotEmpty()
   lastName: string
+
+  @Field(() => String, { nullable: true })
+  @MinLength(6)
+  avatar?: string
 }

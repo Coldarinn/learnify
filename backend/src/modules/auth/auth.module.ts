@@ -7,9 +7,10 @@ import { TwoFaModule } from "../2fa/2fa.module"
 
 import { AuthResolver } from "./auth.resolver"
 import { AuthService } from "./auth.service"
+import { OAuthService } from "./oauth/oauth.service"
 
 @Module({
-  providers: [AuthResolver, AuthService],
+  providers: [AuthResolver, AuthService, OAuthService],
   imports: [UserModule, SessionModule, TwoFaModule],
 })
 export class AuthModule {}

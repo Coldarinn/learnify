@@ -5,6 +5,7 @@ import { CurrentUser } from "@/modules/auth/decorators/current-user.decorator"
 
 import { UserModel } from "./models/user.model"
 import { UserService } from "./user.service"
+import { toSafeUser } from "./utils/to-safe-user.util"
 
 @Resolver("User")
 export class UserResolver {
@@ -13,7 +14,6 @@ export class UserResolver {
   @Authorization()
   @Query(() => UserModel)
   async me(@CurrentUser("id") userId: string): Promise<UserModel> {
-    const { password: _, ...safeUser } = await this.userService.getById(userId)
-    return safeUser
+    return toSafeUser(await this.userService.getById(userId))
   }
 }
