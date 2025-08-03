@@ -16,8 +16,12 @@ export const SignIn = () => {
   }
 
   useLayoutEffect(() => {
+    console.log("window.location: ", window.location)
     const code = new URLSearchParams(window.location.search).get("code")
+    const access_token = new URLSearchParams(window.location.hash).get("access_token")
+    // remove code and access_token from url
     console.log("code: ", code)
+    console.log("access_token: ", access_token)
   }, [])
 
   const redirectToYandex = () => {
@@ -36,11 +40,42 @@ export const SignIn = () => {
     window.location.href = authUrl
   }
 
+  function oauthSignIn() {
+    const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
+
+    const form = document.createElement("form")
+    form.setAttribute("method", "GET")
+    form.setAttribute("action", oauth2Endpoint)
+
+    const params = {
+      client_id: "566926243482-72pudmt4a11rm908gensjkcg6ailoisv.apps.googleusercontent.com",
+      redirect_uri: "http://localhost:3000/auth/sign-in",
+      response_type: "token",
+      scope: "openid email profile",
+      include_granted_scopes: "true",
+      state: "pass-through value",
+    }
+
+    for (const p in params) {
+      const input = document.createElement("input")
+      input.setAttribute("type", "hidden")
+      input.setAttribute("name", p)
+      // @ts-ignore
+      input.setAttribute("value", params[p])
+      form.appendChild(input)
+    }
+
+    document.body.appendChild(form)
+    form.submit()
+    form.remove()
+  }
+
   return (
     <>
       <Title>Sign In</Title>
 
       <button onClick={redirectToYandex}>Войти через Яндекс</button>
+      <button onClick={oauthSignIn}>Войти через Google</button>
 
       <Form name="signin" onFinish={onFinish}>
         <FormInput

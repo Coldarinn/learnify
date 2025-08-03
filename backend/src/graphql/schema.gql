@@ -42,6 +42,7 @@ type Mutation {
   disableTwoFa(code: String!): Boolean!
   enableTwoFa(code: String!): Boolean!
   generateTwoFaSecret: String!
+  linkOAuthAccount(data: OAuthSignInInput!): UserModel!
   requestEmailChange(data: ChangeEmailInput!): Boolean!
   requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!
@@ -49,10 +50,15 @@ type Mutation {
   signInOAuth(data: OAuthSignInInput!): UserModel!
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
+  unlinkOAuthAccount(data: OAuthUnlinkInput!): Boolean!
 }
 
 input OAuthSignInInput {
   code: String!
+  provider: String!
+}
+
+input OAuthUnlinkInput {
   provider: String!
 }
 

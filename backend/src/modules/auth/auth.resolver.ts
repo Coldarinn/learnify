@@ -16,6 +16,7 @@ import { ResetPasswordInput } from "./inputs/reset-password.input"
 import { SignInInput } from "./inputs/sign-in.input"
 import { SignUpInput } from "./inputs/sign-up.input"
 import { OAuthSignInInput } from "./oauth/inputs/oauth-sign-in.input"
+import { OAuthUnlinkInput } from "./oauth/inputs/oauth-unlink.input"
 import { OAuthService } from "./oauth/oauth.service"
 
 @Resolver("Auth")
@@ -45,6 +46,20 @@ export class AuthResolver {
     const { code, provider } = input
 
     return await this.oauthService.signInOAuth(code, provider, req.session, req.headers, req.ip, userAgent)
+  }
+
+  @Authorization()
+  @Mutation(() => UserModel)
+  async linkOAuthAccount(@CurrentUser("id") userId: string, @Args("data") input: OAuthSignInInput): Promise<boolean> {
+    const { code, provider } = input
+
+    return await this.oauthService.linkOAuthAccount(userId, code, provider)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean)
+  async unlinkOAuthAccount(@CurrentUser("id") userId: string, @Args("data") { provider }: OAuthUnlinkInput): Promise<boolean> {
+    return this.oauthService.unlinkOAuthAccount(userId, provider)
   }
 
   @Mutation(() => Boolean)
