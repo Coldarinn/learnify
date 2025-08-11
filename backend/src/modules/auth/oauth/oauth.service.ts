@@ -12,10 +12,7 @@ import { UserModel } from "@/modules/user/models/user.model"
 import { UserService } from "@/modules/user/user.service"
 import { toSafeUser } from "@/modules/user/utils/to-safe-user.util"
 
-import { GoogleProfileResponse } from "./interfaces/google-profile-response.interface"
-import { OAuthProfile } from "./interfaces/oauth-profile.interface"
-import { OAuthTokenResponse } from "./interfaces/oauth-token-response.interface"
-import { YandexProfileResponse } from "./interfaces/yandex-profile-response.interface"
+import { GoogleProfileResponse, OAuthProfile, OAuthTokenResponse, YandexProfileResponse } from "./oauth.types"
 
 @Injectable()
 export class OAuthService {

@@ -17,7 +17,8 @@ model User {
 
   firstName String  @map("first_name")
   lastName  String  @map("last_name")
-  avatar    String?
+  avatarUrl String?
+  avatarKey String?
 
   isEmailConfirmed Boolean @default(false) @map("is_email_confirmed")
 

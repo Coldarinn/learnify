@@ -19,7 +19,10 @@ export class UserModel implements Omit<User, "password" | "twoFaSecret" | "tempT
   lastName: string
 
   @Field(() => String, { nullable: true })
-  avatar: string | null
+  avatarUrl: string | null
+
+  @Field(() => String, { nullable: true })
+  avatarKey: string | null
 
   @Field(() => Boolean)
   isEmailConfirmed: boolean

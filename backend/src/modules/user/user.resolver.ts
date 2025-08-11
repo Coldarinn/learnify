@@ -1,4 +1,5 @@
-import { Query, Resolver } from "@nestjs/graphql"
+import { Args, Mutation, Query, Resolver } from "@nestjs/graphql"
+import { FileUpload, GraphQLUpload } from "graphql-upload"
 
 import { Authorization } from "@/modules/auth/decorators/auth.decorator"
 import { CurrentUser } from "@/modules/auth/decorators/current-user.decorator"
@@ -15,5 +16,14 @@ export class UserResolver {
   @Query(() => UserModel)
   async me(@CurrentUser("id") userId: string): Promise<UserModel> {
     return toSafeUser(await this.userService.getById(userId))
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean)
+  uploadUserAvatar(
+    @CurrentUser("id") userId: string,
+    @Args({ name: "file", type: () => GraphQLUpload }) file: Promise<FileUpload>
+  ): Promise<boolean> {
+    return this.userService.updateUserAvatar(userId, file)
   }
 }
