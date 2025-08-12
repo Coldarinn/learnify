@@ -2,26 +2,15 @@ import { BadRequestException, Injectable, PipeTransform } from "@nestjs/common"
 import { ReadStream } from "fs-capacitor"
 import { FileUpload } from "graphql-upload"
 
-interface FileValidationOptions {
-  maxSize?: number
-  allowedMimeTypes?: string[]
-}
-
-const DEFAULT_OPTIONS: Required<FileValidationOptions> = {
-  maxSize: 5 * 1024 * 1024,
-  allowedMimeTypes: ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml", "image/bmp", "image/tiff", "image/x-icon"],
-}
+const DEFAULT_MAX_SIZE = 5 * 1024 * 1024
+const DEFAULT_ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml", "image/bmp", "image/tiff", "image/x-icon"]
 
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
-  private readonly options: Required<FileValidationOptions>
-
-  constructor(options: FileValidationOptions = {}) {
-    this.options = {
-      maxSize: options.maxSize ?? DEFAULT_OPTIONS.maxSize,
-      allowedMimeTypes: options.allowedMimeTypes ?? DEFAULT_OPTIONS.allowedMimeTypes,
-    }
-  }
+  constructor(
+    private readonly maxSize = DEFAULT_MAX_SIZE,
+    private readonly allowedMimeTypes = DEFAULT_ALLOWED_MIME_TYPES
+  ) {}
 
   async transform(value: FileUpload): Promise<FileUpload> {
     this.validateInput(value)
@@ -41,8 +30,8 @@ export class FileValidationPipe implements PipeTransform {
   }
 
   private validateMimeType(mimetype: string): void {
-    if (!this.options.allowedMimeTypes.includes(mimetype))
-      throw new BadRequestException(`Invalid file type. Allowed types: ${this.options.allowedMimeTypes.join(", ")}`)
+    if (!this.allowedMimeTypes.includes(mimetype))
+      throw new BadRequestException(`Invalid file type. Allowed types: ${this.allowedMimeTypes.join(", ")}`)
   }
 
   private async validateFileSize(fileStream: ReadStream): Promise<void> {
@@ -51,7 +40,7 @@ export class FileValidationPipe implements PipeTransform {
 
       fileStream.on("data", (chunk: Buffer) => {
         totalSize += chunk.length
-        if (totalSize > this.options.maxSize) {
+        if (totalSize > this.maxSize) {
           fileStream.destroy()
           resolve(false)
         }
@@ -61,6 +50,6 @@ export class FileValidationPipe implements PipeTransform {
       fileStream.on("error", reject)
     })
 
-    if (!isValid) throw new BadRequestException(`File too large. Maximum size is ${this.options.maxSize / (1024 * 1024)} mb`)
+    if (!isValid) throw new BadRequestException(`File too large. Maximum size is ${this.maxSize / (1024 * 1024)} mb`)
   }
 }

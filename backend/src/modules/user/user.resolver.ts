@@ -33,7 +33,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   uploadUserAvatar(
     @CurrentUser("id") userId: string,
-    @Args("avatar", { type: () => GraphQLUpload }, new FileValidationPipe({ maxSize: 2 * 1024 * 1024 })) avatar: Upload
+    @Args("avatar", { type: () => GraphQLUpload }, new FileValidationPipe(2 * 1024 * 1024)) avatar: Upload
   ): Promise<boolean> {
     return this.userService.updateUserAvatar(userId, avatar as unknown as FileUpload)
   }
