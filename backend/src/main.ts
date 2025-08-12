@@ -4,6 +4,7 @@ import { NestFactory } from "@nestjs/core"
 import { RedisStore } from "connect-redis"
 import cookieParser from "cookie-parser"
 import session from "express-session"
+import { graphqlUploadExpress } from "graphql-upload"
 import ms, { StringValue } from "ms"
 
 import { AppModule } from "./app.module"
@@ -16,6 +17,8 @@ async function bootstrap() {
   const config = app.get(ConfigService)
 
   const redis = app.get(RedisService)
+
+  app.use(graphqlUploadExpress())
 
   app.use(cookieParser(config.get("COOKIES_SECRET")))
 

@@ -32,7 +32,6 @@ import { IS_DEV_ENV, isDev } from "./shared/utils/is-dev.util"
         path: configService.get<string>("GRAPHQL_PREFIX"),
         autoSchemaFile: join(process.cwd(), "src/graphql/schema.gql"),
         sortSchema: true,
-        uploads: false,
         resolvers: { Upload: GraphQLUpload },
         context: ({ req, res }: GqlContext) => ({ req, res }),
       }),

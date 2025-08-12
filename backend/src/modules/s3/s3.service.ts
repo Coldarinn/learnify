@@ -25,11 +25,13 @@ export class S3Service {
     })
   }
 
-  async uploadFile({ buffer, key, contentType, acl = "private" }: UploadFileOptions): Promise<string> {
+  async uploadFile({ stream, key, contentType, acl = "private" }: UploadFileOptions): Promise<string> {
+    if (!stream) throw new InternalServerErrorException("No file data provided")
+
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
-      Body: buffer,
+      Body: stream,
       ContentType: contentType,
       ACL: acl,
     })

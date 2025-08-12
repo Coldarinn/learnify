@@ -49,35 +49,28 @@ export class UserService {
     return tx.user.update({ where: { id }, data })
   }
 
-  async updateUserAvatar(userId: string, file: Promise<FileUpload>): Promise<boolean> {
+  async updateUserAvatar(userId: string, avatar: FileUpload): Promise<boolean> {
     const user = await this.getById(userId)
+    const extension = mime.extension(avatar.mimetype) || "jpg"
 
-    const uploadedFile = await file
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const { createReadStream, mimetype } = uploadedFile
-
-    const stream = createReadStream()
-    const extension = mime.extension(mimetype) || "jpg"
     const key = `avatars/${userId}-${uuidv4()}.${extension}`
 
-    const chunks: Buffer[] = []
-    for await (const chunk of stream) chunks.push(chunk as Buffer)
-    const buffer = Buffer.concat(chunks)
-
-    await this.s3Service.uploadFile({
-      buffer,
-      key,
-      contentType: mimetype,
-      acl: "public-read",
-    })
-
-    if (user.avatarKey) {
-      await this.s3Service.deleteFile({ key: user.avatarKey }).catch((e) => {
-        console.warn("Failed to delete old avatar", e)
+    try {
+      await this.s3Service.uploadFile({
+        stream: avatar.createReadStream(),
+        key,
+        contentType: avatar.mimetype,
+        acl: "public-read",
       })
-    }
 
-    await this.update(userId, { avatarUrl: await this.s3Service.getPresignedUrl({ key }) })
-    return true
+      if (user.avatarKey) await this.s3Service.deleteFile({ key: user.avatarKey }).catch((e) => console.error("Failed to delete old avatar", e))
+
+      await this.update(userId, { avatarKey: key })
+
+      return true
+    } catch (error) {
+      await this.s3Service.deleteFile({ key }).catch(() => {})
+      throw error
+    }
   }
 }

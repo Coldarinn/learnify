@@ -51,7 +51,7 @@ type Mutation {
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
   unlinkOAuthAccount(data: OAuthUnlinkInput!): Boolean!
-  uploadUserAvatar(file: Upload!): Boolean!
+  uploadUserAvatar(avatar: Upload!): Boolean!
 }
 
 input OAuthSignInInput {

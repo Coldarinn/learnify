@@ -1,5 +1,7 @@
+import { Readable } from "stream"
+
 export interface UploadFileOptions {
-  buffer: Buffer
+  stream?: Readable
   key: string
   contentType?: string
   acl?: "private" | "public-read"
