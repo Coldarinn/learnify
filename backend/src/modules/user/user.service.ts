@@ -51,13 +51,15 @@ export class UserService {
 
   async updateUserAvatar(userId: string, avatar: FileUpload): Promise<boolean> {
     const user = await this.getById(userId)
-    const extension = mime.extension(avatar.mimetype) || "jpg"
+    const extension = mime.extension(avatar.mimetype)
 
     const key = `avatars/${userId}-${uuidv4()}.${extension}`
 
+    const stream = avatar.createReadStream()
+
     try {
       await this.s3Service.uploadFile({
-        stream: avatar.createReadStream(),
+        stream,
         key,
         contentType: avatar.mimetype,
         acl: "public-read",

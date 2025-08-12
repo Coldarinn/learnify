@@ -28,12 +28,15 @@ export class S3Service {
   async uploadFile({ stream, key, contentType, acl = "private" }: UploadFileOptions): Promise<string> {
     if (!stream) throw new InternalServerErrorException("No file data provided")
 
+    const buffer = await this.streamToBuffer(stream)
+
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       Key: key,
-      Body: stream,
+      Body: buffer,
       ContentType: contentType,
       ACL: acl,
+      ContentLength: buffer.length,
     })
 
     try {
@@ -43,6 +46,14 @@ export class S3Service {
       console.error("S3 Upload error:", error)
       throw new InternalServerErrorException("S3 upload failed")
     }
+  }
+
+  private async streamToBuffer(stream: Readable): Promise<Buffer> {
+    const chunks: Buffer[] = []
+    for await (const chunk of stream) {
+      chunks.push(chunk as Buffer)
+    }
+    return Buffer.concat(chunks)
   }
 
   async deleteFile({ key }: DeleteFileOptions): Promise<boolean> {
