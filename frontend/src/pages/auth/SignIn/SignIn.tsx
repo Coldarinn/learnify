@@ -5,7 +5,7 @@ import { useLayoutEffect } from "react"
 
 import { FormInput } from "@/shared/components/Input"
 
-import { Button, Divider, Footer, Title } from "../styles"
+import { Button, Divider, Footer, Title } from "../auth.styles"
 import { ForgotPassword } from "./ForgotPassword/ForgotPassword"
 
 export const SignIn = () => {

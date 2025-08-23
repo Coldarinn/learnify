@@ -4,13 +4,14 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { Form } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
 
-import { Button, Divider, Footer, Title } from "../styles"
+import { Button, Divider, Footer, Title } from "../auth.styles"
+import { SignUpInput } from "./SignUp.types"
 
 export const SignUp = () => {
   const navigate = useNavigate()
 
-  const onFinish = (values: object) => {
-    console.log("Login attempt:", values)
+  const onFinish = (values: SignUpInput) => {
+    console.log("SignUpInput:", values)
     navigate("/")
   }
 
@@ -18,7 +19,7 @@ export const SignUp = () => {
     <>
       <Title>Sign Up</Title>
 
-      <Form name="signup" onFinish={onFinish}>
+      <Form<SignUpInput> name="signup" onFinish={onFinish}>
         <FormInput
           input={{
             prefix: <UserOutlined />,
@@ -29,7 +30,7 @@ export const SignUp = () => {
           formItem={{
             name: "email",
             rules: [
-              { required: true, message: "Please input your email!" },
+              { required: true, message: "Please input your email" },
               {
                 type: "email",
                 message: "The input is not valid E-mail!",
@@ -40,14 +41,54 @@ export const SignUp = () => {
 
         <FormInput
           input={{
+            prefix: <UserOutlined />,
+            placeholder: "username",
+            size: "l",
+            label: "Username",
+          }}
+          formItem={{
+            name: "username",
+            rules: [{ required: true, message: "Please input your username" }],
+          }}
+        />
+
+        <FormInput
+          input={{
+            prefix: <UserOutlined />,
+            placeholder: "first name",
+            size: "l",
+            label: "First name",
+          }}
+          formItem={{
+            name: "firstname",
+            rules: [{ required: true, message: "Please input your first name" }],
+          }}
+        />
+
+        <FormInput
+          input={{
+            prefix: <UserOutlined />,
+            placeholder: "last name",
+            size: "l",
+            label: "Last name",
+          }}
+          formItem={{
+            name: "lastname",
+            rules: [{ required: true, message: "Please input your last name" }],
+          }}
+        />
+
+        <FormInput
+          input={{
             prefix: <LockOutlined />,
+            placeholder: "password",
             type: "password",
             size: "l",
             label: "Password",
           }}
           formItem={{
             name: "password",
-            rules: [{ required: true, message: "Please input your password!" }],
+            rules: [{ required: true, min: 6, message: "The password must be longer than 5 characters" }],
           }}
         />
 

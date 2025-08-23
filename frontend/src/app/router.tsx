@@ -20,26 +20,26 @@ export const routes: RouteObject[] = [
         element: <Dashboard />,
       },
       {
-        path: "auth",
-        element: <AuthLayout />,
-        children: [
-          {
-            index: true,
-            element: <Navigate to="/auth/sign-in" replace />,
-          },
-          {
-            path: "sign-in",
-            element: <SignIn />,
-          },
-          {
-            path: "sign-up",
-            element: <SignUp />,
-          },
-        ],
-      },
-      {
         path: "*",
         element: <Navigate to="/" replace />,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        index: true,
+        element: <Navigate to="/auth/sign-in" replace />,
+      },
+      {
+        path: "sign-in",
+        element: <SignIn />,
+      },
+      {
+        path: "sign-up",
+        element: <SignUp />,
       },
     ],
   },
