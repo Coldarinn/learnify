@@ -3,16 +3,44 @@ import styled from "@emotion/styled"
 
 import { ControlWrapperProps } from "./ControlWrapper.types"
 
-export const Wrapper = styled.div<Pick<ControlWrapperProps, "formControlStatus" | "size">>`
+export const Wrapper = styled.div<Pick<ControlWrapperProps, "view" | "formControlStatus" | "size">>`
+  --wrapper-font-labell: var(--font-subheading-m);
+  --wrapper-font-caption: var(--font-caption-m);
+  --wrapper-gap: var(--gap-4xs);
+
   position: relative;
 
   display: grid;
 
-  gap: var(--gap-4xs);
+  gap: var(--wrapper-gap);
+
+  min-width: 30px;
 
   &:has(.form-control-caption) {
-    padding-bottom: calc(16px + var(--gap-4xs));
+    padding-bottom: calc(16px + var(--wrapper-gap));
   }
+
+  ${({ view, size }) => {
+    if (view === "horizontal") {
+      return css`
+        grid-template-columns: auto 1fr;
+
+        align-items: center;
+
+        ${{
+          s: css`
+            --wrapper-font-labell: var(--font-subheading-l);
+          `,
+          m: css`
+            --wrapper-font-labell: var(--font-subheading-l);
+          `,
+          l: css`
+            --wrapper-font-labell: var(--font-subheading-xl);
+          `,
+        }[size || "m"]}
+      `
+    }
+  }}
 
   ${({ formControlStatus }) => {
     const status: ControlWrapperProps["formControlStatus"] = formControlStatus || ""
@@ -38,35 +66,20 @@ export const Wrapper = styled.div<Pick<ControlWrapperProps, "formControlStatus" 
   ${({ size }) =>
     ({
       s: css`
-        gap: var(--gap-5xs);
-
-        &:has(.form-control-caption) {
-          padding-bottom: calc(12px + var(--gap-5xs));
-        }
-
-        ${Label} {
-          font: var(--font-subheading-s);
-        }
-        ${Caption} {
-          font: var(--font-caption-xs);
-        }
+        --wrapper-font-labell: var(--font-subheading-s);
+        --wrapper-font-caption: var(--font-caption-xs);
+        --wrapper-gap: var(--gap-5xs);
       `,
       m: css``,
       l: css`
-        gap: var(--gap-3xs);
-
-        ${Label} {
-          font: var(--font-subheading-l);
-        }
-
-        &:has(.form-control-caption) {
-          padding-bottom: calc(12px + var(--gap-3xs));
-        }
+        --wrapper-font-labell: var(--font-subheading-l);
+        --wrapper-font-caption: var(--font-caption-3xs);
+        --wrapper-gap: var(--gap-3xs);
       `,
     })[size || "m"]}
 `
 export const Label = styled.div`
-  font: var(--font-subheading-m);
+  font: var(--wrapper-font-labell);
   color: var(--color-text-primary);
 `
 export const Required = styled.span`
@@ -83,7 +96,7 @@ export const Caption = styled.div`
   max-width: 100%;
   overflow: hidden;
 
-  font: var(--font-caption-m);
+  font: var(--wrapper-font-caption);
   color: var(--color-text-secondary);
   text-overflow: ellipsis;
   white-space: nowrap;

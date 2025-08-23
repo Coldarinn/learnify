@@ -3,7 +3,7 @@ import { css } from "@emotion/react"
 import ConfigProvider from "antd/es/config-provider"
 import React from "react"
 
-import { sizeStyles, StyledButton, typeStyles } from "./Button.styles"
+import { StyledButton, sizeStyles, typeStyles } from "./Button.styles"
 import { ButtonProps, ButtonRef } from "./Button.types"
 
 export const Button = React.forwardRef<ButtonRef, ButtonProps>((props, ref) => {

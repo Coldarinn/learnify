@@ -1,9 +1,10 @@
+import { Link, useNavigate } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 
-import { Form, FormInput } from "@/shared/components"
-import { Link, useNavigate } from "@/shared/router"
+import { Form } from "@/shared/components/Form"
+import { FormInput } from "@/shared/components/Input"
 
-import { Footer, Button, Title, Divider } from "../styles"
+import { Button, Divider, Footer, Title } from "../styles"
 
 export const SignUp = () => {
   const navigate = useNavigate()

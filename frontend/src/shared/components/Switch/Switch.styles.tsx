@@ -1,4 +1,4 @@
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Switch from "antd/es/switch"
 
@@ -80,6 +80,8 @@ export const StyledSwitch = styled(Switch)`
     --ant-switch-track-padding: 2px;
     --ant-switch-handle-bg: var(--color-base-white);
     --ant-switch-handle-size: 14px;
+    --ant-switch-inner-max-margin: calc(var(--switch-track-min-width) / 2);
+    --ant-switch-inner-min-margin: calc(var(--switch-track-min-width) / 2);
 
     background-color: var(--color-surface-base-quaternary);
 
@@ -111,7 +113,7 @@ export const StyledSwitch = styled(Switch)`
 export const sizeStyles: Record<NonNullable<SwitchProps["size"]>, SerializedStyles> = {
   s: css`
     --font: var(--font-body-medium-s);
-    --switch-track-min-width: 24px;
+    --switch-track-min-width: 30px;
 
     .ant-switch {
       --ant-switch-track-height: 16px;

@@ -1,11 +1,15 @@
 import { css as emotionCss } from "@emotion/css"
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 
 import { ControlWrapper, ControlWrapperProps } from "../ControlWrapper"
 import { SelectProps } from "./Select.types"
 
 export const Wrapper = styled(ControlWrapper)`
+  .custom-select {
+    min-width: 30px;
+  }
+
   ${({ formControlStatus }) => {
     const formStatus: ControlWrapperProps["formControlStatus"] = formControlStatus || ""
 
@@ -65,6 +69,8 @@ export const SelectStyles = emotionCss`
 
     &.ant-select-multiple {
       .ant-select-selection-item {
+        height: fit-content;
+
         color: var(--color-text-accent);
 
         background-color: var(--color-surface-elements-sub-accent);
@@ -81,6 +87,10 @@ export const SelectStyles = emotionCss`
 
       .ant-select-selection-search {
         margin-inline-start: 0;
+      }
+
+      .ant-select-selection-overflow {
+        align-content: center;
       }
 
       .ant-select-selection-overflow-item-suffix {
@@ -105,6 +115,16 @@ export const SelectStyles = emotionCss`
 
       & + .ant-select-arrow {
         color: var(--color-icon-tertiary);
+      }
+    }
+
+    .ant-select-arrow {
+      transition: transform var(--ant-motion-duration-mid) var(--ant-motion-ease-in-out);
+    }
+      
+    &.ant-select-open {
+      .ant-select-arrow {
+        transform: rotate(180deg);
       }
     }
   }
@@ -143,7 +163,7 @@ export const sizeStyles: Record<NonNullable<SelectProps["size"]>, SerializedStyl
     .ant-select-selection-item,
     .ant-select-selection-search-input,
     .ant-select-selection-placeholder {
-      font: var(--font-body-normal-s);
+      font: var(--font-body-regular-s);
     }
 
     .ant-select-item-option-content {
@@ -170,7 +190,7 @@ export const sizeStyles: Record<NonNullable<SelectProps["size"]>, SerializedStyl
     .ant-select-selection-item,
     .ant-select-selection-search-input,
     .ant-select-selection-placeholder {
-      font: var(--font-body-normal-s);
+      font: var(--font-body-regular-s);
     }
 
     .ant-select-item-option-content {
@@ -197,7 +217,7 @@ export const sizeStyles: Record<NonNullable<SelectProps["size"]>, SerializedStyl
     .ant-select-selection-item,
     .ant-select-selection-search-input,
     .ant-select-selection-placeholder {
-      font: var(--font-body-normal-m);
+      font: var(--font-body-regular-m);
     }
 
     .ant-select-item-option-content {

@@ -1,4 +1,7 @@
-import { Button, Form, FormInput, Modal, ModalProps } from "@/shared/components"
+import { Button } from "@/shared/components/Button"
+import { Form } from "@/shared/components/Form"
+import { FormInput } from "@/shared/components/Input"
+import { Modal, ModalProps } from "@/shared/components/Modal"
 
 import { Text } from "./styles"
 
@@ -49,7 +52,7 @@ const Footer = (props: FooterProps) => {
 
   return (
     <>
-      <Button type="extra-primary" onClick={onCancel}>
+      <Button type="link-primary" onClick={onCancel}>
         Cancel
       </Button>
       <Button onClick={onSubmit}>Continue</Button>

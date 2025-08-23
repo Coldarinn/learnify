@@ -9,7 +9,7 @@ interface Props {
 export const ConfirmEmailTemplate = ({ confirmationUrl, firstName, lastName }: Props) => (
   <Html>
     <Head />
-    <Preview>Confirm your email to get started with Tessera</Preview>
+    <Preview>Confirm your email to get started with Learnlify</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={heading}>Confirm your email</Heading>
@@ -18,7 +18,7 @@ export const ConfirmEmailTemplate = ({ confirmationUrl, firstName, lastName }: P
           Hi, {lastName} {firstName}!
           <br />
           <br />
-          Welcome to <strong>Tessera</strong>! Please confirm your email address to activate your account.
+          Welcome to <strong>Learnlify</strong>! Please confirm your email address to activate your account.
         </Text>
 
         <Section style={{ textAlign: "center", margin: "30px 0" }}>
@@ -35,7 +35,7 @@ export const ConfirmEmailTemplate = ({ confirmationUrl, firstName, lastName }: P
           </Link>
         </Text>
 
-        <Text style={footerText}>If you did not sign up for Tessera, you can safely ignore this email.</Text>
+        <Text style={footerText}>If you did not sign up for Learnlify, you can safely ignore this email.</Text>
       </Container>
     </Body>
   </Html>

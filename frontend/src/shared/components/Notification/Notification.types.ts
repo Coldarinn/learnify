@@ -1,5 +1,6 @@
-export type { NotificationConfig } from "antd/es/notification/interface"
 import type { NotificationArgsProps as AntNotificationArgsProps } from "antd/es"
+
+export type { NotificationConfig } from "antd/es/notification/interface"
 
 export type NotificationArgsProps = AntNotificationArgsProps
 

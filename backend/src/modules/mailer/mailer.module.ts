@@ -22,7 +22,7 @@ import { MailerService } from "./mailer.service"
           },
         },
         defaults: {
-          from: `"Tessera" ${configService.get("MAIL_LOGIN")}`,
+          from: `"Learnlify" ${configService.get("MAIL_LOGIN")}`,
         },
       }),
       inject: [ConfigService],

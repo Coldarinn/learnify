@@ -1,11 +1,11 @@
-import { Wrapper, Label, Caption, Required } from "./ControlWrapper.styles"
+import { Caption, Label, Required, Wrapper } from "./ControlWrapper.styles"
 import { ControlWrapperProps } from "./ControlWrapper.types"
 
 export const ControlWrapper = (props: ControlWrapperProps) => {
-  const { className, size = "m", formControlStatus, label, isFormItem, isRequired, error, caption, children } = props
+  const { className, view = "vertical", size = "m", formControlStatus, label, isFormItem, isRequired, error, caption, children } = props
 
   return (
-    <Wrapper className={className} size={size} formControlStatus={formControlStatus}>
+    <Wrapper className={className} view={view} size={size} formControlStatus={formControlStatus}>
       {label && (
         <Label className="form-control-label">
           {isRequired && <Required className="form-control-label-required">*</Required>}

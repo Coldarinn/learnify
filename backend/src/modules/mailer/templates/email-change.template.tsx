@@ -22,7 +22,7 @@ export const EmailChangeTemplate = ({ changeUrl, firstName, lastName, metadata }
           Hi, {lastName} {firstName}!
           <br />
           <br />
-          You recently requested to change the email associated with your Tessera account. To confirm this change, please click the button below:
+          You recently requested to change the email associated with your Learnlify account. To confirm this change, please click the button below:
         </Text>
 
         <Section style={buttonSection}>

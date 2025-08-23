@@ -1,10 +1,14 @@
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Badge from "antd/es/badge"
 
 import { BadgeProps } from "./Badge.types"
 
 export const StyledBadge = styled(Badge)<BadgeProps>`
+  &.ant-badge {
+    --ant-badge-indicator-height: auto;
+  }
+
   &.ant-badge.ant-badge-not-a-wrapper .ant-scroll-number {
     height: fit-content;
 
@@ -83,9 +87,9 @@ export const sizeStyles: Record<NonNullable<BadgeProps["size"]>, SerializedStyle
     }
 
     .ant-badge-count {
-      padding: var(--gap-5xs) var(--gap-4xs);
+      padding: var(--gap-6xs) var(--gap-4xs) var(--gap-5xs);
 
-      font: var(--font-subheading-m);
+      font: var(--font-subheading-s);
 
       border-radius: var(--radius-3xl);
     }
@@ -101,9 +105,9 @@ export const sizeStyles: Record<NonNullable<BadgeProps["size"]>, SerializedStyle
     }
 
     .ant-badge-count {
-      padding: var(--gap-5xs) var(--gap-2xs);
+      padding: var(--gap-5xs) var(--gap-3xs);
 
-      font: var(--font-subheading-l);
+      font: var(--font-subheading-m);
 
       border-radius: var(--radius-3xl);
     }

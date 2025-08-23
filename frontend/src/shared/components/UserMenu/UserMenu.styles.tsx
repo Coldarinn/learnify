@@ -30,7 +30,7 @@ export const Email = styled.div`
   align-items: center;
 
   span:not(.ant-btn-icon) {
-    font: var(--font-body-normal-s);
+    font: var(--font-body-regular-s);
     color: var(--color-text-secondary);
   }
 `
@@ -55,7 +55,10 @@ export const LogoutButton = styled.button`
   svg {
     flex-shrink: 0;
 
-    font-size: 16px;
+    width: 16px;
+    height: 16px;
+
+    fill: currentColor;
   }
 
   span {

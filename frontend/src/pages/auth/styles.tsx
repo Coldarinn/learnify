@@ -1,6 +1,7 @@
 import styled from "@emotion/styled"
 
-import { Button as BaseButton, Divider as BaseDivider } from "@/shared/components"
+import { Button as BaseButton } from "@/shared/components/Button"
+import { Divider as BaseDivider } from "@/shared/components/Divider"
 
 export const Wrapper = styled.div`
   height: 100dvh;

@@ -1,6 +1,7 @@
 import AntModal from "antd/es/modal"
 
 import { Button } from "@/shared/components/Button"
+
 import CloseIcon from "@/shared/icons/close.svg"
 
 import { StyledModal } from "./Modal.styles"
@@ -14,8 +15,8 @@ export const Modal = (props: ModalProps) => {
       rootClassName={`${StyledModal} ${rootClassName}`}
       centered
       footer={<ModalFooter onCancel={props.onCancel} onOk={props.onOk} />}
-      closeIcon={<Button type="extra-secondary" size="xs" icon={<CloseIcon />} tabIndex={-1} />}
-      destroyOnHidden
+      closeIcon={<Button type="link-secondary" size="xs" icon={<CloseIcon />} tabIndex={-1} />}
+      destroyOnClose
       {...otherProps}
     />
   )

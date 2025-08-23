@@ -14,7 +14,7 @@ export const StyledDivider = styled(Divider)`
   .ant-divider-inner-text {
     padding: 0 var(--gap-md);
 
-    font: var(--font-body-normal-m);
+    font: var(--font-body-regular-m);
     color: var(--color-text-primary);
   }
 

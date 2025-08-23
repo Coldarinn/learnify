@@ -6,13 +6,15 @@ export const StyledAvatar = styled(Avatar)`
   --icon-size: 20px;
 
   font: var(--font);
-  color: var(--color-text-accent);
 
   background-color: var(--color-surface-elements-sub-accent);
   border: 1px solid var(--color-border-tertiary);
 
   svg {
-    font-size: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+
+    fill: var(--color-text-accent);
   }
 
   &.ant-avatar-lg {

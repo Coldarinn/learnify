@@ -12,7 +12,7 @@ export class TwoFaService {
     const user = await this.userService.getById(userId)
 
     const secret = speakeasy.generateSecret({
-      name: `Tessera (${user.email})`,
+      name: `Learnlify (${user.email})`,
     }) as GeneratedSecretWithOtpAuthUrl
 
     await this.userService.update(userId, {

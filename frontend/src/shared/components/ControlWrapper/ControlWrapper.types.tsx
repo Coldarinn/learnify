@@ -6,6 +6,7 @@ export type ControlWrapperProps = React.PropsWithChildren<{
   error?: string
   label?: React.ReactNode
   caption?: React.ReactNode
+  view?: "vertical" | "horizontal"
   size?: "s" | "m" | "l"
   formControlStatus?: FormItemProps["status"]
   className?: string

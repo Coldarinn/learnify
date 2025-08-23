@@ -1,7 +1,8 @@
 import { useState } from "react"
 
+import { Button } from "@/shared/components/Button"
+
 import { ResetModal } from "./ResetModal"
-import { Button } from "./styles"
 
 export const ForgotPassword = () => {
   const [isOpen, setIsOpen] = useState(false)

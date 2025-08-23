@@ -1,9 +1,8 @@
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 import AntInput from "antd/es/input"
 
-import { ControlWrapper, ControlWrapperProps } from "@/shared/components/ControlWrapper"
-
+import { ControlWrapper, ControlWrapperProps } from "../ControlWrapper"
 import { InputProps } from "./Input.types"
 
 export const Wrapper = styled(ControlWrapper)`
@@ -81,6 +80,19 @@ export const StyledInput = styled(AntInput)`
         background-color 0s 600000s,
         color 0s 600000s !important;
     }
+
+    .anticon {
+      color: inherit;
+
+      svg {
+        width: 1em;
+        height: 1em;
+
+        fill: currentColor;
+
+        transition: color var(--ant-motion-duration-mid) var(--ant-motion-ease-in-out);
+      }
+    }
   }
 `
 
@@ -89,7 +101,7 @@ export const sizeStyles: Record<NonNullable<InputProps["size"]>, SerializedStyle
     height: 24px;
     padding: var(--gap-6xs) var(--gap-3xs);
 
-    font: var(--font-body-normal-s);
+    font: var(--font-body-regular-s);
 
     border-radius: var(--radius-2xs);
   `,
@@ -97,7 +109,7 @@ export const sizeStyles: Record<NonNullable<InputProps["size"]>, SerializedStyle
     height: 32px;
     padding: var(--gap-4xs) var(--gap-2xs);
 
-    font: var(--font-body-normal-s);
+    font: var(--font-body-regular-s);
 
     border-radius: var(--radius-xs);
   `,
@@ -105,7 +117,7 @@ export const sizeStyles: Record<NonNullable<InputProps["size"]>, SerializedStyle
     height: 46px;
     padding: var(--gap-2xs) var(--gap-sm) var(--gap-xs) var(--gap-sm);
 
-    font: var(--font-body-normal-m);
+    font: var(--font-body-regular-m);
 
     border-radius: var(--radius-md);
   `,

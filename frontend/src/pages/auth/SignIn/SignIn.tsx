@@ -1,10 +1,11 @@
+import { Link, useNavigate } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { Form } from "antd"
 import { useLayoutEffect } from "react"
 
-import { Form, FormInput } from "@/shared/components"
-import { Link, useNavigate } from "@/shared/router"
+import { FormInput } from "@/shared/components/Input"
 
-import { Footer, Button, Title, Divider } from "../styles"
+import { Button, Divider, Footer, Title } from "../styles"
 import { ForgotPassword } from "./ForgotPassword/ForgotPassword"
 
 export const SignIn = () => {

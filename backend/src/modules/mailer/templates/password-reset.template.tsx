@@ -12,7 +12,7 @@ interface Props {
 export const PasswordResetTemplate = ({ resetUrl, firstName, lastName, metadata }: Props) => (
   <Html>
     <Head />
-    <Preview>Reset your Tessera password</Preview>
+    <Preview>Reset your Learnlify password</Preview>
 
     <Body style={main}>
       <Container style={container}>
@@ -22,7 +22,7 @@ export const PasswordResetTemplate = ({ resetUrl, firstName, lastName, metadata 
           Hi, {lastName} {firstName}!
           <br />
           <br />
-          We received a request to reset your password for your Tessera account. If you made this request, click the button below to set a new
+          We received a request to reset your password for your Learnlify account. If you made this request, click the button below to set a new
           password.
         </Text>
 

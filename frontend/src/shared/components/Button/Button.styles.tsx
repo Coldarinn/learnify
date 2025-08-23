@@ -1,4 +1,4 @@
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Button from "antd/es/button"
 
@@ -29,13 +29,18 @@ export const StyledButton = styled(Button)<{ isLoading?: ButtonProps["loading"] 
     line-height: 0;
 
     svg {
-      font-size: var(--loader-size);
+      width: var(--loader-size);
+      height: var(--loader-size);
+
       vertical-align: middle;
+
+      fill: currentcolor;
     }
   }
 
   .ant-btn-loading-icon svg {
-    font-size: var(--loader-size);
+    width: var(--loader-size);
+    height: var(--loader-size);
   }
 
   &:disabled {
@@ -116,6 +121,10 @@ export const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SerializedStyl
       --radius: var(--radius-xs);
       --loader-size: 14px;
     }
+
+    &${StyledButton}:not(.ant-btn-icon-only) {
+      min-width: 64px;
+    }
   `,
   s: css`
     &${StyledButton} {
@@ -126,20 +135,24 @@ export const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SerializedStyl
       --radius: var(--radius-sm);
       --loader-size: 16px;
     }
+
+    &${StyledButton}:not(.ant-btn-icon-only) {
+      min-width: 64px;
+    }
   `,
-  m: css``,
+  m: css`
+    &${StyledButton}:not(.ant-btn-icon-only) {
+      min-width: 74px;
+    }
+  `,
   l: css`
     &${StyledButton} {
       --height: 50px;
       --padding: var(--gap-xl);
     }
-  `,
-  xl: css`
-    &${StyledButton} {
-      --height: 56px;
-      --padding: var(--gap-2xl);
-      --font: var(--font-subheading-xl);
-      --loader-size: 24px;
+
+    &${StyledButton}:not(.ant-btn-icon-only) {
+      min-width: 96px;
     }
   `,
 }
@@ -183,12 +196,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --border-color-disabled: var(--color-border-secondary);
 
     border-width: 1px;
-
-    .anticon-loading {
-      color: var(--color);
-    }
   `,
-  link: css`
+  "link-primary": css`
     --bg-color: transparent;
     --bg-color-hover: transparent;
     --bg-color-active: transparent;
@@ -201,9 +210,23 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
 
     padding-right: 0;
     padding-left: 0;
+  `,
+  "link-secondary": css`
+    --bg-color: transparent;
+    --bg-color-hover: transparent;
+    --bg-color-active: transparent;
+    --bg-color-disabled: transparent;
+    --bg-color-loading: transparent;
+    --color: var(--color-text-secondary);
+    --color-hover: var(--color-text-accent-hover);
+    --color-active: var(--color-text-accent);
+    --color-disabled: var(--color-text-disabled);
+
+    padding-right: 0;
+    padding-left: 0;
 
     .anticon-loading {
-      color: var(--color);
+      color: var(--color-icon-accent);
     }
   `,
   "extra-primary": css`
@@ -215,17 +238,6 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --color: var(--color-text-primary);
     --color-hover: var(--color-text-primary);
     --color-active: var(--color-text-primary);
-    --color-disabled: var(--color-text-disabled);
-  `,
-  "extra-secondary": css`
-    --bg-color: transparent;
-    --bg-color-hover: transparent;
-    --bg-color-active: transparent;
-    --bg-color-disabled: transparent;
-    --bg-color-loading: transparent;
-    --color: var(--color-text-secondary);
-    --color-hover: var(--color-text-accent-hover);
-    --color-active: var(--color-text-accent);
     --color-disabled: var(--color-text-disabled);
   `,
   "extra-outline": css`
@@ -246,11 +258,11 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     border-width: 1px;
 
     &:has(.anticon-loading) {
-      border-color: var(--border-color-active);
+      border-color: var(--border-color-active) !important;
     }
 
     .anticon-loading {
-      color: var(--color);
+      color: var(--color-icon-accent);
     }
   `,
 }

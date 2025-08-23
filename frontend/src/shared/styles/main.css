@@ -12,14 +12,12 @@ html {
   box-sizing: border-box;
   scroll-behavior: smooth;
   width: 100%;
-  height: fit-content;
-  min-height: 100vh;
 }
 
 body {
-  font: var(--font-body-normal-m);
+  font: var(--font-body-regular-m);
   font-family: var(--font-family-base);
-  -webkit-font-smoothing: antialiased; /* Улучшение сглаживания шрифтов */
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text-primary);
 
@@ -70,21 +68,11 @@ picture {
   pointer-events: none;
 }
 
-svg:not(.clear),
-svg:not(.clear) * {
-  overflow-clip-margin: content-box;
-  fill: currentcolor;
-  width: 1em;
-  height: 1em;
-}
-
-/* Общий стиль скроллбара */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
-/* Ползунок  */
 ::-webkit-scrollbar-thumb {
   background: var(--color-surface-base-quaternary);
   border-radius: var(--radius-2xl);
@@ -93,7 +81,6 @@ svg:not(.clear) * {
   background: var(--color-surface-base-quaternary-hover);
 }
 
-/* Фон скроллбара */
 ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: var(--radius-2xl);

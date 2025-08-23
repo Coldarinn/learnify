@@ -1,4 +1,4 @@
-import { sizeStyles, StyledBadge } from "./Badge.styles"
+import { StyledBadge, sizeStyles } from "./Badge.styles"
 import { BadgeProps } from "./Badge.types"
 
 export const Badge = (props: BadgeProps) => {

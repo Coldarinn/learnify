@@ -33,17 +33,17 @@ export const Alert = styled(BaseAlert)`
     .ant-alert-message {
       margin-bottom: var(--gap-5xs);
 
-      font: var(--font-subheading-l);
+      font: var(--font-subheading-xl);
       color: var(--color-text-primary);
     }
 
     .ant-alert-description {
-      font: var(--font-body-normal-s);
+      font: var(--font-body-regular-s);
       color: var(--color-text-primary);
     }
   }
 
-  .ant-alert-close {
+  .ant-alert-close svg {
     font-size: 14px;
     color: var(--color-icon-tertiary);
   }
@@ -82,53 +82,48 @@ export const StyledNotification = css`
     --background-color: var(--color-surface-elements-sub-info);
     --icon-color: var(--color-icon-info);
     --icon-background-color: var(--color-blue-200);
+    --icon-size: 24px;
 
     padding: var(--gap-xs) !important;
 
     background-color: var(--background-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
+    box-shadow: none;
+
+    .ant-notification-notice-icon {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      width: var(--icon-size);
+      height: var(--icon-size);
+
+      font-size: 17px;
+      color: var(--icon-color);
+
+      background-color: var(--icon-background-color);
+      border-radius: var(--radius-circle);
+    }
 
     .ant-notification-notice-content {
-      --icon-size: 24px;
-      --left-margin: calc(var(--icon-size) + var(--gap-3xs));
-
-      .ant-notification-notice-icon {
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        width: var(--icon-size);
-        height: var(--icon-size);
-
-        font-size: 17px;
-        color: var(--icon-color);
-
-        background-color: var(--icon-background-color);
-        border-radius: var(--radius-circle);
-      }
-
       .ant-notification-notice-message {
-        margin-inline-start: var(--left-margin);
+        margin-inline-start: calc(var(--icon-size) + var(--gap-3xs));
         margin-bottom: var(--gap-5xs);
 
-        font: var(--font-subheading-l);
+        font: var(--font-subheading-xl);
         color: var(--color-text-primary);
       }
 
       .ant-notification-notice-description {
-        margin-inline-start: var(--left-margin);
-
-        font: var(--font-body-normal-s);
+        font: var(--font-body-regular-s);
         color: var(--color-text-primary);
       }
     }
 
-    .ant-notification-notice-close {
-      top: var(--gap-xs);
-      right: var(--gap-xs);
-
+    .ant-notification-notice-close svg {
+      font-size: 14px;
       color: var(--color-icon-tertiary);
     }
 
@@ -151,6 +146,13 @@ export const StyledNotification = css`
       --background-color: var(--color-surface-elements-sub-success);
       --icon-color: var(--color-icon-success);
       --icon-background-color: var(--color-green-200);
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+
+      fill: currentColor;
     }
   }
 `

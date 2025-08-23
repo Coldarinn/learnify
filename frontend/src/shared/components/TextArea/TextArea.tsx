@@ -1,6 +1,6 @@
 import React from "react"
 
-import { sizeStyles, StyledTextArea, Wrapper } from "./TextArea.styles"
+import { StyledTextArea, Wrapper, sizeStyles } from "./TextArea.styles"
 import { TextAreaProps, TextAreaRef } from "./TextArea.types"
 
 export const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>((props, ref) => {

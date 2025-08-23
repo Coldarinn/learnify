@@ -1,7 +1,7 @@
 import ConfigProvider from "antd/es/config-provider"
 import React from "react"
 
-import { Body, Caption, Children, sizeStyles, StyledSwitch, Wrapper } from "./Switch.styles"
+import { Body, Caption, Children, StyledSwitch, Wrapper, sizeStyles } from "./Switch.styles"
 import { SwitchProps, SwitchRef } from "./Switch.types"
 
 export const Switch = React.forwardRef<SwitchRef, SwitchProps>((props, ref) => {

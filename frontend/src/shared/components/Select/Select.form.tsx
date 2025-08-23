@@ -1,8 +1,8 @@
 import React from "react"
 
+import { Form, FormItemProps } from "../Form"
 import { Select } from "./Select"
 import { SelectProps, SelectRef } from "./Select.types"
-import { Form, FormItemProps } from "../Form"
 
 type Props<T> = {
   formItem?: FormItemProps<T>

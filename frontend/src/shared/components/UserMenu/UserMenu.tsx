@@ -1,6 +1,7 @@
 import { Avatar } from "@/shared/components/Avatar"
 import { Button } from "@/shared/components/Button"
 import { Popover } from "@/shared/components/Popover"
+
 import LogoutIcon from "@/shared/icons/arrow-logout-2.svg"
 import CopyIcon from "@/shared/icons/copy.svg"
 
@@ -20,7 +21,7 @@ const UserMenuContent = (props: UserMenuContentProps) => {
           {email && (
             <Email className="user-menu-email">
               <span>{email}</span>
-              <Button size="xs" type="extra-secondary" icon={<CopyIcon />} onClick={() => navigator.clipboard.writeText(email)} />
+              <Button size="xs" type="link-secondary" icon={<CopyIcon />} onClick={() => navigator.clipboard.writeText(email)} />
             </Email>
           )}
         </div>

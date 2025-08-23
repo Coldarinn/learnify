@@ -1,4 +1,4 @@
-import { css, type SerializedStyles } from "@emotion/react"
+import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
 import TextArea from "antd/es/input/TextArea"
 
@@ -67,7 +67,7 @@ export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedSt
       height: 56px;
       padding: var(--gap-3xs);
 
-      font: var(--font-subheading-m);
+      font: var(--font-body-regular-s);
 
       border-radius: var(--radius-sm);
     }
@@ -77,7 +77,7 @@ export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedSt
       height: 86px;
       padding: var(--gap-2xs);
 
-      font: var(--font-subheading-l);
+      font: var(--font-body-regular-s);
 
       border-radius: var(--radius-md);
     }
@@ -87,7 +87,7 @@ export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedSt
       height: 106px;
       padding: var(--gap-sm);
 
-      font: var(--font-subheading-l);
+      font: var(--font-body-regular-m);
 
       border-radius: var(--radius-md);
     }
