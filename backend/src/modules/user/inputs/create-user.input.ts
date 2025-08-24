@@ -27,5 +27,5 @@ export class CreateUserInput {
 
   @Field(() => String, { nullable: true })
   @MinLength(6)
-  avatar?: string
+  avatarUrl?: string
 }

@@ -1,3 +1,4 @@
+import { useApiAction } from "@/shared/api"
 import { Link, useNavigate } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { Form } from "antd"
@@ -5,6 +6,7 @@ import { useLayoutEffect } from "react"
 
 import { FormInput } from "@/shared/components/Input"
 
+import { signInOAuthAction } from "../api"
 import { Button, Divider, Footer, Title } from "../styles"
 import { ForgotPassword } from "./ForgotPassword/ForgotPassword"
 
@@ -16,67 +18,22 @@ export const SignIn = () => {
     navigate("/")
   }
 
+  const signInOAuth = useApiAction(signInOAuthAction, {
+    error: "Failed to sign in",
+  })
+
   useLayoutEffect(() => {
-    console.log("window.location: ", window.location)
     const code = new URLSearchParams(window.location.search).get("code")
     const access_token = new URLSearchParams(window.location.hash).get("access_token")
-    // remove code and access_token from url
-    console.log("code: ", code)
-    console.log("access_token: ", access_token)
+    window.history.replaceState({}, document.title, window.location.pathname)
+
+    if (code) signInOAuth({ code, provider: "yandex" })
+    if (access_token) signInOAuth({ code: access_token, provider: "google" })
   }, [])
-
-  const redirectToYandex = () => {
-    const clientId = "da3a58a6f6d440909e444e48dab9a348"
-    const redirectUri = "http://localhost:3000/auth/sign-in"
-
-    const authUrl =
-      "https://oauth.yandex.ru/authorize?" +
-      new URLSearchParams({
-        response_type: "code",
-        client_id: clientId,
-        redirect_uri: redirectUri,
-        force_confirm: "yes",
-      }).toString()
-
-    window.location.href = authUrl
-  }
-
-  function oauthSignIn() {
-    const oauth2Endpoint = "https://accounts.google.com/o/oauth2/v2/auth"
-
-    const form = document.createElement("form")
-    form.setAttribute("method", "GET")
-    form.setAttribute("action", oauth2Endpoint)
-
-    const params = {
-      client_id: "566926243482-72pudmt4a11rm908gensjkcg6ailoisv.apps.googleusercontent.com",
-      redirect_uri: "http://localhost:3000/auth/sign-in",
-      response_type: "token",
-      scope: "openid email profile",
-      include_granted_scopes: "true",
-      state: "pass-through value",
-    }
-
-    for (const p in params) {
-      const input = document.createElement("input")
-      input.setAttribute("type", "hidden")
-      input.setAttribute("name", p)
-      // @ts-ignore
-      input.setAttribute("value", params[p])
-      form.appendChild(input)
-    }
-
-    document.body.appendChild(form)
-    form.submit()
-    form.remove()
-  }
 
   return (
     <>
       <Title>Sign In</Title>
-
-      <button onClick={redirectToYandex}>Войти через Яндекс</button>
-      <button onClick={oauthSignIn}>Войти через Google</button>
 
       <Form name="signin" onFinish={onFinish}>
         <FormInput

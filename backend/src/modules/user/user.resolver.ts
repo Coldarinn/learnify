@@ -24,7 +24,7 @@ export class UserResolver {
     const user = await this.userService.getById(userId)
     const safeUser = toSafeUser(user)
 
-    if (user.avatarKey) safeUser.avatarUrl = await this.s3Service.getPresignedUrl({ key: user.avatarKey })
+    if (user.avatarKey && !safeUser.avatarUrl) safeUser.avatarUrl = await this.s3Service.getPresignedUrl({ key: user.avatarKey })
 
     return safeUser
   }

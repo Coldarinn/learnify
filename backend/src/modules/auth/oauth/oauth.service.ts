@@ -56,7 +56,7 @@ export class OAuthService {
             username,
             firstName: profile.firstName || "",
             lastName: profile.lastName || "",
-            avatar: profile.avatar,
+            avatarUrl: profile.avatar,
             password: "",
           },
           tx

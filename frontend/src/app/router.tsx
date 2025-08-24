@@ -1,4 +1,9 @@
-import { Navigate, createBrowserRouter } from "react-router"
+import { userAtom } from "@/entities/user"
+import { Navigate } from "@/shared/router"
+import { computed } from "@reatom/core"
+import { reatomComponent } from "@reatom/react"
+import { ReactNode } from "react"
+import { createBrowserRouter } from "react-router"
 import { type RouteObject } from "react-router"
 
 import { Dashboard } from "@/pages/Dashboard"
@@ -6,10 +11,31 @@ import { AuthLayout, SignIn, SignUp } from "@/pages/auth"
 
 import { Layout } from "./Layout"
 
+type Props = {
+  children: ReactNode
+}
+const isAuth = computed(() => !!userAtom().id)
+
+const ProtectedRoute = reatomComponent((props: Props) => {
+  const { children } = props
+
+  return isAuth() ? children : <Navigate to="/auth/sign-in" replace />
+})
+
+const GuestRoute = reatomComponent((props: Props) => {
+  const { children } = props
+
+  return !isAuth() ? children : <Navigate to="/dashboard" replace />
+})
+
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -21,13 +47,17 @@ export const routes: RouteObject[] = [
       },
       {
         path: "*",
-        element: <Navigate to="/" replace />,
+        element: <Navigate to="/dashboard" replace />,
       },
     ],
   },
   {
     path: "/auth",
-    element: <AuthLayout />,
+    element: (
+      <GuestRoute>
+        <AuthLayout />
+      </GuestRoute>
+    ),
     children: [
       {
         index: true,
@@ -41,7 +71,15 @@ export const routes: RouteObject[] = [
         path: "sign-up",
         element: <SignUp />,
       },
+      {
+        path: "*",
+        element: <Navigate to="/auth/sign-in" replace />,
+      },
     ],
+  },
+  {
+    path: "*",
+    element: <Navigate to="/dashboard" replace />,
   },
 ]
 
