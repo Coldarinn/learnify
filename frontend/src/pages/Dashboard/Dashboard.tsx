@@ -6,8 +6,8 @@ import { FormSelect } from "@/shared/components/Select"
 import { FormSwitch } from "@/shared/components/Switch"
 import { FormTextArea } from "@/shared/components/TextArea"
 
-import { Form, SubmitBtn } from "./Dashboard.styles"
 import { createCourseAction } from "./api/api"
+import { Form, SubmitBtn } from "./styles"
 import { CreateCourseDto } from "./types"
 
 export const Dashboard = reatomComponent(() => {

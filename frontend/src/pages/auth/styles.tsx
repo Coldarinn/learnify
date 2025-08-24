@@ -73,6 +73,10 @@ export const Title = styled.h1`
 export const Divider = styled(BaseDivider)`
   margin: 0 !important;
 `
+export const OAuth = styled.div`
+  display: flex;
+  gap: var(--gap-md);
+`
 export const Button = styled(BaseButton)`
   width: 100%;
 

@@ -2,8 +2,8 @@ import { Popover } from "@/shared/components/Popover"
 
 import SupportIcon from "@/shared/icons/support-bold.svg"
 
-import { Button, Content, Divider, Item, Wrapper } from "./Support.styles"
-import { SupportProps } from "./Support.types"
+import { Button, Content, Divider, Item, Wrapper } from "./styles"
+import { SupportProps } from "./types"
 
 const SupportContent = (props: SupportProps) => {
   const { phone, email } = props

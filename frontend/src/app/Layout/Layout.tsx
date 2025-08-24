@@ -3,8 +3,8 @@ import { Outlet } from "react-router"
 import ArrowAltIcon from "@/shared/icons/arrow-double-alt-bold.svg"
 
 import { Header } from "./Header"
-import { CollapseTrigger, StyledContent, StyledLayout, StyledMenu, StyledSider } from "./Layout.styles"
 import DashboardIcon from "./icons/dashboard.svg"
+import { CollapseTrigger, StyledContent, StyledLayout, StyledMenu, StyledSider } from "./styles"
 
 export const Layout = () => {
   return (

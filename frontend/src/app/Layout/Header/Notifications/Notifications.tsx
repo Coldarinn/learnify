@@ -4,8 +4,8 @@ import { Popover } from "@/shared/components/Popover"
 
 import BellIcon from "@/shared/icons/bell-bold.svg"
 
-import { Button, Content } from "./Notifications.styles"
-import { NotificationsProps } from "./Notifications.types"
+import { Button, Content } from "./styles"
+import { NotificationsProps } from "./types"
 
 const NotificationsContent = (props: NotificationsProps) => {
   const { notifications } = props

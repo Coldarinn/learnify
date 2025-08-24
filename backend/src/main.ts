@@ -50,6 +50,7 @@ async function bootstrap() {
 
   const rawOrigins = config.get<string>("ALLOWED_ORIGINS")
   const origin = rawOrigins?.split(",").map((origin) => origin.trim())
+  console.log("origin: ", origin)
   app.enableCors({
     origin,
     credentials: true,

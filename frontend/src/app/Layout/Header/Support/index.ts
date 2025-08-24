@@ -1,2 +1,2 @@
 export { Support } from "./Support"
-export type { SupportProps } from "./Support.types"
+export type { SupportProps } from "./types"

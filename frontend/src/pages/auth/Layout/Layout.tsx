@@ -1,6 +1,6 @@
 import { Outlet } from "react-router"
 
-import { Bg, Container, Content, Wrapper } from "../auth.styles"
+import { Bg, Container, Content, Wrapper } from "../styles"
 import BgImg from "./bg.svg"
 
 export const Layout = () => {

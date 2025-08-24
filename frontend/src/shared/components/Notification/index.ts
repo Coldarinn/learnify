@@ -1,3 +1,4 @@
 export { Notification } from "./Notification"
-export { useGlobalNotification, NotificationProvider } from "./NotificationProvider"
+export { NotificationProvider } from "./NotificationProvider"
+export { useNotification } from "./useNotification"
 export type { NotificationConfig, NotificationArgsProps, NotificationProps } from "./Notification.types"

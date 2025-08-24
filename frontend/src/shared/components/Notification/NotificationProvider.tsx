@@ -1,18 +1,18 @@
 import { NotificationInstance } from "antd/es/notification/interface"
-import { createContext, useContext } from "react"
+import { createContext } from "react"
 
-import { useNotification } from "./useNotification"
+import { useLocalNotification } from "./useNotification"
 
 type Props = {
   children: React.ReactNode
 }
 
-const NotificationContext = createContext<NotificationInstance>({} as NotificationInstance)
+export const NotificationContext = createContext<NotificationInstance>({} as NotificationInstance)
 
 export const NotificationProvider = (props: Props) => {
   const { children } = props
 
-  const { api, contextHolder } = useNotification()
+  const { api, contextHolder } = useLocalNotification()
 
   return (
     <NotificationContext.Provider value={api}>
@@ -20,10 +20,4 @@ export const NotificationProvider = (props: Props) => {
       {children}
     </NotificationContext.Provider>
   )
-}
-
-export const useGlobalNotification = () => {
-  const ctx = useContext(NotificationContext)
-  if (!ctx) throw new Error("useGlobalNotification must be used inside NotificationProvider")
-  return ctx
 }

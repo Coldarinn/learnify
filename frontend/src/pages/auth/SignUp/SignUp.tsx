@@ -1,33 +1,31 @@
+import { useApiAction } from "@/shared/api"
 import { Link, useNavigate } from "@/shared/router"
-import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
 
 import { Form } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
-import { useGlobalNotification } from "@/shared/components/Notification"
 
-import { Button, Divider, Footer, Title } from "../auth.styles"
-import { SignUpInput } from "./SignUp.types"
+import { Button, Divider, Footer, OAuth, Title } from "../styles"
 import { signUpAction } from "./api"
+import YandexIcon from "./icons/yandex.svg"
+import { SignUpInput } from "./types"
 
 export const SignUp = reatomComponent(() => {
   const navigate = useNavigate()
 
-  const notify = useGlobalNotification()
-
   const isFetching = !signUpAction.ready()
+
+  const signUp = useApiAction(signUpAction, {
+    error: "Failed to create an account",
+    success: "A confirmation email has been sent to your email address",
+  })
 
   const onFinish = async (values: SignUpInput) => {
     if (isFetching) return
 
-    try {
-      await signUpAction(values)
-      notify.success({ message: "A confirmation email has been sent to your email address" })
-      navigate("/auth/sign-in")
-    } catch (err) {
-      const error: Error = err instanceof Error ? err : new Error("Failed to create an account")
-      notify.error({ message: error.message })
-    }
+    await signUp(values)
+    navigate("/auth/sign-in")
   }
 
   return (
@@ -121,6 +119,16 @@ export const SignUp = reatomComponent(() => {
       </Form>
 
       <Divider>or</Divider>
+
+      <OAuth>
+        <Button icon={<GoogleOutlined />} size="l">
+          Sign Up with Google
+        </Button>
+
+        <Button icon={<YandexIcon />} size="l">
+          Sign Up with Yandex
+        </Button>
+      </OAuth>
 
       <Footer>
         <p>Already have an account? </p>
