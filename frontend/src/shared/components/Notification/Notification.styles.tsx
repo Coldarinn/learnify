@@ -108,6 +108,8 @@ export const StyledNotification = css`
     }
 
     .ant-notification-notice-content {
+      padding-right: var(--gap-md);
+
       .ant-notification-notice-message {
         margin-inline-start: calc(var(--icon-size) + var(--gap-3xs));
         margin-bottom: var(--gap-5xs);
@@ -122,9 +124,19 @@ export const StyledNotification = css`
       }
     }
 
-    .ant-notification-notice-close svg {
-      font-size: 14px;
-      color: var(--color-icon-tertiary);
+    .ant-notification-notice-close {
+      width: 14px !important;
+      height: 14px !important;
+
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+
+      background: none !important;
+
+      svg {
+        font-size: 14px;
+        color: var(--color-icon-tertiary);
+      }
     }
 
     &.ant-notification-notice-warning {
