@@ -15,15 +15,20 @@ export const Wrapper = styled.div`
 
   position: relative;
 
-  > svg {
+  > img {
     position: absolute;
     left: 0;
     top: 0;
-    right: 0;
-    bottom: 0;
 
     width: 100%;
     height: 100%;
+    object-fit: cover;
+
+    mix-blend-mode: luminosity;
+  }
+
+  .oauth-loader {
+    position: fixed;
   }
 `
 export const Container = styled.section`

@@ -1,5 +1,7 @@
 import { atom, effect, withInit } from "@reatom/core"
 
+import { withReset } from "@/shared/utils/withReset"
+
 import { User } from "./model"
 
 const persistKey = "learnify-user"
@@ -18,7 +20,10 @@ const initUser: User = {
   updatedAt: new Date(),
 }
 
-export const userAtom = atom<User>(initUser).extend(withInit(() => JSON.parse(localStorage.getItem(persistKey) || JSON.stringify(initUser))))
+export const userAtom = atom<User>(initUser).extend(
+  withInit(() => JSON.parse(localStorage.getItem(persistKey) || JSON.stringify(initUser))),
+  withReset(initUser)
+)
 
 effect(() => {
   const user = userAtom()

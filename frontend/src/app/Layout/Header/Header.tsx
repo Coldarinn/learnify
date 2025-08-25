@@ -1,23 +1,15 @@
-import { UserMenu } from "@/shared/components/UserMenu"
-
-import { Notifications } from "./Notifications"
-import { Support } from "./Support"
+import { UserMenu } from "./UserMenu"
 import LogoIcon from "./logo.svg"
 import { Content, Logo, StyledHeader } from "./styles"
-import { HeaderProps } from "./types"
 
-export const Header = (props: HeaderProps) => {
-  const { antProps, support, notifications, userMenu } = props
-
+export const Header = () => {
   return (
-    <StyledHeader className="header" {...antProps}>
+    <StyledHeader className="header">
       <Logo className="header-logo">
         <LogoIcon />
       </Logo>
       <Content className="header-content">
-        {support && <Support {...support} />}
-        {notifications && <Notifications {...notifications} />}
-        <UserMenu {...userMenu} />
+        <UserMenu />
       </Content>
     </StyledHeader>
   )

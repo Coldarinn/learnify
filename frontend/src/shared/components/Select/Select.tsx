@@ -41,7 +41,7 @@ export const Select = React.forwardRef<SelectRef, SelectProps>((props, ref) => {
         className="custom-select"
         rootClassName={`${SelectStyles} ${rootClassName}`}
         showSearch
-        placeholder="Выберите значение"
+        placeholder="Select a value"
         suffixIcon={<ArrowIcon />}
         optionRender={(option) => (
           <Option className="ant-select-item-option-content" size={size}>

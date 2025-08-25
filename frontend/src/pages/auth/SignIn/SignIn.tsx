@@ -1,12 +1,11 @@
-import { useApiAction } from "@/shared/api"
 import { Link, useNavigate } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { Form } from "antd"
-import { useLayoutEffect } from "react"
 
 import { FormInput } from "@/shared/components/Input"
+import { Loader } from "@/shared/components/Loader"
 
-import { signInOAuthAction } from "../api"
+import { OAuth, useOAuth } from "../OAuth"
 import { Button, Divider, Footer, Title } from "../styles"
 import { ForgotPassword } from "./ForgotPassword/ForgotPassword"
 
@@ -18,18 +17,7 @@ export const SignIn = () => {
     navigate("/")
   }
 
-  const signInOAuth = useApiAction(signInOAuthAction, {
-    error: "Failed to sign in",
-  })
-
-  useLayoutEffect(() => {
-    const code = new URLSearchParams(window.location.search).get("code")
-    const access_token = new URLSearchParams(window.location.hash).get("access_token")
-    window.history.replaceState({}, document.title, window.location.pathname)
-
-    if (code) signInOAuth({ code, provider: "yandex" })
-    if (access_token) signInOAuth({ code: access_token, provider: "google" })
-  }, [])
+  const { isAuthing } = useOAuth()
 
   return (
     <>
@@ -77,12 +65,14 @@ export const SignIn = () => {
 
       <Divider>or</Divider>
 
-      {/* <Button icon={<GoogleOutlined />}>Sign in with Google</Button> */}
+      <OAuth />
 
       <Footer>
         <p>Don’t have an account? </p>
         <Link to="/auth/sign-up">Sign Up</Link>
       </Footer>
+
+      <Loader className="oauth-loader" isLoading={isAuthing} />
     </>
   )
 }

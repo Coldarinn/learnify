@@ -1,7 +1,7 @@
 import { Outlet } from "react-router"
 
 import { Bg, Container, Content, Wrapper } from "../styles"
-import BgImg from "./bg.svg"
+import BgImg from "./bg.png"
 
 export const Layout = () => {
   return (
@@ -12,7 +12,7 @@ export const Layout = () => {
         </Content>
         <Bg />
       </Container>
-      <BgImg />
+      <img src={BgImg} />
     </Wrapper>
   )
 }

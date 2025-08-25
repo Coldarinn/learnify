@@ -1,14 +1,14 @@
 import { useApiAction } from "@/shared/api"
 import { Link, useNavigate } from "@/shared/router"
-import { GoogleOutlined, LockOutlined, UserOutlined } from "@ant-design/icons"
+import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
 
 import { Form } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
 
-import { Button, Divider, Footer, OAuth, Title } from "../styles"
+import { OAuth } from "../OAuth"
+import { Button, Divider, Footer, Title } from "../styles"
 import { signUpAction } from "./api"
-import YandexIcon from "./icons/yandex.svg"
 import { SignUpInput } from "./types"
 
 export const SignUp = reatomComponent(() => {
@@ -26,46 +26,6 @@ export const SignUp = reatomComponent(() => {
 
     await signUp(values)
     navigate("/auth/sign-in")
-  }
-
-  const redirectToYandexOAuth = () => {
-    const authUrl =
-      `${import.meta.env.VITE_OAUTH_YANDEX_URL}?` +
-      new URLSearchParams({
-        response_type: "code",
-        client_id: import.meta.env.VITE_OAUTH_YANDEX_CLIENT_ID,
-        redirect_uri: `${window.location.origin}${import.meta.env.VITE_OAUTH_REDIRECT_ROUTE}`,
-        force_confirm: "yes",
-      }).toString()
-
-    window.location.href = authUrl
-  }
-
-  const redirectToGoogleOAuth = () => {
-    const form = document.createElement("form")
-    form.setAttribute("method", "GET")
-    form.setAttribute("action", import.meta.env.VITE_OAUTH_GOOGLE_TOKEN_URL)
-
-    const params: Record<string, string> = {
-      client_id: import.meta.env.VITE_OAUTH_GOOGLE_CLIENT_ID,
-      redirect_uri: `${window.location.origin}${import.meta.env.VITE_OAUTH_REDIRECT_ROUTE}`,
-      response_type: "token",
-      scope: "openid email profile",
-      include_granted_scopes: "true",
-      state: "pass-through value",
-    }
-
-    for (const p in params) {
-      const input = document.createElement("input")
-      input.setAttribute("type", "hidden")
-      input.setAttribute("name", p)
-      input.setAttribute("value", params[p])
-      form.appendChild(input)
-    }
-
-    document.body.appendChild(form)
-    form.submit()
-    form.remove()
   }
 
   return (
@@ -160,15 +120,7 @@ export const SignUp = reatomComponent(() => {
 
       <Divider>or</Divider>
 
-      <OAuth>
-        <Button icon={<GoogleOutlined />} type="extra-outline" onClick={redirectToGoogleOAuth}>
-          Sign In with Google
-        </Button>
-
-        <Button icon={<YandexIcon />} type="extra-outline" onClick={redirectToYandexOAuth}>
-          Sign In with Yandex
-        </Button>
-      </OAuth>
+      <OAuth />
 
       <Footer>
         <p>Already have an account? </p>
