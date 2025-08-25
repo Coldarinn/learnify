@@ -64,6 +64,34 @@ export class AuthService {
     return true
   }
 
+  async reSendConfirmEmail(oldToken: string): Promise<boolean> {
+    const { user, token } = await this.prismaService.$transaction(async (tx) => {
+      const user = await tx.user.findFirst({
+        where: { tokens: { some: { token: oldToken } } },
+        include: { tokens: true },
+      })
+
+      if (!user) throw new Error("Invalid or expired token")
+
+      await tx.token.deleteMany({
+        where: { userId: user.id, type: "EMAIL_CONFIRM" },
+      })
+
+      const newToken = await this.tokenService.createForUser({ userId: user.id, type: "EMAIL_CONFIRM" }, tx)
+
+      return { user, token: newToken }
+    })
+
+    await this.mailerService.sendConfirmEmail({
+      to: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      token,
+    })
+
+    return true
+  }
+
   async confirmEmail(token: string): Promise<boolean> {
     const { userId } = await this.tokenService.validateToken(token, "EMAIL_CONFIRM")
 

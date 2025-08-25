@@ -1,5 +1,7 @@
-import { Link, useNavigate } from "@/shared/router"
+import { useApiAction } from "@/shared/api"
+import { Link } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { reatomComponent } from "@reatom/react"
 import { Form } from "antd"
 
 import { FormInput } from "@/shared/components/Input"
@@ -7,57 +9,63 @@ import { Loader } from "@/shared/components/Loader"
 
 import { OAuth, useOAuth } from "../OAuth"
 import { Button, Divider, Footer, Title } from "../styles"
-import { ForgotPassword } from "./ForgotPassword/ForgotPassword"
+import { ForgotPassword } from "./ForgotPassword"
+import { signInAction } from "./api"
+import { SignInInput } from "./types"
+import { useEmailConfirm } from "./useEmailConfirm"
 
-export const SignIn = () => {
-  const navigate = useNavigate()
+export const SignIn = reatomComponent(() => {
+  const signIn = useApiAction(signInAction, {
+    error: { message: "Failed to sign in" },
+  })
+  const isFetching = !signInAction.ready()
 
-  const onFinish = (values: object) => {
-    console.log("Login attempt:", values)
-    navigate("/")
+  const onFinish = async (values: SignInInput) => {
+    if (isFetching) return
+
+    await signIn(values)
   }
 
   const { isAuthing } = useOAuth()
+
+  const { isConfirming } = useEmailConfirm()
 
   return (
     <>
       <Title>Sign In</Title>
 
-      <Form name="signin" onFinish={onFinish}>
-        <FormInput
+      <Form<SignInInput> name="signin" onFinish={onFinish}>
+        <FormInput<SignInInput>
           input={{
             prefix: <UserOutlined />,
-            placeholder: "your@email.com",
+            placeholder: "email or username",
             size: "l",
-            label: "Email",
+            label: "Login",
           }}
           formItem={{
-            name: "email",
-            rules: [
-              { required: true, message: "Please input your email!" },
-              {
-                type: "email",
-                message: "The input is not valid E-mail!",
-              },
-            ],
+            name: "login",
+            rules: [{ required: true, message: "Please input your email or username" }],
           }}
         />
 
-        <FormInput
+        <FormInput<SignInInput>
           input={{
             prefix: <LockOutlined />,
+            placeholder: "password",
             type: "password",
             size: "l",
             label: "Password",
           }}
           formItem={{
             name: "password",
-            rules: [{ required: true, message: "Please input your password!" }],
+            rules: [{ required: true, message: "Please input your password" }],
           }}
         />
 
         <Form.Item>
-          <Button htmlType="submit">Sign In</Button>
+          <Button htmlType="submit" size="l" loading={isFetching}>
+            Sign In
+          </Button>
         </Form.Item>
       </Form>
 
@@ -72,7 +80,7 @@ export const SignIn = () => {
         <Link to="/auth/sign-up">Sign Up</Link>
       </Footer>
 
-      <Loader className="oauth-loader" isLoading={isAuthing} />
+      <Loader className="oauth-loader" isLoading={isAuthing || isConfirming} />
     </>
   )
-}
+})

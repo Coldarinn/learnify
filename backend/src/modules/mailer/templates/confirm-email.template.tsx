@@ -72,7 +72,7 @@ const text = {
 }
 
 const button = {
-  backgroundColor: "#2563eb",
+  backgroundColor: "#f76818",
   color: "#ffffff",
   fontSize: "16px",
   padding: "12px 24px",
@@ -82,7 +82,7 @@ const button = {
 }
 
 const link = {
-  color: "#2563eb",
+  color: "#f76818",
   textDecoration: "underline",
   wordBreak: "break-all" as const,
 }

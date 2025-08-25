@@ -43,6 +43,7 @@ type Mutation {
   enableTwoFa(code: String!): Boolean!
   generateTwoFaSecret: String!
   linkOAuthAccount(data: OAuthSignInInput!): UserModel!
+  reSendConfirmEmail(oldToken: String!): Boolean!
   requestEmailChange(data: ChangeEmailInput!): Boolean!
   requestPasswordReset(data: RequestPasswordResetInput!): Boolean!
   resetPassword(data: ResetPasswordInput!): Boolean!

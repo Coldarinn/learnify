@@ -32,6 +32,11 @@ export class AuthResolver {
   }
 
   @Mutation(() => Boolean)
+  reSendConfirmEmail(@Args("oldToken") oldToken: string): Promise<boolean> {
+    return this.authService.reSendConfirmEmail(oldToken)
+  }
+
+  @Mutation(() => Boolean)
   confirmEmail(@Args("token") token: string): Promise<boolean> {
     return this.authService.confirmEmail(token)
   }

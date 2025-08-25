@@ -16,7 +16,7 @@ export const Modal = (props: ModalProps) => {
       centered
       footer={<ModalFooter onCancel={props.onCancel} onOk={props.onOk} />}
       closeIcon={<Button type="link-secondary" size="xs" icon={<CloseIcon />} tabIndex={-1} />}
-      destroyOnClose
+      destroyOnHidden
       {...otherProps}
     />
   )

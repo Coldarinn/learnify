@@ -26,7 +26,7 @@ export class MailerService {
   async sendConfirmEmail(input: ConfirmEmailInput): Promise<SentMessageInfo> {
     const { token, ...otherInput } = input
 
-    const confirmationUrl = `${this.clientUrl}/confirm-email/${token}`
+    const confirmationUrl = `${this.clientUrl}/auth/sign-in?confirm-email-token=${token}`
     const html = await render(ConfirmEmailTemplate({ confirmationUrl, ...otherInput }))
 
     return this.sendEmail({ to: input.to, html, subject: "Confirm your email" })
@@ -35,7 +35,7 @@ export class MailerService {
   async sendPasswordResetEmail(input: PasswordResetInput): Promise<SentMessageInfo> {
     const { token, ...otherInput } = input
 
-    const resetUrl = `${this.clientUrl}/password-reset/${token}`
+    const resetUrl = `${this.clientUrl}/auth/reset-password/${token}`
     const html = await render(PasswordResetTemplate({ resetUrl, ...otherInput }))
 
     return this.sendEmail({ to: input.to, html, subject: "Password reset" })

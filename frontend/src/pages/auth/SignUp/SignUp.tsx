@@ -14,12 +14,11 @@ import { SignUpInput } from "./types"
 export const SignUp = reatomComponent(() => {
   const navigate = useNavigate()
 
-  const isFetching = !signUpAction.ready()
-
   const signUp = useApiAction(signUpAction, {
-    error: "Failed to create an account",
-    success: "A confirmation email has been sent to your email address",
+    error: { message: "Failed to create an account" },
+    success: { message: "A confirmation email has been sent to your email address" },
   })
+  const isFetching = !signUpAction.ready()
 
   const onFinish = async (values: SignUpInput) => {
     if (isFetching) return
