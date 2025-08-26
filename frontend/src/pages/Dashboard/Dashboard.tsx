@@ -12,19 +12,12 @@ import { CreateCourseDto } from "./types"
 
 export const Dashboard = reatomComponent(() => {
   const onFinish: FormProps<CreateCourseDto>["onFinish"] = async (values) => {
-    console.log("Success:", values)
     const res = await createCourseAction(values)
     console.log("res: ", res)
   }
 
-  const onFinishFailed: FormProps<CreateCourseDto>["onFinishFailed"] = (errorInfo) => {
-    console.log("Failed:", errorInfo)
-  }
-
-  const [form] = BaseForm.useForm<CreateCourseDto>()
-
   return (
-    <BaseForm className={Form} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+    <BaseForm className={Form} onFinish={onFinish}>
       <FormInput<CreateCourseDto>
         input={{ isRequired: true, label: "Course Name" }}
         formItem={{ name: "name", rules: [{ required: true, message: "Please input course name" }] }}

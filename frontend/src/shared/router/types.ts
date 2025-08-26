@@ -3,6 +3,7 @@ export type AppRoutes = {
   "/auth": never
   "/auth/sign-in": never
   "/auth/sign-up": never
+  "/auth/reset-password": { token: string }
   "/dashboard": never
 }
 

@@ -1,3 +1,4 @@
+import { css } from "@emotion/css"
 import styled from "@emotion/styled"
 
 export const Button = styled.button`
@@ -13,4 +14,14 @@ export const Text = styled.p`
 
   color: var(--color-text-secondary);
   font: var(--font-caption-l);
+`
+export const ModalStyles = css`
+  .ant-modal-content {
+    background: var(--color-surface-base-tertiary);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
+  }
+
+  .custom-input {
+    background: transparent !important;
+  }
 `

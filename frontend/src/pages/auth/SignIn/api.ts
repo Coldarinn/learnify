@@ -39,23 +39,33 @@ export const signInAction = action(async (data: SignInInput) => {
 }).extend(withAsync())
 
 export const confirmEmailAction = action(async (token: string) => {
-  await wrap(
-    gqlClient.mutate({
-      mutation: gql`
-        mutation confirmEmail($token: String!) {
-          confirmEmail(token: $token)
-        }
-      `,
-      variables: {
-        token,
-      },
-    })
-  )
+  try {
+    return await wrap(
+      gqlClient.mutate({
+        mutation: gql`
+          mutation confirmEmail($token: String!) {
+            confirmEmail(token: $token)
+          }
+        `,
+        variables: {
+          token,
+        },
+      })
+    )
+  } catch (err) {
+    let message = ""
+
+    if (err instanceof Error && "errors" in err && Array.isArray(err.errors)) message = err.errors.map((err) => err.message).join("; ")
+
+    if (err instanceof Error) message = err.message
+
+    if (message.includes("expired")) message = "Invalid or expired link. Please request a new one"
+
+    throw new Error(message)
+  }
 }).extend(withAsync())
 
 export const resendConfirmEmailAction = action(async (oldToken: string) => {
-  console.log("oldToken: ", oldToken)
-
   await wrap(
     gqlClient.mutate({
       mutation: gql`

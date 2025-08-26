@@ -1,5 +1,6 @@
+import LogoIcon from "@/shared/icons/logo.svg"
+
 import { UserMenu } from "./UserMenu"
-import LogoIcon from "./logo.svg"
 import { Content, Logo, StyledHeader } from "./styles"
 
 export const Header = () => {

@@ -3,11 +3,8 @@ import { Request } from "express"
 import { lookup } from "geoip-lite"
 
 import { SessionMetadata } from "@/modules/session/types/session-metadata.types"
-import { IS_DEV_ENV } from "@/shared/utils/is-dev.util"
 
 function getClientIp(headers: Request["headers"], ip: Request["ip"]): string {
-  if (IS_DEV_ENV) return "104.156.244.107"
-
   const cloudflareIp = Array.isArray(headers["cf-connecting-ip"]) ? headers["cf-connecting-ip"][0] : headers["cf-connecting-ip"]
 
   if (cloudflareIp) return cloudflareIp

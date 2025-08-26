@@ -3,6 +3,7 @@ import { Link } from "@/shared/router"
 import { LockOutlined, UserOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
 import { Form } from "antd"
+import { useWatch } from "antd/es/form/Form"
 
 import { FormInput } from "@/shared/components/Input"
 import { Loader } from "@/shared/components/Loader"
@@ -30,11 +31,14 @@ export const SignIn = reatomComponent(() => {
 
   const { isConfirming } = useEmailConfirm()
 
+  const [form] = Form.useForm()
+  const login = useWatch("login", form)
+
   return (
     <>
       <Title>Sign In</Title>
 
-      <Form<SignInInput> name="signin" onFinish={onFinish}>
+      <Form<SignInInput> form={form} name="signin" onFinish={onFinish}>
         <FormInput<SignInInput>
           input={{
             prefix: <UserOutlined />,
@@ -69,7 +73,7 @@ export const SignIn = reatomComponent(() => {
         </Form.Item>
       </Form>
 
-      <ForgotPassword />
+      <ForgotPassword login={login} />
 
       <Divider>or</Divider>
 

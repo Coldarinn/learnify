@@ -15,6 +15,35 @@ export const Wrapper = styled.div`
 
   position: relative;
 
+  .logo {
+    position: absolute;
+    left: var(--gap-md);
+    top: var(--gap-md);
+    z-index: 2;
+
+    svg {
+      height: 50px !important;
+      width: auto !important;
+
+      .spark {
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
+          fill: var(--color-orange-400);
+        }
+        &:nth-child(5),
+        &:nth-child(6) {
+          fill: var(--color-orange-600);
+        }
+      }
+
+      .letter {
+        fill: var(--color-orange-300);
+      }
+    }
+  }
+
   > img {
     position: absolute;
     left: 0;

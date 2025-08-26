@@ -1,6 +1,6 @@
 import { useApiAction } from "@/shared/api"
 import { Link, useNavigate } from "@/shared/router"
-import { LockOutlined, UserOutlined } from "@ant-design/icons"
+import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
 
 import { Form } from "@/shared/components/Form"
@@ -34,7 +34,7 @@ export const SignUp = reatomComponent(() => {
       <Form<SignUpInput> name="signup" onFinish={onFinish}>
         <FormInput<SignUpInput>
           input={{
-            prefix: <UserOutlined />,
+            prefix: <MailOutlined />,
             placeholder: "your@email.com",
             size: "l",
             label: "Email",
@@ -45,7 +45,7 @@ export const SignUp = reatomComponent(() => {
               { required: true, message: "Please input your email" },
               {
                 type: "email",
-                message: "The input is not valid E-mail!",
+                message: "The input is not valid email",
               },
             ],
           }}
