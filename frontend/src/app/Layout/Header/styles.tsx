@@ -1,3 +1,4 @@
+import { Link } from "@/shared/router"
 import styled from "@emotion/styled"
 import Layout from "antd/es/layout"
 
@@ -27,7 +28,7 @@ export const StyledHeader = styled(Header)`
     border-radius: 0 0 var(--radius-md) var(--radius-md);
   }
 `
-export const Logo = styled.div`
+export const Logo = styled(Link)`
   svg {
     height: 50px !important;
     width: auto !important;

@@ -6,7 +6,7 @@ import { Content, Logo, StyledHeader } from "./styles"
 export const Header = () => {
   return (
     <StyledHeader className="header">
-      <Logo className="header-logo">
+      <Logo className="header-logo" to="/dashboard">
         <LogoIcon />
       </Logo>
       <Content className="header-content">
