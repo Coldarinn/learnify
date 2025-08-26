@@ -1,4 +1,6 @@
 import { userAtom } from "@/entities/user"
+import { Link } from "@/shared/router"
+import { UserOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
 
 import { Avatar } from "@/shared/components/Avatar"
@@ -9,7 +11,7 @@ import LogoutIcon from "@/shared/icons/arrow-logout-2.svg"
 import CopyIcon from "@/shared/icons/copy.svg"
 
 import { signOutAction } from "./api"
-import { AvatarButton, Email, Header, LogoutButton, Name, StyledDivider } from "./styles"
+import { AvatarButton, Email, Header, List, LogoutButton, Name, StyledDivider } from "./styles"
 
 const UserMenuContent = reatomComponent(() => {
   const { avatarUrl, firstName, lastName, email } = userAtom()
@@ -29,6 +31,13 @@ const UserMenuContent = reatomComponent(() => {
         </div>
       </Header>
       <StyledDivider className="user-menu-divider" />
+      <List>
+        <Link to="/user-profile">
+          <Button type="link-secondary" size="s" icon={<UserOutlined />}>
+            Profile
+          </Button>
+        </Link>
+      </List>
       <LogoutButton className="user-menu-logout" onClick={signOutAction}>
         <LogoutIcon />
         <span>Выйти из профиля</span>

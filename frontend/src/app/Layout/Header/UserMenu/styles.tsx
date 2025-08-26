@@ -76,3 +76,10 @@ export const LogoutButton = styled.button`
     color: var(--color-text-accent);
   }
 `
+export const List = styled.div`
+  padding: 0 var(--gap-2xs);
+
+  display: grid;
+  gap: var(--gap-5xs);
+  justify-content: flex-start;
+`

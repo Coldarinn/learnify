@@ -7,6 +7,7 @@ import { createBrowserRouter } from "react-router"
 import { type RouteObject } from "react-router"
 
 import { Dashboard } from "@/pages/Dashboard"
+import { UserProfile } from "@/pages/UserProfile"
 import { AuthLayout, ResetPassword, SignIn, SignUp } from "@/pages/auth"
 
 import { Layout } from "./Layout"
@@ -44,6 +45,10 @@ export const routes: RouteObject[] = [
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/user-profile",
+        element: <UserProfile />,
       },
       {
         path: "*",

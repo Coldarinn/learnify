@@ -5,6 +5,7 @@ export type AppRoutes = {
   "/auth/sign-up": never
   "/auth/reset-password": { token: string }
   "/dashboard": never
+  "/user-profile": never
 }
 
 export type RoutePath = keyof AppRoutes
