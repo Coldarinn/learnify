@@ -20,8 +20,4 @@ export const ModalStyles = css`
     background: var(--color-surface-base-tertiary);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
   }
-
-  .custom-input {
-    background: transparent !important;
-  }
 `

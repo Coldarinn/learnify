@@ -1,10 +1,9 @@
 import { Args, Context, Mutation, Resolver } from "@nestjs/graphql"
 
+import { Authorization } from "@/modules/auth/decorators/auth.decorator"
+import { CurrentUser } from "@/modules/auth/decorators/current-user.decorator"
+import { UserAgent } from "@/modules/auth/decorators/user-agent.decorator"
 import { GqlContext } from "@/shared/types/gql-context.types"
-
-import { Authorization } from "../decorators/auth.decorator"
-import { CurrentUser } from "../decorators/current-user.decorator"
-import { UserAgent } from "../decorators/user-agent.decorator"
 
 import { EmailChangeService } from "./email-change.service"
 import { ChangeEmailInput } from "./inputs/change-email.input"

@@ -93,10 +93,6 @@ export const Content = styled.div`
 
   position: relative;
   z-index: 1;
-
-  .ant-input-affix-wrapper.custom-input {
-    background: transparent !important;
-  }
 `
 export const Title = styled.h1`
   font: var(--font-heading-m);

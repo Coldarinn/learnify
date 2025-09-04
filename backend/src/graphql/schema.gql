@@ -39,6 +39,7 @@ type Mutation {
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
   unlinkOAuthAccount(data: OAuthUnlinkInput!): Boolean!
+  updateProfile(data: UpdateProfileInput!): Boolean!
   uploadUserAvatar(avatar: Upload!): Boolean!
 }
 
@@ -76,6 +77,12 @@ input SignUpInput {
   lastName: String!
   password: String!
   username: String!
+}
+
+input UpdateProfileInput {
+  firstName: String
+  lastName: String
+  username: String
 }
 
 """The `Upload` scalar type represents a file upload."""

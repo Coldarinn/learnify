@@ -13,7 +13,7 @@ export const Wrapper = styled(ControlWrapper)`
       case "success":
         return css`
           ${StyledInput}.custom-input {
-            background-color: var(--color-surface-base-primary);
+            background-color: transparent;
             border-color: var(--color-border-success);
           }
         `
@@ -23,7 +23,7 @@ export const Wrapper = styled(ControlWrapper)`
             &,
             &:hover,
             &:focus-within {
-              background-color: var(--color-surface-base-primary);
+              background-color: transparent;
               border-color: var(--color-border-critical);
               box-shadow: none;
             }
@@ -40,7 +40,7 @@ export const StyledInput = styled(AntInput)`
 
     color: var(--color-text-primary);
 
-    background-color: var(--color-surface-base-primary);
+    background-color: transparent;
     border: 1px solid var(--color-border-secondary);
 
     &::placeholder {
@@ -67,7 +67,7 @@ export const StyledInput = styled(AntInput)`
       }
 
       &:hover {
-        background-color: var(--color-surface-base-primary);
+        background-color: transparent;
         border-color: var(--color-border-tertiary);
       }
     }

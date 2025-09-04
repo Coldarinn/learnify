@@ -7,6 +7,8 @@ import { FileValidationPipe } from "@/shared/pipes/file-validation.pipe"
 
 import { S3Service } from "../s3/s3.service"
 
+import { ChangePasswordInput } from "./inputs/change-password.input"
+import { UpdateProfileInput } from "./inputs/update-profile.input"
 import { UserModel } from "./models/user.model"
 import { UserService } from "./user.service"
 import { toSafeUser } from "./utils/to-safe-user.util"
@@ -31,10 +33,22 @@ export class UserResolver {
 
   @Authorization()
   @Mutation(() => Boolean)
+  async updateProfile(@CurrentUser("id") userId: string, @Args("data") data: UpdateProfileInput): Promise<boolean> {
+    return this.userService.updateProfile(userId, data)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean)
   uploadUserAvatar(
     @CurrentUser("id") userId: string,
     @Args("avatar", { type: () => GraphQLUpload }, new FileValidationPipe(2 * 1024 * 1024)) avatar: Upload
   ): Promise<boolean> {
     return this.userService.updateUserAvatar(userId, avatar as unknown as FileUpload)
+  }
+
+  @Authorization()
+  @Mutation(() => Boolean)
+  changePassword(@CurrentUser("id") userId: string, @Args("data") input: ChangePasswordInput): Promise<boolean> {
+    return this.userService.changePassword(userId, input)
   }
 }

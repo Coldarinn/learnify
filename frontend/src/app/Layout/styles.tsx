@@ -156,5 +156,7 @@ export const StyledContent = styled(Content)`
 
     background: var(--color-surface-base-background);
     border-radius: var(--radius-md) var(--radius-md) 0 var(--radius-md);
+
+    color: var(--color-text-primary);
   }
 `

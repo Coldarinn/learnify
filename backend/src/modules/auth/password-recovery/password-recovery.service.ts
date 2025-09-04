@@ -1,5 +1,5 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common"
-import { hash, verify } from "argon2"
+import { ConflictException, Injectable } from "@nestjs/common"
+import { hash } from "argon2"
 import { Request } from "express"
 
 import { MailerService } from "@/modules/mailer/mailer.service"
@@ -7,8 +7,6 @@ import { PrismaService } from "@/modules/prisma/prisma.service"
 import { getSessionMetadata } from "@/modules/session/utils/session.utils"
 import { TokenService } from "@/modules/token/token.service"
 import { UserService } from "@/modules/user/user.service"
-
-import { ChangePasswordInput } from "./inputs/change-password.input"
 
 @Injectable()
 export class PasswordRecoveryService {
@@ -60,23 +58,6 @@ export class PasswordRecoveryService {
       await this.userService.update(userId, { password: hashedPassword }, tx)
       await tx.token.delete({ where: { token } })
     })
-
-    return true
-  }
-
-  async changePassword(userId: string, input: ChangePasswordInput): Promise<boolean> {
-    const { currentPassword, newPassword } = input
-
-    const user = await this.userService.getById(userId)
-
-    if ((!user.password && user.oAuthAccounts.length === 0) || user.password) {
-      const isMatch = await verify(user.password, currentPassword)
-      if (!isMatch) throw new UnauthorizedException("Current password is incorrect")
-    }
-
-    const hashedNewPassword = await hash(newPassword)
-
-    await this.userService.update(userId, { password: hashedNewPassword })
 
     return true
   }
