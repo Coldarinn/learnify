@@ -64,10 +64,7 @@ export const PersonalInfo = reatomComponent(() => {
       const profileFields: Partial<PersonalInfoType> = {}
 
       if (form.isFieldTouched("avatar")) {
-        console.log("values.avatar: ", values.avatar)
-        const formData = new FormData()
-        formData.append("avatar", values.avatar as unknown as Blob)
-        actions.push((async () => updateAvatar(formData))())
+        actions.push((async () => updateAvatar(values.avatar))())
       }
 
       if (form.isFieldTouched("username")) {
@@ -86,7 +83,6 @@ export const PersonalInfo = reatomComponent(() => {
         actions.push(async () => updateProfile(profileFields))
       }
 
-      console.log("actions: ", actions)
       const response = await Promise.allSettled(actions)
 
       if (response.filter((item) => item.status === "fulfilled").length > 0) {
