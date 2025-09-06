@@ -33,9 +33,9 @@ export class UserResolver {
   }
 
   @Authorization()
-  @Mutation(() => Boolean)
-  async updateProfile(@CurrentUser("id") userId: string, @Args("data") data: UpdateProfileInput): Promise<boolean> {
-    return this.userService.updateProfile(userId, data)
+  @Mutation(() => UserModel)
+  async updateProfile(@CurrentUser("id") userId: string, @Args("data") data: UpdateProfileInput): Promise<UserModel> {
+    return toSafeUser(await this.userService.updateProfile(userId, data))
   }
 
   @Authorization()

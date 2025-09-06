@@ -53,7 +53,7 @@ export class UserService {
     return tx.user.update({ where: { id }, data, include: { oAuthAccounts: true, tokens: true } })
   }
 
-  async updateProfile(userId: string, data: UpdateProfileInput): Promise<boolean> {
+  async updateProfile(userId: string, data: UpdateProfileInput): Promise<FullUserModel> {
     const existingUser = await this.prismaService.user.findUnique({ where: { id: userId } })
     if (!existingUser) throw new NotFoundException("User not found")
 
@@ -62,9 +62,7 @@ export class UserService {
       if (usernameExists) throw new ConflictException("Username already in use")
     }
 
-    await this.update(userId, data)
-
-    return true
+    return await this.update(userId, data)
   }
 
   async updateUserAvatar(userId: string, avatar: FileUpload): Promise<string> {

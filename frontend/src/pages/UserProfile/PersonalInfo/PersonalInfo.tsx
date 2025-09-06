@@ -1,4 +1,4 @@
-import { userAtom } from "@/entities/user"
+import { getUserAction, userAtom } from "@/entities/user"
 import { useApiAction } from "@/shared/api"
 import { reatomComponent } from "@reatom/react"
 import { UploadFile } from "antd"
@@ -57,7 +57,14 @@ export const PersonalInfo = reatomComponent(() => {
       message: "Failed to update avatar",
     },
   })
-  const updateProfile = useApiAction(updateProfileAction)
+  const updateProfile = useApiAction(updateProfileAction, {
+    success: {
+      message: "Profile has been updated",
+    },
+    error: {
+      message: "Failed to update profile",
+    },
+  })
   const [isUpdating, setIsUpdating] = useState(false)
 
   const onFinish = async (values: PersonalInfoType) => {
@@ -87,10 +94,14 @@ export const PersonalInfo = reatomComponent(() => {
       }
 
       if (Object.keys(profileFields).length > 0) {
-        actions.push(async () => updateProfile(profileFields))
+        actions.push((async () => updateProfile(profileFields))())
       }
 
-      await Promise.allSettled(actions)
+      const response = await Promise.allSettled(actions)
+
+      if (response.filter((item) => item.status === "fulfilled").length > 0) {
+        await getUserAction()
+      }
     } finally {
       setIsUpdating(false)
     }

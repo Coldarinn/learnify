@@ -39,7 +39,7 @@ type Mutation {
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
   unlinkOAuthAccount(data: OAuthUnlinkInput!): Boolean!
-  updateProfile(data: UpdateProfileInput!): Boolean!
+  updateProfile(data: UpdateProfileInput!): UserModel!
   uploadUserAvatar(avatar: Upload!): UploadAvatarResponse!
 }
 

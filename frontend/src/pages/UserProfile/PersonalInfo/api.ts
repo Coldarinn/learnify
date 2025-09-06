@@ -1,4 +1,4 @@
-import { User, userAtom } from "@/entities/user"
+import { User } from "@/entities/user"
 import { gqlClient } from "@/shared/api"
 import { gql } from "@apollo/client"
 import { action, wrap } from "@reatom/core"
@@ -33,7 +33,7 @@ export const updateAvatarAction = action(async (file: UploadFile) => {
   )
   formData.append("0", file)
 
-  const response = await wrap(
+  await wrap(
     fetch(`${import.meta.env.VITE_SERVER_URL}/graphql`, {
       method: "POST",
       body: formData,
@@ -43,21 +43,18 @@ export const updateAvatarAction = action(async (file: UploadFile) => {
       },
     })
   )
-
-  const json = (await response.json()) as { data?: { uploadUserAvatar: Pick<User, "avatarKey" | "avatarUrl"> } }
-
-  if (!json.data?.uploadUserAvatar) return false
-  userAtom.set((prev) => ({ ...prev, ...json.data?.uploadUserAvatar }))
-
-  return true
 }).extend(withAsync())
 
 export const updateProfileAction = action(async (data: UpdateProfileInput) => {
   await wrap(
-    gqlClient.mutate({
+    gqlClient.mutate<{ updateProfile: User }>({
       mutation: gql`
         mutation updateProfile($data: UpdateProfileInput!) {
-          updateProfile(data: $data)
+          updateProfile(data: $data) {
+            username
+            firstName
+            lastName
+          }
         }
       `,
       variables: {
