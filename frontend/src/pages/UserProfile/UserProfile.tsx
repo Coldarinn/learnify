@@ -28,7 +28,7 @@ export const UserProfile = reatomComponent(() => {
 
   return (
     <Wrapper>
-      <Tabs size="l" activeKey={tab} onChange={setTab} type="square" items={tabs} />
+      <Tabs activeKey={tab} onChange={setTab} type="square" items={tabs} />
       {content()}
     </Wrapper>
   )

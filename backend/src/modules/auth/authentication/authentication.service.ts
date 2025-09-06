@@ -6,7 +6,7 @@ import { Request } from "express"
 import { TwoFaService } from "@/modules/2fa/2fa.service"
 import { SessionService } from "@/modules/session/session.service"
 import { getSessionMetadata } from "@/modules/session/utils/session.utils"
-import { UserModel } from "@/modules/user/models/user.model"
+import { FullUserModel } from "@/modules/user/models/full-user.model"
 import { UserService } from "@/modules/user/user.service"
 
 import { SignInInput } from "./inputs/sign-in.input"
@@ -26,7 +26,7 @@ export class AuthenticationService {
     headers: Request["headers"],
     ip: Request["ip"],
     userAgent: string
-  ): Promise<UserModel> {
+  ): Promise<FullUserModel> {
     const { login, password, twoFaCode } = input
 
     const user = await this.userService.findByLogin(login)
@@ -47,8 +47,7 @@ export class AuthenticationService {
 
     await this.sessionService.save(session, user.id, metadata)
 
-    const { password: _, ...safeUser } = user
-    return safeUser
+    return user
   }
 
   signOut(req: Request): Promise<boolean> {

@@ -10,6 +10,7 @@ import { S3Service } from "../s3/s3.service"
 import { ChangePasswordInput } from "./inputs/change-password.input"
 import { UpdateProfileInput } from "./inputs/update-profile.input"
 import { UserModel } from "./models/user.model"
+import { UploadAvatarResponse } from "./responses/upload-avatar.response"
 import { UserService } from "./user.service"
 import { toSafeUser } from "./utils/to-safe-user.util"
 
@@ -26,7 +27,7 @@ export class UserResolver {
     const user = await this.userService.getById(userId)
     const safeUser = toSafeUser(user)
 
-    if (user.avatarKey && !safeUser.avatarUrl) safeUser.avatarUrl = await this.s3Service.getPresignedUrl({ key: user.avatarKey })
+    if (user.avatarKey) safeUser.avatarUrl = await this.s3Service.getPresignedUrl({ key: user.avatarKey })
 
     return safeUser
   }
@@ -38,12 +39,14 @@ export class UserResolver {
   }
 
   @Authorization()
-  @Mutation(() => Boolean)
-  uploadUserAvatar(
+  @Mutation(() => UploadAvatarResponse)
+  async uploadUserAvatar(
     @CurrentUser("id") userId: string,
     @Args("avatar", { type: () => GraphQLUpload }, new FileValidationPipe(2 * 1024 * 1024)) avatar: Upload
-  ): Promise<boolean> {
-    return this.userService.updateUserAvatar(userId, avatar as unknown as FileUpload)
+  ): Promise<Pick<UserModel, "avatarKey" | "avatarUrl">> {
+    const avatarKey = await this.userService.updateUserAvatar(userId, avatar as unknown as FileUpload)
+    const avatarUrl = await this.s3Service.getPresignedUrl({ key: avatarKey })
+    return { avatarKey, avatarUrl }
   }
 
   @Authorization()

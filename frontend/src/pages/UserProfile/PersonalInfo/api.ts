@@ -1,3 +1,4 @@
+import { User, userAtom } from "@/entities/user"
 import { gqlClient } from "@/shared/api"
 import { gql } from "@apollo/client"
 import { action, wrap } from "@reatom/core"
@@ -15,7 +16,10 @@ export const updateAvatarAction = action(async (file: UploadFile) => {
     JSON.stringify({
       query: `
         mutation uploadUserAvatar($avatar: Upload!) {
-          uploadUserAvatar(avatar: $avatar)
+          uploadUserAvatar(avatar: $avatar) {
+            avatarKey
+            avatarUrl
+          }
         }
       `,
       variables: { avatar: null },
@@ -40,11 +44,12 @@ export const updateAvatarAction = action(async (file: UploadFile) => {
     })
   )
 
-  const json = await response.json()
+  const json = (await response.json()) as { data?: { uploadUserAvatar: Pick<User, "avatarKey" | "avatarUrl"> } }
 
-  if (json.errors) throw new Error(json.errors.map((e: { message: string }) => e.message).join("\n"))
+  if (!json.data?.uploadUserAvatar) return false
+  userAtom.set((prev) => ({ ...prev, ...json.data?.uploadUserAvatar }))
 
-  return json.data.uploadUserAvatar
+  return true
 }).extend(withAsync())
 
 export const updateProfileAction = action(async (data: UpdateProfileInput) => {

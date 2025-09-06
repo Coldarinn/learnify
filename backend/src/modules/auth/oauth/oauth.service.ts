@@ -5,6 +5,7 @@ import fetch from "node-fetch"
 import { OAuthProvider } from "prisma/generated"
 
 import { PrismaService } from "@/modules/prisma/prisma.service"
+import { S3Service } from "@/modules/s3/s3.service"
 import { SessionService } from "@/modules/session/session.service"
 import { getSessionMetadata } from "@/modules/session/utils/session.utils"
 import { FullUserModel } from "@/modules/user/models/full-user.model"
@@ -20,7 +21,8 @@ export class OAuthService {
     private readonly configService: ConfigService,
     private readonly userService: UserService,
     private readonly prismaService: PrismaService,
-    private readonly sessionService: SessionService
+    private readonly sessionService: SessionService,
+    private readonly s3Service: S3Service
   ) {}
 
   async signInOAuth(
@@ -33,7 +35,7 @@ export class OAuthService {
   ): Promise<UserModel> {
     const profile = await this.getProfileFromProvider(code, provider)
 
-    let user = await this.userService.findByLogin(profile.email).catch(() => null)
+    let user: UserModel | null = await this.userService.findByLogin(profile.email).catch(() => null)
 
     let oauthAccount = await this.prismaService.oAuthAccount.findUnique({
       where: {
@@ -95,7 +97,10 @@ export class OAuthService {
 
     await this.sessionService.save(session, user.id, metadata)
 
-    return toSafeUser(user as FullUserModel)
+    const safeUser = toSafeUser(user as FullUserModel)
+    if (user.avatarKey) safeUser.avatarUrl = await this.s3Service.getPresignedUrl({ key: user.avatarKey })
+
+    return safeUser
   }
 
   async linkOAuthAccount(userId: string, code: string, provider: OAuthProvider): Promise<boolean> {

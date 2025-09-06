@@ -46,7 +46,7 @@ const UserMenuContent = reatomComponent(() => {
   )
 })
 
-export const UserMenu = () => {
+export const UserMenu = reatomComponent(() => {
   const { avatarUrl } = userAtom()
 
   return (
@@ -56,4 +56,4 @@ export const UserMenu = () => {
       </AvatarButton>
     </Popover>
   )
-}
+})

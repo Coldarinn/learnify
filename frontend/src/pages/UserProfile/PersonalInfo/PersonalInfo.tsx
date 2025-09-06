@@ -1,4 +1,4 @@
-import { getUserAction, userAtom } from "@/entities/user"
+import { userAtom } from "@/entities/user"
 import { useApiAction } from "@/shared/api"
 import { reatomComponent } from "@reatom/react"
 import { UploadFile } from "antd"
@@ -35,7 +35,7 @@ export const PersonalInfo = reatomComponent(() => {
   const file = Form.useWatch("avatar", form)
 
   const avatarSrc = useMemo(() => {
-    if (!file) return undefined
+    if (!file || (file.uid === "-1" && !file.url)) return undefined
     if (file.url) return file.url
     return URL.createObjectURL(file as unknown as Blob)
   }, [file])
@@ -49,7 +49,14 @@ export const PersonalInfo = reatomComponent(() => {
     return e.file
   }
 
-  const updateAvatar = useApiAction(updateAvatarAction)
+  const updateAvatar = useApiAction(updateAvatarAction, {
+    success: {
+      message: "Avatar has been updated",
+    },
+    error: {
+      message: "Failed to update avatar",
+    },
+  })
   const updateProfile = useApiAction(updateProfileAction)
   const [isUpdating, setIsUpdating] = useState(false)
 
@@ -83,11 +90,7 @@ export const PersonalInfo = reatomComponent(() => {
         actions.push(async () => updateProfile(profileFields))
       }
 
-      const response = await Promise.allSettled(actions)
-
-      if (response.filter((item) => item.status === "fulfilled").length > 0) {
-        await getUserAction()
-      }
+      await Promise.allSettled(actions)
     } finally {
       setIsUpdating(false)
     }

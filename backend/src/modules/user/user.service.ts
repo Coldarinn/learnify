@@ -21,15 +21,16 @@ export class UserService {
     private readonly s3Service: S3Service
   ) {}
 
-  async create(input: CreateUserInput, tx: Prisma.TransactionClient = this.prismaService): Promise<User> {
-    return tx.user.create({ data: input })
+  async create(input: CreateUserInput, tx: Prisma.TransactionClient = this.prismaService): Promise<FullUserModel> {
+    return tx.user.create({ data: input, include: { oAuthAccounts: true, tokens: true } })
   }
 
-  async findByLogin(login: string): Promise<User> {
+  async findByLogin(login: string): Promise<FullUserModel> {
     const user = await this.prismaService.user.findFirst({
       where: {
         OR: [{ username: { equals: login } }, { email: { equals: login } }],
       },
+      include: { oAuthAccounts: true, tokens: true },
     })
 
     if (!user) throw new NotFoundException("User not found")
@@ -48,8 +49,8 @@ export class UserService {
     return user
   }
 
-  update(id: string, data: Partial<User>, tx: Prisma.TransactionClient = this.prismaService): Promise<User> {
-    return tx.user.update({ where: { id }, data })
+  update(id: string, data: Partial<User>, tx: Prisma.TransactionClient = this.prismaService): Promise<FullUserModel> {
+    return tx.user.update({ where: { id }, data, include: { oAuthAccounts: true, tokens: true } })
   }
 
   async updateProfile(userId: string, data: UpdateProfileInput): Promise<boolean> {
@@ -66,7 +67,7 @@ export class UserService {
     return true
   }
 
-  async updateUserAvatar(userId: string, avatar: FileUpload): Promise<boolean> {
+  async updateUserAvatar(userId: string, avatar: FileUpload): Promise<string> {
     const user = await this.getById(userId)
     const extension = mime.extension(avatar.mimetype)
 
@@ -84,9 +85,9 @@ export class UserService {
 
       if (user.avatarKey) await this.s3Service.deleteFile({ key: user.avatarKey }).catch((e) => console.error("Failed to delete old avatar", e))
 
-      await this.update(userId, { avatarKey: key })
+      await this.update(userId, { avatarKey: key, avatarUrl: null })
 
-      return true
+      return key
     } catch (error) {
       await this.s3Service.deleteFile({ key }).catch(() => {})
       throw error
