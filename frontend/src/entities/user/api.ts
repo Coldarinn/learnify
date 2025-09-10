@@ -32,5 +32,5 @@ export const getUserAction = action(async () => {
   if (!response.data) return false
   userAtom.set(response.data.me)
 
-  return true
+  return response.data.me
 }).extend(withAsync())

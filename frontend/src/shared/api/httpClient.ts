@@ -11,10 +11,10 @@ class HttpClient {
     return this.request<T>(url, { method: "GET" })
   }
 
-  async POST<T, D>(url: string, data: D): Promise<ApiResponse<T>> {
+  async POST<T, D extends string | object | FormData>(url: string, data: D): Promise<ApiResponse<T>> {
     return this.request<T>(url, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: data instanceof FormData ? data : JSON.stringify(data),
     })
   }
 
