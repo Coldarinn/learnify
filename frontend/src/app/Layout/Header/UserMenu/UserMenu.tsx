@@ -40,7 +40,7 @@ const UserMenuContent = reatomComponent(() => {
       </List>
       <LogoutButton className="user-menu-logout" onClick={signOutAction}>
         <LogoutIcon />
-        <span>Выйти из профиля</span>
+        <span>Log out of your profile</span>
       </LogoutButton>
     </>
   )

@@ -6,3 +6,9 @@ export type PersonalInfoType = {
   username: string
   avatar: UploadFile
 }
+
+export type UpdateProfileInput = {
+  username?: string
+  firstName?: string
+  lastName?: string
+}

@@ -36,6 +36,16 @@ export class EmailChangeService {
     const existing = await this.prismaService.user.findUnique({ where: { email: newEmail } })
     if (existing) throw new ConflictException("Email is already in use")
 
+    if (newEmail === user.email) throw new ConflictException("New email must be different from the current one")
+
+    const lastRequest = await this.prismaService.token.findFirst({
+      where: { userId, type: "EMAIL_CHANGE" },
+      orderBy: { createdAt: "desc" },
+    })
+
+    if (lastRequest && Date.now() - lastRequest.createdAt.getTime() < 120_000)
+      throw new ConflictException("You can request email change only once every 2 minutes")
+
     const token = await this.tokenService.createForUser({
       userId,
       type: "EMAIL_CHANGE",

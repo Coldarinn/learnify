@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import { Tabs } from "@/shared/components/Tabs"
 
+import { Email } from "./Email"
 import { PersonalInfo } from "./PersonalInfo"
 import { Wrapper } from "./styles"
 
@@ -14,7 +15,7 @@ export const UserProfile = reatomComponent(() => {
       case "personal-info":
         return <PersonalInfo />
       case "email":
-        return <div>Email</div>
+        return <Email />
       case "password":
         return <div>Password</div>
       case "sessions":

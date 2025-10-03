@@ -5,7 +5,7 @@ import { action, wrap } from "@reatom/core"
 import { withAsync } from "@reatom/core"
 import { UploadFile } from "antd/es/upload"
 
-import { UpdateProfileInput } from "../types"
+import { UpdateProfileInput } from "./types"
 
 export const updateAvatarAction = action(async (file: UploadFile) => {
   if (!(file instanceof File)) throw new Error("Invalid file")
