@@ -4,6 +4,7 @@ export type AppRoutes = {
   "/auth/sign-in": never
   "/auth/sign-up": never
   "/auth/reset-password": { token: string }
+  "/auth/email-change/confirm": { token: string }
   "/dashboard": never
   "/user-profile": never
 }

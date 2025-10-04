@@ -9,6 +9,7 @@ import { type RouteObject } from "react-router"
 import { Dashboard } from "@/pages/Dashboard"
 import { UserProfile } from "@/pages/UserProfile"
 import { AuthLayout, ResetPassword, SignIn, SignUp } from "@/pages/auth"
+import { EmailChangeConfirm } from "@/pages/auth/EmailChangeConfirm/EmailChangeConfirm"
 
 import { Layout } from "./Layout"
 
@@ -26,7 +27,9 @@ const ProtectedRoute = reatomComponent((props: Props) => {
 const GuestRoute = reatomComponent((props: Props) => {
   const { children } = props
 
-  return !isAuth() ? children : <Navigate to="/dashboard" replace />
+  if (!isAuth() || window.location.href.includes("auth/email-change/confirm")) return children
+
+  return <Navigate to="/dashboard" replace />
 })
 
 export const routes: RouteObject[] = [
@@ -79,6 +82,10 @@ export const routes: RouteObject[] = [
       {
         path: "reset-password/:token",
         element: <ResetPassword />,
+      },
+      {
+        path: "email-change/confirm/:token",
+        element: <EmailChangeConfirm />,
       },
       {
         path: "*",

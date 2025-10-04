@@ -44,7 +44,7 @@ export class MailerService {
   async sendEmailChange(input: EmailChangeInput): Promise<SentMessageInfo> {
     const { token, ...otherInput } = input
 
-    const changeUrl = `${this.clientUrl}/email-change/${token}?email=${input.to}`
+    const changeUrl = `${this.clientUrl}/auth/email-change/confirm/${token}?email=${input.to}`
     const html = await render(EmailChangeTemplate({ changeUrl, ...otherInput }))
 
     return this.sendEmail({ to: input.to, html, subject: "Email change" })

@@ -84,7 +84,7 @@ export const SignIn = reatomComponent(() => {
         <Link to="/auth/sign-up">Sign Up</Link>
       </Footer>
 
-      <Loader className="oauth-loader" isLoading={isAuthing || isConfirming} />
+      <Loader className="fixed-loader" isLoading={isAuthing || isConfirming} />
     </>
   )
 })

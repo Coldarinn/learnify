@@ -15,9 +15,6 @@ export const Email = reatomComponent(() => {
   const notify = useNotification()
 
   const user = userAtom()
-  const initialValues: Partial<ChangeEmailInput> = {
-    newEmail: user.email,
-  }
 
   const [form] = Form.useForm<ChangeEmailInput>()
 
@@ -43,7 +40,7 @@ export const Email = reatomComponent(() => {
   }
 
   return (
-    <Form<ChangeEmailInput> form={form} onFinish={onFinish} initialValues={initialValues}>
+    <Form<ChangeEmailInput> form={form} onFinish={onFinish}>
       <Header>
         <Titles>
           <Title>Email</Title>

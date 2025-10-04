@@ -56,7 +56,7 @@ export const Wrapper = styled.div`
     mix-blend-mode: luminosity;
   }
 
-  .oauth-loader {
+  .fixed-loader {
     position: fixed;
   }
 `
