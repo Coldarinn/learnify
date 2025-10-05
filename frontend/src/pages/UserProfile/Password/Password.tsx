@@ -5,8 +5,8 @@ import { Button } from "@/shared/components/Button"
 import { Form } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
 
+import { Buttons, Header, Row, RowLabel, Subtitle, Title, Titles } from "../styles"
 import { changePasswordAction } from "./api"
-import { Buttons, Header, Row, RowLabel, Subtitle, Title, Titles } from "./styles"
 import { ChangePasswordInput } from "./types"
 
 export const Password = reatomComponent(() => {

@@ -10,8 +10,8 @@ import { FormInput } from "@/shared/components/Input"
 import { useNotification } from "@/shared/components/Notification"
 import { FormUpload } from "@/shared/components/Upload"
 
+import { Avatar, Buttons, Header, Inputs, Row, RowLabel, Subtitle, Title, Titles, UploadContent } from "../styles"
 import { updateAvatarAction, updateProfileAction } from "./api"
-import { Avatar, Buttons, Header, Inputs, Row, RowLabel, Subtitle, Title, Titles, UploadContent } from "./styles"
 import { PersonalInfoType } from "./types"
 
 export const PersonalInfo = reatomComponent(() => {

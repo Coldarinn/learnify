@@ -6,6 +6,7 @@ import { Tabs } from "@/shared/components/Tabs"
 import { Email } from "./Email"
 import { Password } from "./Password"
 import { PersonalInfo } from "./PersonalInfo"
+import { Sessions } from "./Sessions"
 import { Wrapper } from "./styles"
 
 export const UserProfile = reatomComponent(() => {
@@ -20,7 +21,7 @@ export const UserProfile = reatomComponent(() => {
       case "password":
         return <Password />
       case "sessions":
-        return <div>Sessions</div>
+        return <Sessions />
       case "billing":
         return <div>Billing</div>
       case "notifications":

@@ -7,8 +7,8 @@ import { Form } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
 import { useNotification } from "@/shared/components/Notification"
 
+import { Buttons, Header, Row, RowLabel, Subtitle, Title, Titles } from "../styles"
 import { changeEmailAction } from "./api"
-import { Buttons, Header, Row, RowLabel, Subtitle, Title, Titles } from "./styles"
 import { ChangeEmailInput } from "./types"
 
 export const Email = reatomComponent(() => {
@@ -40,7 +40,7 @@ export const Email = reatomComponent(() => {
   }
 
   return (
-    <Form<ChangeEmailInput> form={form} onFinish={onFinish}>
+    <Form<ChangeEmailInput> form={form} onFinish={onFinish} autoComplete="off">
       <Header>
         <Titles>
           <Title>Email</Title>
@@ -67,6 +67,7 @@ export const Email = reatomComponent(() => {
             placeholder: "••••••",
             type: "password",
             size: "l",
+            autoComplete: "off",
           }}
           formItem={{
             name: "currentPassword",
@@ -81,6 +82,7 @@ export const Email = reatomComponent(() => {
           input={{
             placeholder: "email",
             size: "l",
+            autoComplete: "off",
           }}
           formItem={{
             name: "newEmail",
