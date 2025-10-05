@@ -1,14 +1,15 @@
+import { atom, withSearchParams } from "@reatom/core"
 import { reatomComponent } from "@reatom/react"
-import { useState } from "react"
 
 import { Tabs } from "@/shared/components/Tabs"
 
 import { Email } from "./Email"
+import { Password } from "./Password"
 import { PersonalInfo } from "./PersonalInfo"
 import { Wrapper } from "./styles"
 
 export const UserProfile = reatomComponent(() => {
-  const [tab, setTab] = useState(tabs[0].key)
+  const tab = tabAtom()
 
   const content = () => {
     switch (tab) {
@@ -17,7 +18,7 @@ export const UserProfile = reatomComponent(() => {
       case "email":
         return <Email />
       case "password":
-        return <div>Password</div>
+        return <Password />
       case "sessions":
         return <div>Sessions</div>
       case "billing":
@@ -29,7 +30,7 @@ export const UserProfile = reatomComponent(() => {
 
   return (
     <Wrapper>
-      <Tabs activeKey={tab} onChange={setTab} type="square" items={tabs} />
+      <Tabs activeKey={tab} onChange={tabAtom} type="square" items={tabs} />
       {content()}
     </Wrapper>
   )
@@ -43,3 +44,5 @@ const tabs = [
   { key: "billing", label: "Billing" },
   { key: "notifications", label: "Notifications" },
 ]
+
+const tabAtom = atom(tabs[0].key).extend(withSearchParams("activeTab"))

@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common"
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common"
 import { hash, verify } from "argon2"
 import { FileUpload } from "graphql-upload"
 import mime from "mime"
@@ -99,7 +99,7 @@ export class UserService {
 
     if ((!user.password && user.oAuthAccounts.length === 0) || user.password) {
       const isMatch = await verify(user.password, currentPassword)
-      if (!isMatch) throw new UnauthorizedException("Current password is incorrect")
+      if (!isMatch) throw new ConflictException("Current password is incorrect")
     }
 
     const hashedNewPassword = await hash(newPassword)

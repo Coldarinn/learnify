@@ -1,8 +1,8 @@
 import { userAtom } from "@/entities/user"
 import { useApiAction } from "@/shared/api"
-import { useNavigate } from "@/shared/router"
 import { reatomComponent } from "@reatom/react"
 import { useLayoutEffect, useRef } from "react"
+import { useNavigate } from "react-router"
 
 import { Loader } from "@/shared/components/Loader"
 
@@ -45,7 +45,7 @@ export const EmailChangeConfirm = reatomComponent(() => {
           if (user.id) navigate("/user-profile")
         })
         .catch(() => {
-          navigate(user.id ? "/user-profile" : "/auth/sign-in")
+          navigate(user.id ? "/user-profile?activeTab=email" : "/auth/sign-in")
         })
     } else {
       navigate(user.id ? "/user-profile" : "/auth/sign-in")

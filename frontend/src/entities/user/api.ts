@@ -7,6 +7,8 @@ import { userAtom } from "./atom"
 import { User } from "./model"
 
 export const getUserAction = action(async () => {
+  if (!userAtom().id) return
+
   const response = await wrap(
     gqlClient.query<{ me: User }>({
       query: gql`

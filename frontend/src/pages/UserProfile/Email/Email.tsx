@@ -44,7 +44,7 @@ export const Email = reatomComponent(() => {
       <Header>
         <Titles>
           <Title>Email</Title>
-          <Subtitle>Please enter new email to change your email</Subtitle>
+          <Subtitle>Please enter your new email to change your email</Subtitle>
         </Titles>
 
         <Buttons>
@@ -65,6 +65,7 @@ export const Email = reatomComponent(() => {
         <FormInput<ChangeEmailInput>
           input={{
             placeholder: "••••••",
+            type: "password",
             size: "l",
           }}
           formItem={{
