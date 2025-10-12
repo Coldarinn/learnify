@@ -1,22 +1,58 @@
-import { User } from "@/entities/user"
 import { gqlClient } from "@/shared/api"
 import { gql } from "@apollo/client"
-import { action, wrap } from "@reatom/core"
-import { withAsync } from "@reatom/core"
+import { computed, wrap } from "@reatom/core"
+import { withAsyncData } from "@reatom/core"
 
-import { ChangeSessionInput } from "./types"
+import { Session } from "./types"
 
-export const changeSessionAction = action(async (data: ChangeSessionInput) => {
-  await wrap(
-    gqlClient.mutate<{ updateProfile: User }>({
-      mutation: gql`
-        mutation requestSessionChange($data: ChangeSessionInput!) {
-          requestSessionChange(data: $data)
+export const currentSessionResource = computed(async () => {
+  const response = await wrap(
+    gqlClient.query<{ currentSession: Session }>({
+      query: gql`
+        query currentSession {
+          currentSession ${sessionFields}
         }
       `,
-      variables: {
-        data,
-      },
     })
   )
-}).extend(withAsync())
+
+  if (!response.data?.currentSession) return {}
+
+  return response.data?.currentSession
+}).extend(withAsyncData({ initState: {} }))
+
+export const sessionsResource = computed(async () => {
+  const response = await wrap(
+    gqlClient.query<{ userSessions: Session[] }>({
+      query: gql`
+        query userSessions {
+          userSessions ${sessionFields}
+        }
+      `,
+    })
+  )
+
+  if (!response.data?.userSessions?.length) return []
+
+  return response.data?.userSessions
+}).extend(withAsyncData({ initState: [] }))
+
+const sessionFields = `{
+  id
+  userId
+  createdAt
+  metadata {
+    location {
+      country
+      city
+      latitude
+      longitude
+    }
+    device {
+      browser
+      os
+      type
+    }
+    ip
+  }
+}`

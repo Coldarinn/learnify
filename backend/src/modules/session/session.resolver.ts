@@ -21,9 +21,7 @@ export class SessionResolver {
   @Authorization()
   @Query(() => [SessionModel])
   userSessions(@Context() { req }: GqlContext): Promise<SessionModel[]> {
-    if (!req.session.userId) throw new NotFoundException("Session not found")
-
-    return this.sessionService.getAllByUser(req.session.userId)
+    return this.sessionService.getAllByUser(req.session.userId!)
   }
 
   @Authorization()

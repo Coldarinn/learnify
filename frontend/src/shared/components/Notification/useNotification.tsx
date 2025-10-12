@@ -55,6 +55,6 @@ export const useLocalNotification = (props?: NotificationConfig) => {
 
 export const useNotification = () => {
   const ctx = useContext(NotificationContext)
-  if (!ctx) throw new Error("useGlobalNotification must be used inside NotificationProvider")
+  if (!ctx) throw new Error("useNotification must be used inside NotificationProvider")
   return ctx
 }
