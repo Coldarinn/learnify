@@ -7,6 +7,7 @@ import { Header, Subtitle, Title, Titles } from "../styles"
 import { Item } from "./Item"
 import { currentSessionResource, sessionsResource } from "./api"
 import { List } from "./styles"
+import { Session } from "./types"
 
 export const Sessions = reatomComponent(() => {
   const [form] = Form.useForm()
@@ -14,10 +15,11 @@ export const Sessions = reatomComponent(() => {
   const { email } = userAtom()
 
   const sessions = sessionsResource.data()
-  const currentSession = currentSessionResource.data()
+  const currentSession = currentSessionResource.data() as Session
+
+  const primarySession = sessions.find((s) => s.id === currentSession.id)
 
   const sortedSessions = sessions.slice().sort((a, b) => {
-    if (!("id" in currentSession)) return 0
     if (a.id === currentSession.id) return -1
     if (b.id === currentSession.id) return 1
     return 0
@@ -34,7 +36,7 @@ export const Sessions = reatomComponent(() => {
 
       <List>
         {sortedSessions.map((session, idx) => (
-          <Item key={session.id} session={session} isActive={!idx} />
+          <Item key={session.id} session={session} isActive={!idx} isPrimary={currentSession.id === primarySession?.id} />
         ))}
       </List>
     </Form>

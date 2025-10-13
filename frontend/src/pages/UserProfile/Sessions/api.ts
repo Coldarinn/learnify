@@ -40,6 +40,7 @@ export const sessionsResource = computed(async () => {
 const sessionFields = `{
   id
   userId
+  isPrimary
   createdAt
   metadata {
     location {

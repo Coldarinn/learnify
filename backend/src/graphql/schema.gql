@@ -51,6 +51,7 @@ type Mutation {
   signInOAuth(data: OAuthSignInInput!): UserModel!
   signOut: Boolean!
   signUp(data: SignUpInput!): Boolean!
+  terminateSession(sessionId: String!): Boolean!
   unlinkOAuthAccount(data: OAuthUnlinkInput!): Boolean!
   updateProfile(data: UpdateProfileInput!): UserModel!
   uploadUserAvatar(avatar: Upload!): UploadAvatarResponse!
@@ -68,7 +69,6 @@ input OAuthUnlinkInput {
 type Query {
   currentSession: SessionModel!
   me: UserModel!
-  terminateSession(sessionId: String!): Boolean!
   userSessions: [SessionModel!]!
 }
 
@@ -90,6 +90,7 @@ type SessionMetadataModel {
 type SessionModel {
   createdAt: String!
   id: ID!
+  isPrimary: Boolean!
   metadata: SessionMetadataModel!
   userId: String!
 }

@@ -53,6 +53,9 @@ export class SessionModel implements SessionData {
   @Field(() => String)
   createdAt: string
 
+  @Field(() => Boolean)
+  isPrimary: boolean
+
   @Field(() => SessionMetadataModel)
   metadata: SessionMetadataModel
 

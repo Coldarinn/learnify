@@ -25,6 +25,9 @@ export class SessionService {
     session.userId = userId
     session.metadata = metadata
 
+    const userSessions = await this.getAllByUser(userId)
+    session.isPrimary = userSessions.length ? false : true
+
     return new Promise((resolve, reject) => {
       session.save((err) => {
         if (err) reject(new InternalServerErrorException("Couldn't save session"))

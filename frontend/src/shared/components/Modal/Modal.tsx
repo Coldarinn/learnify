@@ -8,13 +8,22 @@ import { StyledModal } from "./Modal.styles"
 import { ModalProps } from "./Modal.types"
 
 export const Modal = (props: ModalProps) => {
-  const { rootClassName = "", ...otherProps } = props
+  const { rootClassName = "", okText, cancelText, cancelButtonProps, okButtonProps, ...otherProps } = props
 
   return (
     <AntModal
       rootClassName={`${StyledModal} ${rootClassName}`}
       centered
-      footer={<ModalFooter onCancel={props.onCancel} onOk={props.onOk} />}
+      footer={
+        <ModalFooter
+          onCancel={props.onCancel}
+          onOk={props.onOk}
+          okText={okText}
+          cancelText={cancelText}
+          okButtonProps={okButtonProps}
+          cancelButtonProps={cancelButtonProps}
+        />
+      }
       closeIcon={<Button type="link-secondary" size="xs" icon={<CloseIcon />} tabIndex={-1} />}
       destroyOnHidden
       {...otherProps}
@@ -22,13 +31,17 @@ export const Modal = (props: ModalProps) => {
   )
 }
 
-const ModalFooter = (props: Pick<ModalProps, "onCancel" | "onOk">) => (
-  <>
-    <Button type="extra-primary" size="s" onClick={props.onCancel}>
-      Закрыть
-    </Button>
-    <Button size="s" onClick={props.onOk}>
-      Ок
-    </Button>
-  </>
-)
+const ModalFooter = (props: Pick<ModalProps, "onCancel" | "onOk" | "okText" | "cancelText" | "okButtonProps" | "cancelButtonProps">) => {
+  const { okText = "Ok", cancelText = "Cancel", onCancel, onOk, okButtonProps, cancelButtonProps } = props
+
+  return (
+    <>
+      <Button {...cancelButtonProps} type="extra-primary" size="s" onClick={onCancel}>
+        {cancelText}
+      </Button>
+      <Button {...okButtonProps} type="main-primary" size="s" onClick={onOk}>
+        {okText}
+      </Button>
+    </>
+  )
+}

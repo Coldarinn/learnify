@@ -1,5 +1,5 @@
 import { ConflictException, NotFoundException } from "@nestjs/common"
-import { Args, Context, Query, Resolver } from "@nestjs/graphql"
+import { Args, Context, Mutation, Query, Resolver } from "@nestjs/graphql"
 
 import { SessionModel } from "@/modules/session/models/session.model"
 import { GqlContext } from "@/shared/types/gql-context.types"
@@ -25,8 +25,10 @@ export class SessionResolver {
   }
 
   @Authorization()
-  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   async terminateSession(@Context() { req }: GqlContext, @Args("sessionId") sessionId: string): Promise<boolean> {
+    if (!req.session.isPrimary) throw new ConflictException("The current session is not the primary one")
+
     if (req.session.id === sessionId) throw new ConflictException("The current session cannot be deleted")
 
     const exists = await this.sessionService.exists(sessionId)
