@@ -1,4 +1,4 @@
-import notification from "antd/es/notification"
+import { notification } from "antd"
 import type { NotificationConfig } from "antd/es/notification/interface"
 import { useContext } from "react"
 
@@ -8,11 +8,12 @@ import CloseIcon from "@/shared/icons/close.svg"
 import WarningIcon from "@/shared/icons/danger-circle.svg"
 import InfoIcon from "@/shared/icons/info-circle.svg"
 
-import { StyledNotification } from "./Notification.styles"
+import { StyledNotificationFn } from "./Notification.styles"
+import { NotificationInstance } from "./Notification.types"
 import { NotificationContext } from "./NotificationProvider"
 
 export const useLocalNotification = (props?: NotificationConfig) => {
-  const [antApi, contextHolder] = notification.useNotification(props)
+  const [antApi, contextHolder] = notification.useNotification(props) as readonly [NotificationInstance, React.ReactElement<unknown, string>]
 
   const api: typeof antApi = {
     ...antApi,
@@ -21,7 +22,7 @@ export const useLocalNotification = (props?: NotificationConfig) => {
         icon: <InfoIcon />,
         closeIcon: <CloseIcon />,
         ...args,
-        className: `${StyledNotification} ${args.className || ""}`,
+        className: `${StyledNotificationFn(args.type)} ${args.className || ""}`,
       })
     },
     success: (args) => {
@@ -29,7 +30,8 @@ export const useLocalNotification = (props?: NotificationConfig) => {
         icon: <CheckIcon />,
         closeIcon: <CloseIcon />,
         ...args,
-        className: `${StyledNotification} ${args.className || ""}`,
+        type: "success",
+        className: `${StyledNotificationFn("success")} ${args.className || ""}`,
       })
     },
     error: (args) => {
@@ -37,7 +39,8 @@ export const useLocalNotification = (props?: NotificationConfig) => {
         icon: <ErrorIcon />,
         closeIcon: <CloseIcon />,
         ...args,
-        className: `${StyledNotification} ${args.className || ""}`,
+        type: "error",
+        className: `${StyledNotificationFn("error")} ${args.className || ""}`,
       })
     },
     warning: (args) => {
@@ -45,7 +48,8 @@ export const useLocalNotification = (props?: NotificationConfig) => {
         icon: <WarningIcon />,
         closeIcon: <CloseIcon />,
         ...args,
-        className: `${StyledNotification} ${args.className || ""}`,
+        type: "warning",
+        className: `${StyledNotificationFn("warning")} ${args.className || ""}`,
       })
     },
   }

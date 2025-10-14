@@ -5,7 +5,7 @@ export type Course = {
   difficultyLevel: "string"
   category: "string"
   bannerImagePrompt: "string"
-  totalDuration: "string"
+  duration: "string"
   learningObjectives: "string"[]
   prerequisites: "string"[]
   chapters: Chapter[]

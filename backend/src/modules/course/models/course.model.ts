@@ -28,7 +28,7 @@ export class CourseModel implements Course {
   bannerImageKey: string
 
   @Field(() => String)
-  totalDuration: string
+  duration: string
 
   @Field(() => [String])
   learningObjectives: string[]

@@ -2,6 +2,8 @@ import styled from "@emotion/styled"
 import { Upload } from "antd"
 
 export const StyledDragger = styled(Upload.Dragger)`
+  --radius: var(--radius-md);
+
   position: relative;
 
   .ant-upload-drag {
@@ -9,10 +11,13 @@ export const StyledDragger = styled(Upload.Dragger)`
     border: unset;
     border-radius: inherit;
 
+    background: var(--color-surface-base-primary);
+    border-radius: var(--radius);
+
     .ant-upload-btn {
       padding: var(--gap-2xl);
 
-      border-radius: var(--radius-md);
+      border-radius: var(--radius);
     }
   }
 
@@ -25,14 +30,14 @@ export const StyledDragger = styled(Upload.Dragger)`
     height: 100%;
 
     pointer-events: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
     overflow: hidden;
 
     rect {
       width: 100%;
       height: 100%;
 
-      rx: var(--radius-md);
+      rx: var(--radius);
       fill: none;
 
       stroke: var(--color-border-accent);
@@ -49,6 +54,10 @@ export const StyledDragger = styled(Upload.Dragger)`
       width: 40px;
       height: 40px;
       color: var(--color-icon-accent);
+
+      path {
+        fill: currentColor;
+      }
     }
   }
 

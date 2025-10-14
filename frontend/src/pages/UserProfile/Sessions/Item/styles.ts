@@ -56,8 +56,10 @@ export const Location = styled.div`
   color: var(--color-text-secondary);
 
   span {
+    margin-top: -5px;
+
     font-size: 24px;
-    line-height: 18px;
+    line-height: 16px;
     font-weight: 700;
   }
 `

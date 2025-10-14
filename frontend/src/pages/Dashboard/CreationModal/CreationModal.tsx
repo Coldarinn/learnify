@@ -1,3 +1,4 @@
+import { useApiAction } from "@/shared/api"
 import { reatomComponent } from "@reatom/react"
 import { MouseEvent } from "react"
 
@@ -5,13 +6,12 @@ import { Button } from "@/shared/components/Button"
 import { Form as BaseForm, FormProps } from "@/shared/components/Form"
 import { FormInput } from "@/shared/components/Input"
 import { Modal, ModalProps } from "@/shared/components/Modal"
-import { useNotification } from "@/shared/components/Notification"
 import { FormSelect } from "@/shared/components/Select"
 import { FormSwitch } from "@/shared/components/Switch"
 import { FormTextArea } from "@/shared/components/TextArea"
 
-import { createCourseAction } from "../api"
 import { CreateCourseDto } from "../types"
+import { createCourseAction } from "./api"
 import { difficultyLevelOptions } from "./difficultyLevelOptions"
 import { Footer, FormStyles, SwitchStyles } from "./styles"
 
@@ -20,13 +20,13 @@ type Props = Pick<ModalProps, "open" | "onCancel">
 export const CreationModal = reatomComponent((props: Props) => {
   const isCreating = !createCourseAction.ready()
 
-  const notify = useNotification()
+  const createCourse = useApiAction(createCourseAction, {
+    success: { message: "Course created successfully" },
+  })
 
   const onFinish: FormProps<CreateCourseDto>["onFinish"] = async (values) => {
-    await createCourseAction(values).then((res) => {
-      console.log("res: ", res)
+    await createCourse(values).then(() => {
       props.onCancel?.({} as MouseEvent<HTMLButtonElement>)
-      notify.success({ message: "Course created successfully" })
     })
   }
 

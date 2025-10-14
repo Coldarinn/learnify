@@ -12,9 +12,41 @@ input ChangePasswordInput {
   newPassword: String!
 }
 
+input ChapterInput {
+  description: String
+  duration: String!
+  name: String!
+  topics: [TopicInput!]!
+}
+
+type ChapterModel {
+  courseId: String!
+  createdAt: DateTime!
+  description: String
+  duration: String!
+  id: ID!
+  name: String!
+  topics: [TopicModel!]!
+  updatedAt: DateTime!
+}
+
 input ConfirmEmailChangeInput {
   email: String!
   token: String!
+}
+
+input CreateCourseInput {
+  bannerBase64: String!
+  category: String!
+  chapters: [ChapterInput!]!
+  description: String
+  difficultyLevel: String!
+  duration: String!
+  includeVideo: Boolean!
+  learningObjectives: [String!]!
+  name: String!
+  numOfChapters: Float!
+  prerequisites: [String!]!
 }
 
 """
@@ -39,6 +71,7 @@ type Mutation {
   changePassword(data: ChangePasswordInput!): Boolean!
   confirmEmail(token: String!): Boolean!
   confirmEmailChange(data: ConfirmEmailChangeInput!): Boolean!
+  createCourse(data: CreateCourseInput!): Boolean!
   disableTwoFa(code: String!): Boolean!
   enableTwoFa(code: String!): Boolean!
   generateTwoFaSecret: String!
@@ -107,6 +140,22 @@ input SignUpInput {
   lastName: String!
   password: String!
   username: String!
+}
+
+input TopicInput {
+  description: String
+  duration: String!
+  name: String!
+}
+
+type TopicModel {
+  chapterId: String!
+  createdAt: DateTime!
+  description: String
+  duration: String!
+  id: ID!
+  name: String!
+  updatedAt: DateTime!
 }
 
 input UpdateProfileInput {

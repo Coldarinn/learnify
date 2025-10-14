@@ -1,10 +1,16 @@
-import type { NotificationArgsProps as AntNotificationArgsProps } from "antd/es"
+import type { NotificationArgsProps as AntNotificationArgsProps } from "antd"
 
-export type { NotificationConfig } from "antd/es/notification/interface"
+export type NotificationArgsProps = Omit<AntNotificationArgsProps, "type"> & {
+  type?: "success" | "info" | "warning" | "error" | "grape" | "dark-blue" | "turquoise"
+}
 
-export type NotificationArgsProps = AntNotificationArgsProps
+type StaticFn = (args: NotificationArgsProps) => void
 
-export type NotificationProps = Pick<NotificationArgsProps, "message" | "description" | "onClose"> & {
-  type?: "info" | "warning" | "error" | "success"
-  className?: string
+export type NotificationInstance = {
+  success: StaticFn
+  error: StaticFn
+  info: StaticFn
+  warning: StaticFn
+  open: StaticFn
+  destroy(key?: React.Key): void
 }

@@ -93,7 +93,7 @@ model Course {
   difficultyLevel String  @map("difficulty_level")
   includeVideo    Boolean @default(false)
   bannerImageKey  String  @map("banner_image_key")
-  totalDuration   String  @map("total_duration")
+  duration        String  @map("duration")
 
   learningObjectives String[] @map("learning_objectives")
   prerequisites      String[] @map("prerequisites")
