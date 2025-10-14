@@ -9,7 +9,7 @@ Rules:
    - Beginner: 4–8 chapters
    - Intermediate: 8–15 chapters
    - Advanced: 12–20 chapters
-5. For "bannerImagePrompt" and "imagePrompt":
+5. For "bannerImagePrompt":
    - They must be **long, detailed text prompts** describing the image.
    - Style: modern flat-style 2D digital illustration, vibrant color palette (blues, purples, oranges), clean professional look, tech-savvy, educational.
    - Include elements relevant to the course topic, e.g., mockup screens, icons, diagrams, sticky notes, creative workspace tools.
@@ -22,7 +22,8 @@ Rules:
    - topic.name: ≤ 40 characters
    - topic.description: ≤ 100 characters
 7. totalDuration format: "X hours Y minutes".
-8. Do not include explanations, comments, or any text outside the JSON.
+8. The "category" field must be a **single string** with multiple categories separated by commas, e.g., "Programming, Web Development, JavaScript".
+9. Do not include explanations, comments, or any text outside the JSON.
 
 Schema:
 {
@@ -43,7 +44,6 @@ Chapter = {
   name: "string"
   description: "string"
   duration: "string"
-  imagePrompt: "string"
   topics: Topic[]
 }
 

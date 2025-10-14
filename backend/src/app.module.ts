@@ -8,6 +8,7 @@ import { join } from "path"
 
 import { TwoFaModule } from "./modules/2fa/2fa.module"
 import { AuthModule } from "./modules/auth/auth.module"
+import { CourseModule } from "./modules/course/course.module"
 import { MailerModule } from "./modules/mailer/mailer.module"
 import { PrismaModule } from "./modules/prisma/prisma.module"
 import { RedisModule } from "./modules/redis/redis.module"
@@ -50,6 +51,7 @@ import { IS_DEV_ENV, isDev } from "./shared/utils/is-dev.util"
     AuthModule,
     TwoFaModule,
     S3Module,
+    CourseModule,
   ],
 })
 export class AppModule {}

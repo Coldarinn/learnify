@@ -30,6 +30,8 @@ model User {
 
   oAuthAccounts OAuthAccount[]
 
+  courses Course[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -81,4 +83,61 @@ enum OAuthProvider {
   yandex
 
   @@map("oauth_providers")
+}
+
+model Course {
+  id              String  @id @default(uuid())
+  name            String
+  description     String?
+  category        String
+  difficultyLevel String  @map("difficulty_level")
+  includeVideo    Boolean @default(false)
+  bannerImageKey  String  @map("banner_image_key")
+  totalDuration   String  @map("total_duration")
+
+  learningObjectives String[] @map("learning_objectives")
+  prerequisites      String[] @map("prerequisites")
+
+  numOfChapters Int
+  chapters      Chapter[]
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("courses")
+}
+
+model Chapter {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  duration    String
+
+  course   Course @relation(fields: [courseId], references: [id])
+  courseId String
+
+  topics Topic[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("chapters")
+}
+
+model Topic {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  duration    String
+
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+  chapterId String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("topics")
 }

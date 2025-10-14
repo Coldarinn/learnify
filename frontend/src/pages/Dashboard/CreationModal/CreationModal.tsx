@@ -23,7 +23,8 @@ export const CreationModal = reatomComponent((props: Props) => {
   const notify = useNotification()
 
   const onFinish: FormProps<CreateCourseDto>["onFinish"] = async (values) => {
-    await createCourseAction(values).then(() => {
+    await createCourseAction(values).then((res) => {
+      console.log("res: ", res)
       props.onCancel?.({} as MouseEvent<HTMLButtonElement>)
       notify.success({ message: "Course created successfully" })
     })
@@ -47,11 +48,6 @@ export const CreationModal = reatomComponent((props: Props) => {
         <FormSelect<CreateCourseDto>
           select={{ isRequired: true, label: "Difficulty Level", options: difficultyLevelOptions, size: "l" }}
           formItem={{ name: "difficultyLevel", rules: [{ required: true, message: "Please select difficulty Level" }] }}
-        />
-
-        <FormInput<CreateCourseDto>
-          input={{ label: "Category (separated by commas)", size: "l" }}
-          formItem={{ name: "category", validateStatus: "" }}
         />
 
         <Footer>
