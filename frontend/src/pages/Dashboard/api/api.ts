@@ -4,18 +4,17 @@ import { action, withAsync, wrap } from "@reatom/core"
 import { CreateCourseDto } from "../types"
 import { PROMPT } from "./prompt"
 
-// ===== Creating course =====
-
 export const createCourseAction = action(async (dto: CreateCourseDto) => {
-  await wrap(
-    puter.ai.chat(PROMPT + JSON.stringify(dto), { model: "gpt-5-nano" }).then((response) => {
-      const course: Course = JSON.parse(response.message.content)
-      console.log("course: ", course)
-      puter.ai.txt2img(course.bannerImagePrompt).then((imageElement) => {
-        console.log("base64: ", imageElement.outerHTML.match(/src=["']([^"']+)["']/)?.[1])
-      })
-    })
+  const content = await wrap(
+    puter.ai.chat(PROMPT + JSON.stringify(dto), { model: "gpt-5-nano" }).then<Course>((response) => JSON.parse(response.message.content))
+  )
+  if (!content) throw new Error("Failed to create course")
+
+  const bannerBase64 = await wrap(
+    puter.ai.txt2img(content.bannerImagePrompt).then((imageElement) => imageElement.outerHTML.match(/src=["']([^"']+)["']/)?.[1])
   )
 
-  // return structure
+  if (!bannerBase64) throw new Error("Failed to create course")
+
+  return { content, bannerBase64 }
 }).extend(withAsync())

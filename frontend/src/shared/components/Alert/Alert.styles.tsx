@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import Alert from "antd/es/alert"
+import { Alert } from "antd"
 
 export const StyledAlert = styled(Alert)`
   padding: var(--gap-md) var(--gap-lg);
@@ -33,13 +33,19 @@ export const StyledAlert = styled(Alert)`
     width: 14px;
     height: 14px;
 
-    fill: var(--color-icon-tertiary);
+    color: var(--color-icon-tertiary);
+
+    * {
+      fill: currentColor;
+    }
   }
 
   svg {
     width: 1em;
     height: 1em;
 
-    fill: currentColor;
+    * {
+      fill: currentColor;
+    }
   }
 `

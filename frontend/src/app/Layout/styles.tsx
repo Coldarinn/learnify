@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import Layout from "antd/es/layout"
-import Menu from "antd/es/menu"
+import { Layout } from "antd"
+import { Menu } from "antd"
 
 const { Content, Sider } = Layout
 
@@ -8,17 +8,9 @@ export const StyledLayout = styled(Layout)`
   height: 100svh;
 
   background-color: var(--color-surface-base-page);
-
-  svg {
-    width: 1em;
-    height: 1em;
-
-    fill: currentColor;
-  }
 `
 export const StyledSider = styled(Sider)`
   --ant-menu-collapsed-icon-size: 16px;
-
   --wrapper-margin: 8px;
 
   &.ant-layout-sider {
@@ -50,19 +42,6 @@ export const StyledSider = styled(Sider)`
     }
 
     &.ant-layout-sider-collapsed {
-      .sider-go-back {
-        button {
-          gap: 0;
-
-          padding-right: calc(50% - calc(14px / 2));
-          padding-left: calc(50% - calc(14px / 2));
-
-          span {
-            font-size: 0;
-          }
-        }
-      }
-
       .ant-layout-sider-trigger {
         .sider-collapse-trigger {
           gap: 0;
@@ -78,6 +57,15 @@ export const StyledSider = styled(Sider)`
         span {
           font-size: 0;
         }
+      }
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+
+      * {
+        fill: currentColor;
       }
     }
   }
@@ -101,7 +89,7 @@ export const CollapseTrigger = styled.div`
     width: var(--ant-menu-collapsed-icon-size);
     height: var(--ant-menu-collapsed-icon-size);
 
-    fill: var(--color-icon-tertiary);
+    color: var(--color-icon-tertiary);
 
     transform: scale(-1);
   }
@@ -156,7 +144,5 @@ export const StyledContent = styled(Content)`
 
     background: var(--color-surface-base-background);
     border-radius: var(--radius-md) var(--radius-md) 0 var(--radius-md);
-
-    color: var(--color-text-primary);
   }
 `

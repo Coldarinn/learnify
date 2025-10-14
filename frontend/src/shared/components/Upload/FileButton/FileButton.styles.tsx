@@ -10,7 +10,7 @@ export const StyledFileButton = styled.div<Pick<FileButtonProps, "size">>`
 
   transition: color var(--ant-motion-duration-mid) var(--ant-motion-ease-in-out);
 
-  &:hover:not(:has(.ant-spin-nested-loading)) {
+  &:hover:not(:has(.ant-spin-spinning)) {
     color: var(--color-text-accent-hover);
   }
 
@@ -18,7 +18,9 @@ export const StyledFileButton = styled.div<Pick<FileButtonProps, "size">>`
     width: 1em;
     height: 1em;
 
-    fill: var(--color-icon-accent);
+    * {
+      fill: currentColor;
+    }
   }
 
   .ant-spin-container {
@@ -41,6 +43,10 @@ export const StyledFileButton = styled.div<Pick<FileButtonProps, "size">>`
   }
 
   .ant-spin svg {
+    color: var(--color-icon-accent);
+  }
+
+  .file-icon {
     color: var(--color-icon-accent);
   }
 
@@ -70,9 +76,17 @@ export const StyledFileButton = styled.div<Pick<FileButtonProps, "size">>`
     })[size || "m"]}
 `
 export const RemoveBtn = styled.button`
-  svg {
-    fill: var(--color-icon-tertiary);
+  cursor: pointer;
+
+  &:hover svg {
+    color: var(--color-icon-accent);
   }
 
-  line-height: 0;
+  svg {
+    display: block;
+
+    color: var(--color-icon-tertiary);
+
+    transition: color var(--ant-motion-duration-mid) var(--ant-motion-ease-in-out);
+  }
 `

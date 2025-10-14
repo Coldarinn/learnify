@@ -1,3 +1,8 @@
+/* App */
+.ant-app {
+  font: inherit;
+}
+
 /* Upload */
 .ant-upload-list.ant-upload-list-text {
   display: flex;
@@ -23,7 +28,7 @@
   font: var(--font-body-medium-m);
 }
 
-/* Form */
-.ant-form-item {
-  margin-bottom: 0;
+/* Carousel */
+.ant-carousel {
+  font: inherit;
 }

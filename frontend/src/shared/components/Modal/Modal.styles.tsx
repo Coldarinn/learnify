@@ -28,4 +28,15 @@ export const StyledModal = css`
   .ant-modal-title {
     font: var(--font-heading-xs);
   }
+
+  .ant-modal-close-x {
+    svg {
+      width: 24px;
+      height: 24px;
+
+      path {
+        fill: var(--color-icon-primary);
+      }
+    }
+  }
 `

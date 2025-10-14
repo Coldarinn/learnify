@@ -1,6 +1,6 @@
 import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
-import Tabs from "antd/es/tabs"
+import { Tabs } from "antd"
 
 import { TabsProps } from "./Tabs.types"
 
@@ -92,8 +92,8 @@ export const StyledTabs = styled(Tabs)<{ customType?: TabsProps["type"] }>`
         padding: var(--gap-5xs);
 
         background-color: var(--color-surface-base-secondary);
-        border: 1px solid var(--color-border-tertiary);
         border-radius: var(--radius-sm);
+        box-shadow: 0 0 0 1px var(--color-border-tertiary);
       }
 
       .ant-tabs-nav-list {
@@ -120,9 +120,9 @@ export const sizeStyles: Record<NonNullable<TabsProps["size"]>, SerializedStyles
   s: css`
     --font: var(--font-subheading-m);
     --tab-height: calc(34px + var(--ant-line-width));
-    --tab-height-square: 28px;
+    --tab-height-square: 24px;
     --tab-padding: var(--gap-3xs);
-    --gap: var(--gap-md);
+    --gap: var(--gap-xs);
     --radius: var(--radius-xs);
     --ant-line-width: 2px;
   `,
@@ -131,16 +131,16 @@ export const sizeStyles: Record<NonNullable<TabsProps["size"]>, SerializedStyles
     --tab-height: calc(38px + var(--ant-line-width));
     --tab-height-square: 32px;
     --tab-padding: var(--gap-xs);
-    --gap: var(--gap-md);
+    --gap: var(--gap-xs);
     --radius: var(--radius-sm);
     --ant-line-width: 2px;
   `,
   l: css`
     --font: var(--font-subheading-xl);
     --tab-height: calc(42px + var(--ant-line-width));
-    --tab-height-square: 40px;
+    --tab-height-square: 42px;
     --tab-padding: var(--gap-xs);
-    --gap: var(--gap-md);
+    --gap: var(--gap-xs);
     --radius: var(--radius-sm);
     --ant-line-width: 2px;
   `,

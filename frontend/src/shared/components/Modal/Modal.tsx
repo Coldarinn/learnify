@@ -24,7 +24,7 @@ export const Modal = (props: ModalProps) => {
           cancelButtonProps={cancelButtonProps}
         />
       }
-      closeIcon={<Button type="link-secondary" size="xs" icon={<CloseIcon />} tabIndex={-1} />}
+      closeIcon={<CloseIcon />}
       destroyOnHidden
       {...otherProps}
     />

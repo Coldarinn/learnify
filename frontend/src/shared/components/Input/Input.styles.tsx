@@ -1,6 +1,6 @@
 import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
-import AntInput from "antd/es/input"
+import { Input as AntInput } from "antd"
 
 import { ControlWrapper, ControlWrapperProps } from "../ControlWrapper"
 import { InputProps } from "./Input.types"
@@ -13,7 +13,7 @@ export const Wrapper = styled(ControlWrapper)`
       case "success":
         return css`
           ${StyledInput}.custom-input {
-            background-color: transparent;
+            background-color: var(--color-surface-base-primary);
             border-color: var(--color-border-success);
           }
         `
@@ -23,8 +23,8 @@ export const Wrapper = styled(ControlWrapper)`
             &,
             &:hover,
             &:focus-within {
-              background-color: transparent;
-              border-color: var(--color-border-critical);
+              background-color: var(--color-surface-base-primary);
+              border-color: var(--color-border-error);
               box-shadow: none;
             }
           }
@@ -40,8 +40,12 @@ export const StyledInput = styled(AntInput)`
 
     color: var(--color-text-primary);
 
-    background-color: transparent;
+    background-color: var(--color-surface-base-primary);
     border: 1px solid var(--color-border-secondary);
+
+    input {
+      font: inherit;
+    }
 
     &::placeholder {
       color: var(--color-text-secondary);
@@ -57,18 +61,18 @@ export const StyledInput = styled(AntInput)`
       border-color: var(--color-border-accent);
     }
 
-    &:has(.ant-input-disabled) {
-      color: var(--color-text-disabled);
+    &.ant-input-disabled {
+      color: var(--color-text-disabled) !important;
 
-      border-color: var(--color-border-tertiary);
+      border-color: var(--color-border-tertiary) !important;
 
       &::placeholder {
-        color: var(--color-text-disabled);
+        color: var(--color-text-disabled) !important;
       }
 
       &:hover {
-        background-color: transparent;
-        border-color: var(--color-border-tertiary);
+        background-color: var(--color-surface-base-primary) !important;
+        border-color: var(--color-border-tertiary) !important;
       }
     }
 
@@ -84,11 +88,13 @@ export const StyledInput = styled(AntInput)`
     .anticon {
       color: inherit;
 
-      svg {
+      svg:not(.clear) {
         width: 1em;
         height: 1em;
 
-        fill: currentColor;
+        * {
+          fill: currentColor;
+        }
 
         transition: color var(--ant-motion-duration-mid) var(--ant-motion-ease-in-out);
       }
@@ -114,8 +120,8 @@ export const sizeStyles: Record<NonNullable<InputProps["size"]>, SerializedStyle
     border-radius: var(--radius-xs);
   `,
   l: css`
-    height: 46px;
-    padding: var(--gap-2xs) var(--gap-sm) var(--gap-xs) var(--gap-sm);
+    height: 40px;
+    padding: var(--gap-3xs) var(--gap-sm);
 
     font: var(--font-body-regular-m);
 

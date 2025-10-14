@@ -1,14 +1,14 @@
 @font-face {
-  font-family: "TT-Firs-Text";
-  src: url("../fonts/TT-Firs-Text-Variable.ttf") format("truetype");
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: swap;
+  font-family: "Golos Text";
+  src:
+    url("../fonts/golos-text/golos-text_vf.woff2") format("woff2"),
+    url("../fonts/golos-text/golos-text_vf.woff") format("woff"),
+    url("../fonts/golos-text/golos-text_vf.ttf") format("truetype");
 }
 
 :root {
   --font-family-system: system-ui, -apple-system, "Segoe UI", roboto, "Helvetica Neue", helvetica, sans-serif;
-  --font-family-base: "TT-Firs-Text", var(--font-family-system);
+  --font-family-base: "Golos Text", var(--font-family-system);
 
   --font-heading-l: 500 56px / 60px var(--font-family-base);
   --font-heading-m: 500 36px / 40px var(--font-family-base);

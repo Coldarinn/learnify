@@ -1,6 +1,6 @@
 import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
-import Switch from "antd/es/switch"
+import { Switch } from "antd"
 
 import { SwitchProps } from "./Switch.types"
 
@@ -29,7 +29,7 @@ export const Wrapper = styled.div<Pick<SwitchProps, "status">>`
       case "error":
         return css`
           .switch-caption {
-            color: var(--color-border-critical);
+            color: var(--color-border-error);
           }
         `
       default:
@@ -43,6 +43,15 @@ export const Body = styled.div`
   gap: var(--switch-gap);
 
   align-items: center;
+
+  svg {
+    width: 1em;
+    height: 1em;
+
+    * {
+      fill: currentColor;
+    }
+  }
 `
 export const Children = styled.div`
   display: inline-flex;
@@ -112,12 +121,14 @@ export const StyledSwitch = styled(Switch)`
 
 export const sizeStyles: Record<NonNullable<SwitchProps["size"]>, SerializedStyles> = {
   s: css`
-    --font: var(--font-body-medium-s);
-    --switch-track-min-width: 30px;
+    && {
+      --font: var(--font-body-medium-s);
+      --switch-track-min-width: 30px;
 
-    .ant-switch {
-      --ant-switch-track-height: 16px;
-      --ant-switch-handle-size: 12px;
+      .ant-switch {
+        --ant-switch-track-height: 16px;
+        --ant-switch-handle-size: 12px;
+      }
     }
   `,
   m: css``,

@@ -11,7 +11,7 @@ import LogoutIcon from "@/shared/icons/arrow-logout-2.svg"
 import CopyIcon from "@/shared/icons/copy.svg"
 
 import { signOutAction } from "./api"
-import { AvatarButton, Email, Header, List, LogoutButton, Name, StyledDivider } from "./styles"
+import { AvatarButton, CopyBtn, Email, Header, List, LogoutButton, Name, StyledDivider } from "./styles"
 
 const UserMenuContent = reatomComponent(() => {
   const { avatarUrl, firstName, lastName, email } = userAtom()
@@ -22,15 +22,19 @@ const UserMenuContent = reatomComponent(() => {
     <>
       <Header className="user-menu-header">
         <Avatar className="user-menu-avatar" src={avatarUrl} size="large" alt="Аватар профиля" />
+
         <div className="user-menu-info">
           <Name className="user-menu-name">{fullName}</Name>
+
           <Email className="user-menu-email">
             <span>{email}</span>
-            <Button size="xs" type="link-secondary" icon={<CopyIcon />} onClick={() => navigator.clipboard.writeText(email)} />
+            <CopyBtn size="xs" type="link-secondary" icon={<CopyIcon />} onClick={() => navigator.clipboard.writeText(email)} />
           </Email>
         </div>
       </Header>
+
       <StyledDivider className="user-menu-divider" />
+
       <List>
         <Link to="/user-profile">
           <Button type="link-secondary" size="s" icon={<UserOutlined />}>
@@ -38,6 +42,7 @@ const UserMenuContent = reatomComponent(() => {
           </Button>
         </Link>
       </List>
+
       <LogoutButton className="user-menu-logout" onClick={signOutAction}>
         <LogoutIcon />
         <span>Log out of your profile</span>

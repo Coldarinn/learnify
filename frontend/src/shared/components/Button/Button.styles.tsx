@@ -1,6 +1,6 @@
 import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
-import Button from "antd/es/button"
+import { Button } from "antd"
 
 import { ButtonProps } from "./Button.types"
 
@@ -21,7 +21,8 @@ export const StyledButton = styled(Button)<{ isLoading?: ButtonProps["loading"] 
   color: var(--color);
 
   background-color: var(--bg-color);
-  border: 0px solid var(--border-color);
+  border-color: var(--border-color);
+  border-style: solid;
   border-radius: var(--radius);
   box-shadow: none;
 
@@ -34,7 +35,9 @@ export const StyledButton = styled(Button)<{ isLoading?: ButtonProps["loading"] 
 
       vertical-align: middle;
 
-      fill: currentcolor;
+      * {
+        fill: currentColor;
+      }
     }
   }
 
@@ -119,7 +122,7 @@ export const sizeStyles: Record<NonNullable<ButtonProps["size"]>, SerializedStyl
       --padding: var(--gap-xs);
       --font: var(--font-subheading-s);
       --radius: var(--radius-xs);
-      --loader-size: 14px;
+      --loader-size: 12px;
     }
 
     &${StyledButton}:not(.ant-btn-icon-only) {
@@ -168,6 +171,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --color-hover: var(--color-base-white);
     --color-active: var(--color-base-white);
     --color-disabled: var(--color-text-disabled);
+
+    border-width: 0px;
   `,
   "main-secondary": css`
     --bg-color: var(--color-surface-elements-sub-accent);
@@ -179,6 +184,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --color-hover: var(--color-text-accent);
     --color-active: var(--color-text-accent);
     --color-disabled: var(--color-text-disabled);
+
+    border-width: 0px;
   `,
   "main-outline": css`
     --bg-color: transparent;
@@ -190,12 +197,10 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --color-hover: var(--color-text-accent);
     --color-active: var(--color-text-accent);
     --color-disabled: var(--color-text-disabled);
-    --border-color: var(--color-border-accent);
-    --border-color-hover: var(--color-border-accent);
+    --border-color: var(--color-border-accent-alt);
+    --border-color-hover: var(--color-border-accent-soft);
     --border-color-active: var(--color-border-accent);
     --border-color-disabled: var(--color-border-secondary);
-
-    border-width: 1px;
   `,
   "link-primary": css`
     --bg-color: transparent;
@@ -210,6 +215,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
 
     padding-right: 0;
     padding-left: 0;
+
+    border-width: 0px;
   `,
   "link-secondary": css`
     --bg-color: transparent;
@@ -225,6 +232,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     padding-right: 0;
     padding-left: 0;
 
+    border-width: 0px;
+
     .anticon-loading {
       color: var(--color-icon-accent);
     }
@@ -239,6 +248,8 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --color-hover: var(--color-text-primary);
     --color-active: var(--color-text-primary);
     --color-disabled: var(--color-text-disabled);
+
+    border-width: 0px;
   `,
   "extra-outline": css`
     --bg-color: transparent;
@@ -254,8 +265,6 @@ export const typeStyles: Record<NonNullable<ButtonProps["type"]>, SerializedStyl
     --border-color-hover: var(--color-border-accent-soft);
     --border-color-active: var(--color-border-accent);
     --border-color-disabled: var(--color-border-tertiary);
-
-    border-width: 1px;
 
     &:has(.anticon-loading) {
       border-color: var(--border-color-active) !important;

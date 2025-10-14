@@ -80,7 +80,7 @@ export const SignIn = reatomComponent(() => {
       <OAuth />
 
       <Footer>
-        <p>Don’t have an account? </p>
+        <p>Don't have an account? </p>
         <Link to="/auth/sign-up">Sign Up</Link>
       </Footer>
 

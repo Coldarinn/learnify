@@ -1,57 +1,51 @@
+import { PlusOutlined } from "@ant-design/icons"
 import { reatomComponent } from "@reatom/react"
+import { useState } from "react"
 
-import { Form as BaseForm, FormProps } from "@/shared/components/Form"
-import { FormInput } from "@/shared/components/Input"
-import { FormSelect } from "@/shared/components/Select"
-import { FormSwitch } from "@/shared/components/Switch"
-import { FormTextArea } from "@/shared/components/TextArea"
+import { Button } from "@/shared/components/Button"
 
-import { createCourseAction } from "./api/api"
-import { Form, SubmitBtn } from "./styles"
-import { CreateCourseDto } from "./types"
+import { CreationModal } from "./CreationModal"
+import EmptyIcon from "./images/empty.png"
+import { Banner, Courses, Empty, Intro } from "./styles"
 
 export const Dashboard = reatomComponent(() => {
-  const onFinish: FormProps<CreateCourseDto>["onFinish"] = async (values) => {
-    const res = await createCourseAction(values)
-    console.log("res: ", res)
-  }
+  const [isOpen, setIsOpen] = useState(false)
+
+  const courses = []
 
   return (
-    <BaseForm className={Form} onFinish={onFinish}>
-      <FormInput<CreateCourseDto>
-        input={{ isRequired: true, label: "Course Name" }}
-        formItem={{ name: "name", rules: [{ required: true, message: "Please input course name" }] }}
-      />
+    <>
+      <Banner>
+        <section className="content">
+          <h2>Welcome back, Alex!</h2>
+          <p>Manage your courses and continue creating amazing content.</p>
+          <Button size="l" onClick={() => setIsOpen(true)}>
+            Create a new course
+          </Button>
+        </section>
+      </Banner>
 
-      <FormTextArea<CreateCourseDto> formItem={{ name: "description" }} textArea={{ label: "Course Description" }} />
+      <Intro>
+        {courses.length === 0 ? (
+          <Empty>
+            <img src={EmptyIcon} alt="No courses" />
+            <h2>Look like you haven't created any courses yet</h2>
+            <Button size="l" type="extra-outline" onClick={() => setIsOpen(true)} icon={<PlusOutlined />}>
+              Create your first course
+            </Button>
+          </Empty>
+        ) : (
+          <Courses>
+            <section className="header">
+              <h2>Your courses</h2>
+              <Button onClick={() => setIsOpen(true)}>Create new</Button>
+            </section>
+            <div className="grid"></div>
+          </Courses>
+        )}
+      </Intro>
 
-      <FormSwitch<CreateCourseDto> formItem={{ name: "includeVideo" }} switch={{ children: "Include video" }} />
-
-      <FormSelect<CreateCourseDto>
-        select={{ isRequired: true, label: "Difficulty Level", options: difficultyLevelOptions }}
-        formItem={{ name: "difficultyLevel", rules: [{ required: true, message: "Please select difficulty Level" }] }}
-      />
-
-      <FormInput<CreateCourseDto> input={{ label: "Category" }} formItem={{ name: "category", validateStatus: "" }} />
-
-      <SubmitBtn size="s" htmlType="submit">
-        Create
-      </SubmitBtn>
-    </BaseForm>
+      <CreationModal open={isOpen} onCancel={() => setIsOpen(false)} />
+    </>
   )
 })
-
-const difficultyLevelOptions = [
-  {
-    label: "Beginner",
-    value: "beginner",
-  },
-  {
-    label: "Intermediate",
-    value: "intermediate",
-  },
-  {
-    label: "Advanced",
-    value: "advanced",
-  },
-]

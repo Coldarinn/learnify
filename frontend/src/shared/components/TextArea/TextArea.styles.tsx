@@ -16,14 +16,16 @@ export const Wrapper = styled(ControlWrapper)<Pick<TextAreaProps, "status">>`
       `,
       error: css`
         ${StyledTextArea}.custom-text-area {
-          border-color: var(--color-border-critical);
+          border-color: var(--color-border-error);
         }
       `,
       "": "",
     })[status || ""]}
 `
 export const StyledTextArea = styled(TextArea)`
-  &.ant-input {
+  .ant-input,
+  &.ant-input,
+  &:has(.ant-input) {
     --ant-input-active-shadow: none;
 
     color: var(--color-text-primary);
@@ -63,8 +65,9 @@ export const StyledTextArea = styled(TextArea)`
 
 export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedStyles> = {
   s: css`
-    &.ant-input {
-      height: 56px;
+    &.ant-input,
+    .ant-input {
+      height: 64px;
       padding: var(--gap-3xs);
 
       font: var(--font-body-regular-s);
@@ -73,9 +76,10 @@ export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedSt
     }
   `,
   m: css`
-    &.ant-input {
-      height: 86px;
-      padding: var(--gap-2xs);
+    &.ant-input,
+    .ant-input {
+      height: 80px;
+      padding: var(--gap-2xs) var(--gap-2xs) var(--gap-xs) var(--gap-2xs);
 
       font: var(--font-body-regular-s);
 
@@ -83,9 +87,10 @@ export const sizeStyles: Record<NonNullable<TextAreaProps["size"]>, SerializedSt
     }
   `,
   l: css`
-    &.ant-input {
-      height: 106px;
-      padding: var(--gap-sm);
+    &.ant-input,
+    .ant-input {
+      height: 80px;
+      padding: var(--gap-sm) var(--gap-sm) var(--gap-md) var(--gap-sm);
 
       font: var(--font-body-regular-m);
 

@@ -79,6 +79,8 @@ export const Wrapper = styled.div<Pick<ControlWrapperProps, "view" | "formContro
     })[size || "m"]}
 `
 export const Label = styled.div`
+  min-width: 0;
+
   font: var(--wrapper-font-labell);
   color: var(--color-text-primary);
 `

@@ -1,11 +1,14 @@
 import styled from "@emotion/styled"
 
+import { Button } from "@/shared/components/Button"
 import { Divider } from "@/shared/components/Divider"
 
 export const AvatarButton = styled.button`
   flex-shrink: 0;
 
   border-radius: var(--radius-circle);
+
+  cursor: pointer;
 `
 export const Header = styled.div`
   display: flex;
@@ -34,6 +37,10 @@ export const Email = styled.div`
     color: var(--color-text-secondary);
   }
 `
+export const CopyBtn = styled(Button)`
+  --height: 14px !important;
+  --loader-size: var(--height) !important;
+`
 export const StyledDivider = styled(Divider)`
   margin: var(--gap-xs) 0;
 `
@@ -50,6 +57,8 @@ export const LogoutButton = styled.button`
 
   color: var(--color-text-secondary);
 
+  cursor: pointer;
+
   transition: 0.2s color ease-in-out;
 
   svg {
@@ -58,7 +67,9 @@ export const LogoutButton = styled.button`
     width: 16px;
     height: 16px;
 
-    fill: currentColor;
+    * {
+      fill: currentColor;
+    }
   }
 
   span {

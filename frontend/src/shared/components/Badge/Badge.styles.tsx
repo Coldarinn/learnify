@@ -1,8 +1,8 @@
 import { type SerializedStyles, css } from "@emotion/react"
 import styled from "@emotion/styled"
-import Badge from "antd/es/badge"
+import { Badge } from "antd"
 
-import { BadgeProps } from "./Badge.types"
+import { BadgeProps, colors } from "./Badge.types"
 
 export const StyledBadge = styled(Badge)<BadgeProps>`
   &.ant-badge {
@@ -15,40 +15,7 @@ export const StyledBadge = styled(Badge)<BadgeProps>`
     box-shadow: none;
   }
 
-  &.ant-badge.ant-badge-not-a-wrapper .ant-scroll-number,
-  &.ant-badge.ant-badge-not-a-wrapper .ant-badge-status-dot {
-    ${({ bright }) => css`
-      color: var(--color-text-secondary);
-
-      background: ${bright ? "var(--color-surface-base-secondary)" : "var(--color-surface-base-quaternary)"};
-
-      &.ant-badge-color-red {
-        color: ${bright ? "var(--color-text-error)" : "var(--color-base-white)"};
-
-        background: ${bright ? "var(--color-surface-elements-sub-critical)" : "var(--color-surface-elements-critical)"};
-      }
-      &.ant-badge-color-green {
-        color: ${bright ? "var(--color-text-success)" : "var(--color-base-white)"};
-
-        background: ${bright ? "var(--color-surface-elements-sub-success)" : "var(--color-surface-elements-success)"};
-      }
-      &.ant-badge-color-blue {
-        color: ${bright ? "var(--color-text-info)" : "var(--color-base-white)"};
-
-        background: ${bright ? "var(--color-surface-elements-sub-info)" : "var(--color-surface-elements-info)"};
-      }
-      &.ant-badge-color-yellow {
-        color: ${bright ? "var(--color-text-warning)" : "var(--color-base-white)"};
-
-        background: ${bright ? "var(--color-surface-elements-sub-warning)" : "var(--color-surface-elements-warning)"};
-      }
-      &.ant-badge-color-orange {
-        color: ${bright ? "var(--color-text-accent)" : "var(--color-base-white)"};
-
-        background: ${bright ? "var(--color-surface-elements-sub-accent)" : "var(--color-surface-elements-accent)"};
-      }
-    `}
-  }
+  ${badgeStyles}
 
   &.ant-badge.ant-badge-status .ant-badge-status-text {
     margin-left: var(--gap-5xs);
@@ -56,6 +23,51 @@ export const StyledBadge = styled(Badge)<BadgeProps>`
     font: inherit;
   }
 `
+
+function badgeStyles({ bright, color, customColors }: BadgeProps) {
+  const { text, background, boxShadow } = resolveBadgeColors(bright, color, customColors)
+
+  return css`
+    &.ant-badge.ant-badge-not-a-wrapper .ant-scroll-number,
+    &.ant-badge.ant-badge-not-a-wrapper .ant-badge-status-dot {
+      color: ${text};
+      background: ${background};
+      box-shadow: ${boxShadow};
+    }
+  `
+}
+const resolveBadgeColors = (bright?: boolean, color?: BadgeProps["color"], customColors?: BadgeProps["customColors"]) => {
+  if (customColors) {
+    return {
+      text: customColors.text ?? "inherit",
+      background: customColors.background ?? "transparent",
+      boxShadow: customColors.border ? `0 0 0 1px ${customColors.border}` : "unset",
+    }
+  }
+
+  if (bright) {
+    return {
+      text: color ? `var(--color-text-${color}-alt)` : "var(--color-text-secondary)",
+      background: color ? `var(--color-surface-elements-sub-${color})` : "var(--color-surface-base-tertiary)",
+      boxShadow: color ? `0 0 0 1px var(--color-border-${color}-muted)` : "0 0 0 1px var(--color-border-secondary)",
+    }
+  }
+
+  if (color) {
+    const isSystemColor = colors.includes(color)
+    return {
+      text: isSystemColor ? "var(--color-base-white)" : color,
+      background: isSystemColor ? `var(--color-surface-elements-${color})` : color,
+      boxShadow: "unset",
+    }
+  }
+
+  return {
+    text: "var(--color-text-primary)",
+    background: "var(--color-surface-base-quaternary)",
+    boxShadow: "unset",
+  }
+}
 
 export const sizeStyles: Record<NonNullable<BadgeProps["size"]>, SerializedStyles> = {
   s: css`
@@ -69,7 +81,7 @@ export const sizeStyles: Record<NonNullable<BadgeProps["size"]>, SerializedStyle
     }
 
     .ant-badge-count {
-      padding: var(--gap-6xs) var(--gap-5xs);
+      padding: 1px var(--gap-5xs) 3px;
 
       font: var(--font-subheading-xs);
 
@@ -87,7 +99,7 @@ export const sizeStyles: Record<NonNullable<BadgeProps["size"]>, SerializedStyle
     }
 
     .ant-badge-count {
-      padding: var(--gap-6xs) var(--gap-4xs) var(--gap-5xs);
+      padding: 1px var(--gap-4xs) 3px;
 
       font: var(--font-subheading-s);
 

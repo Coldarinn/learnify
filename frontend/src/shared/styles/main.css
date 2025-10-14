@@ -1,3 +1,6 @@
+@layer reset, antd;
+@import url("antd/dist/reset.css") layer(reset);
+
 @import "./typography.css";
 @import "./colors.css";
 @import "./theme.css";
@@ -9,12 +12,15 @@
 
 body,
 html {
-  box-sizing: border-box;
+  --scrollbar-width: 8px;
+
   scroll-behavior: smooth;
   width: 100%;
+  min-height: 100svh;
 }
 
-body {
+body,
+.sbdocs.sbdocs-wrapper {
   font: var(--font-body-regular-m);
   font-family: var(--font-family-base);
   -webkit-font-smoothing: antialiased;
@@ -23,11 +29,20 @@ body {
 
   background-color: var(--color-surface-base-page);
 }
+.sbdocs.sbdocs-content {
+  max-width: 100%;
+}
+
+.sb-main-padded {
+  background-color: var(--color-base-white);
+  [data-theme="dark"] & {
+    background-color: var(--color-base-black);
+  }
+}
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
   margin: 0;
   padding: 0;
 
@@ -49,39 +64,26 @@ a {
   text-decoration-skip-ink: auto;
 }
 
-button,
-a {
-  cursor: pointer;
-}
-
-img,
-picture,
-video,
-canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-img,
-picture {
-  pointer-events: none;
-}
-
 ::-webkit-scrollbar {
-  width: var(--scrollbar-width);
-  height: var(--scrollbar-width);
+  width: var(--scrollbar-width) !important;
+  height: var(--scrollbar-width) !important;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-base-quaternary);
-  border-radius: var(--radius-2xl);
+  background: var(--color-surface-base-quaternary) !important;
+  border-radius: var(--radius-2xl) !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-surface-base-quaternary-hover);
+  background: var(--color-surface-base-quaternary-hover) !important;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: var(--radius-2xl);
+  background: transparent !important;
+  border-radius: var(--radius-2xl) !important;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  padding-right: calc(var(--scrollbar-width) + var(--gap-4xs));
+  background-clip: content-box;
 }
